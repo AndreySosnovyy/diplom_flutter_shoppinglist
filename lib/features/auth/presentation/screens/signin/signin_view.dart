@@ -12,7 +12,7 @@ class SignInView extends StatelessWidget {
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(),
         body: Center(
-          child: Text(viewModel.hello),
+          child: Text('Hello', style: Theme.of(context).textTheme.headline2),
         ),
       ),
     );
