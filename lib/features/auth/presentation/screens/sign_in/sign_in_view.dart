@@ -1,4 +1,4 @@
-import 'package:diplom/features/auth/presentation/screens/signin/signin_viewmodel.dart';
+import 'package:diplom/features/auth/presentation/screens/sign_in/sign_in_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -12,7 +12,7 @@ class SignInView extends StatelessWidget {
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBar(),
         body: Center(
-          child: Text('Hello', style: Theme.of(context).textTheme.headline2),
+          child: Text('Sign in view', style: Theme.of(context).textTheme.headline2),
         ),
       ),
     );

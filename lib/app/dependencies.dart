@@ -11,5 +11,7 @@ Future<void> setupDependencies() async {
 
 // Future<FirebaseApp> getFirebaseApp() async {
 //   return await Firebase.initializeApp(
-//     options: const FirebaseOptions();
+//     options: const FirebaseOptions(
+//
+//     );
 // }

@@ -24,6 +24,7 @@ dependencies:
   get_it: ^7.2.0
 
   # local storage
+  hive: ^2.0.5
   shared_preferences: ^2.0.12
   path_provider: ^2.0.8
 
@@ -43,7 +44,7 @@ dependencies:
   # other
   url_launcher: ^6.0.18
   google_fonts: ^2.2.0
-  hive: ^2.0.5
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
