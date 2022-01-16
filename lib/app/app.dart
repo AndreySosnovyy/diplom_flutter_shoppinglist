@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:diplom/core/theme/theme.dart';
-import 'package:diplom/core/values/strings.dart';
+import 'package:diplom/app/theme.dart';
+import 'package:diplom/app/values/strings.dart';
 import 'package:flutter/material.dart';
 
 import 'dependencies.dart';
