@@ -1,12 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class AppColors {
   // core colors
-  static const white = Color(0xFFFFFFFF);
-  static const grey = Color(0xFFEFEFEF);
-  static const greyHint = Color(0xFFAAAAAA);
-  static const black = Color(0xFF000000);
-  static const blue = Color(0xFF3636FF);
+  static const white = CupertinoColors.white;
+  static const black = CupertinoColors.black;
+  static const grey1 = CupertinoColors.systemGrey;
+  static const grey2 = CupertinoColors.systemGrey4;
+  static const grey3 = CupertinoColors.systemGrey6;
+
+  static const red = CupertinoColors.systemRed;
+  static const green = CupertinoColors.activeGreen;
+  static const blue = CupertinoColors.activeBlue;
+  static const yellow = CupertinoColors.systemYellow;
 
   // palettes
   static const palette1 = Palette1();

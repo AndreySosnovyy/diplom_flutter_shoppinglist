@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 mixin AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: AppColors.white,
       textTheme: GoogleFonts.robotoTextTheme().copyWith(
         headline1: GoogleFonts.roboto().copyWith(
           fontSize: 36,
@@ -16,7 +16,7 @@ mixin AppTheme {
         subtitle1: GoogleFonts.roboto().copyWith(
           fontSize: 22,
           fontWeight: FontWeight.normal,
-          color: AppColors.greyHint,
+          color: AppColors.grey1,
         ),
         subtitle2: GoogleFonts.roboto().copyWith(),
         bodyText1: GoogleFonts.roboto().copyWith(),

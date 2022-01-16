@@ -25,7 +25,7 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColors.grey,
+      backgroundColor: AppColors.grey3,
       elevation: 0,
       leading: GestureDetector(child: leading, onTap: leadingCallback),
       actions: [
