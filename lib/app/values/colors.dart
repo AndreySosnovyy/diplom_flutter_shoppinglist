@@ -12,6 +12,16 @@ class AppColors {
   static const green = CupertinoColors.activeGreen;
   static const blue = CupertinoColors.activeBlue;
   static const yellow = CupertinoColors.systemYellow;
+  static const indigo = CupertinoColors.systemIndigo;
+  static const orange = CupertinoColors.systemOrange;
+  static const pink = CupertinoColors.systemPink;
+  static const teal = CupertinoColors.systemTeal;
+
+  static final mainGradientColors =  [
+    AppColors.palette1.flickrPink,
+    AppColors.palette1.trypanBlue1,
+    AppColors.palette1.vividSkyBlue
+  ];
 
   // palettes
   static const palette1 = Palette1();

@@ -38,10 +38,8 @@ class AppRouter extends _i6.RootStackRouter {
           routeData: routeData, child: const _i2.SignUpView());
     },
     ListsViewRoute.name: (routeData) {
-      final args = routeData.argsAs<ListsViewRouteArgs>(
-          orElse: () => const ListsViewRouteArgs());
       return _i6.AdaptivePage<dynamic>(
-          routeData: routeData, child: _i3.ListsView(key: args.key));
+          routeData: routeData, child: const _i3.ListsView());
     },
     ListCreationViewRoute.name: (routeData) {
       return _i6.AdaptivePage<dynamic>(
@@ -82,23 +80,10 @@ class SignUpViewRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.ListsView]
-class ListsViewRoute extends _i6.PageRouteInfo<ListsViewRouteArgs> {
-  ListsViewRoute({_i7.Key? key})
-      : super(ListsViewRoute.name,
-            path: '/', args: ListsViewRouteArgs(key: key));
+class ListsViewRoute extends _i6.PageRouteInfo<void> {
+  const ListsViewRoute() : super(ListsViewRoute.name, path: '/');
 
   static const String name = 'ListsViewRoute';
-}
-
-class ListsViewRouteArgs {
-  const ListsViewRouteArgs({this.key});
-
-  final _i7.Key? key;
-
-  @override
-  String toString() {
-    return 'ListsViewRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for

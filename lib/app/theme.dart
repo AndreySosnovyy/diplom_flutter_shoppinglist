@@ -8,19 +8,35 @@ mixin AppTheme {
       scaffoldBackgroundColor: AppColors.white,
       textTheme: GoogleFonts.robotoTextTheme().copyWith(
         headline1: GoogleFonts.roboto().copyWith(
-          fontSize: 36,
+          fontSize: 34,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
         ),
-        headline2: GoogleFonts.roboto().copyWith(),
+        headline2: GoogleFonts.roboto().copyWith(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: AppColors.black,
+        ),
         subtitle1: GoogleFonts.roboto().copyWith(
+          fontSize: 26,
+          fontWeight: FontWeight.normal,
+          color: AppColors.black,
+        ),
+        subtitle2: GoogleFonts.roboto().copyWith(
           fontSize: 22,
           fontWeight: FontWeight.normal,
-          color: AppColors.grey1,
+          color: AppColors.black,
         ),
-        subtitle2: GoogleFonts.roboto().copyWith(),
-        bodyText1: GoogleFonts.roboto().copyWith(),
-        bodyText2: GoogleFonts.roboto().copyWith(),
+        bodyText1: GoogleFonts.roboto().copyWith(
+          fontSize: 18,
+          fontWeight: FontWeight.normal,
+          color: AppColors.black,
+        ),
+        bodyText2: GoogleFonts.roboto().copyWith(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: AppColors.black,
+        ),
       ),
     );
   }
