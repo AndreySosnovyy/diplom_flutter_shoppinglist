@@ -1,6 +1,5 @@
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
-import 'package:diplom/features/common/presentation/widgets/gradient_icon.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +10,10 @@ class ListsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settingsIcon = GradientIcon(
-      icon: const Icon(CupertinoIcons.settings, size: 26),
-      colors: AppColors.mainGradientColors,
+    const settingsIcon = Icon(
+      CupertinoIcons.settings,
+      size: 26,
+      color: AppColors.blue,
     );
 
     return ViewModelBuilder<ListsViewModel>.reactive(

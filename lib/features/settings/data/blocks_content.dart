@@ -17,7 +17,7 @@ class SettingsBlocksContent {
       ),
       SettingsTileModel(
         icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
-        iconColor: AppColors.green,
+        iconColor: AppColors.yellow,
         title: 'Сменить имя пользователя',
         callback: changeHandlerCallback,
       ),
@@ -49,10 +49,28 @@ class SettingsBlocksContent {
         trailingSwitch: soundsSwitch,
       ),
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.at, color: AppColors.white),
+        icon: const Icon(CupertinoIcons.slowmo, color: AppColors.white),
         iconColor: AppColors.indigo,
         title: 'Вибрация',
         trailingSwitch: vibrationSwitch,
+      ),
+    ];
+  }
+
+  static List<SettingsTileModel> getShoppingBlockContent({
+    required CupertinoSwitch productsPicturesSwitch,
+  }) {
+    return <SettingsTileModel>[
+      SettingsTileModel(
+        icon: const Icon(CupertinoIcons.cart, color: AppColors.white),
+        iconColor: AppColors.blue,
+        title: 'Изображения товаров',
+        trailingSwitch: productsPicturesSwitch,
+      ),
+      SettingsTileModel(
+        icon: const Icon(CupertinoIcons.delete, color: AppColors.white),
+        iconColor: AppColors.red,
+        title: 'Автоматическое удаление',
       ),
     ];
   }

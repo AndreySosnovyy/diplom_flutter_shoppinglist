@@ -38,7 +38,7 @@ class SettingsTile extends StatelessWidget {
                         color: content.iconColor,
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                       ),
-                      child: content.icon,
+                      child: Center(child: content.icon),
                     ),
                     const SizedBox(width: 14),
                     Text(
