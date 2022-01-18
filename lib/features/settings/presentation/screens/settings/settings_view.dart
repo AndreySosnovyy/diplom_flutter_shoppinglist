@@ -96,7 +96,12 @@ class SettingsView extends StatelessWidget {
                     description:
                         'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',
                   ),
-                  const SizedBox(height: 80),
+                  SettingsBlock(
+                      title: 'Дополнительно',
+                      settingsContent:
+                          SettingsBlocksContent.getOtherBlockContent(),
+                      description: ''),
+                  const SizedBox(height: 60),
                   GestureDetector(
                     // todo: implement version dialog
                     onTap: () {},
@@ -106,10 +111,11 @@ class SettingsView extends StatelessWidget {
                       child: Center(
                         child: Text(
                           'Версия 1.0.0',
-                          style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                                color: AppColors.grey1,
-                                decoration: TextDecoration.underline,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    color: AppColors.grey1,
+                                    decoration: TextDecoration.underline,
+                                  ),
                         ),
                       ),
                     ),

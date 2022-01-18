@@ -74,4 +74,19 @@ class SettingsBlocksContent {
       ),
     ];
   }
+
+  static List<SettingsTileModel> getOtherBlockContent() {
+    return <SettingsTileModel>[
+      SettingsTileModel(
+        icon: const Icon(CupertinoIcons.creditcard, color: AppColors.white),
+        iconColor: AppColors.green,
+        title: 'Снять ограничения',
+      ),
+      SettingsTileModel(
+        icon: const Icon(CupertinoIcons.ellipsis, color: AppColors.white),
+        iconColor: AppColors.black,
+        title: 'Прочее',
+      ),
+    ];
+  }
 }
