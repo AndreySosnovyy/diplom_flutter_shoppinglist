@@ -26,102 +26,107 @@ class SettingsView extends StatelessWidget {
           ),
           leadingCallback: viewModel.backButtonCallback,
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Center(
+        body: Center(
+          child: Scrollbar(
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 14),
-                  Avatar(
-                    // todo:
-                    onTap: () {},
-                  ),
-                  const SizedBox(height: 14),
-                  Hero(
-                    tag: 'name',
-                    child: Text(
-                      ' Андрей Сосновый ',
-                      style: Theme.of(context).textTheme.headline1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 14),
+                    Avatar(
+                      // todo:
+                      onTap: () {},
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'AndreySosnovyy',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  const SizedBox(height: 20),
-                  SettingsBlock(
-                    title: 'Мой аккаунт',
-                    settingsContent:
-                        SettingsBlocksContent.getAccountBlockContent(
-                      changeNameCallback: () {},
-                      changeHandlerCallback: () {},
-                      hideAccountSwitch: CupertinoSwitch(
-                        value: false,
-                        onChanged: (bool newValue) {},
+                    const SizedBox(height: 14),
+                    Hero(
+                      tag: 'name',
+                      child: Text(
+                        ' Андрей Сосновый ',
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
-                    description:
-                        'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',
-                  ),
-                  SettingsBlock(
-                    title: 'Приложение',
-                    settingsContent:
-                        SettingsBlocksContent.getApplicationBlockContent(
-                      notificationSwitch: CupertinoSwitch(
-                        value: true,
-                        onChanged: (bool newValue) {},
-                      ),
-                      soundsSwitch: CupertinoSwitch(
-                        value: true,
-                        onChanged: (bool newValue) {},
-                      ),
-                      vibrationSwitch: CupertinoSwitch(
-                        value: true,
-                        onChanged: (bool newValue) {},
-                      ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'AndreySosnovyy',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: AppColors.grey1),
                     ),
-                  ),
-                  SettingsBlock(
-                    title: 'Товары',
-                    settingsContent:
-                        SettingsBlocksContent.getShoppingBlockContent(
-                      productsPicturesSwitch: CupertinoSwitch(
-                        value: true,
-                        onChanged: (bool newValue) {},
-                      ),
-                    ),
-                    description:
-                        'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',
-                  ),
-                  SettingsBlock(
-                      title: 'Дополнительно',
+                    const SizedBox(height: 20),
+                    SettingsBlock(
+                      title: 'Мой аккаунт',
                       settingsContent:
-                          SettingsBlocksContent.getOtherBlockContent(),
-                      description: ''),
-                  const SizedBox(height: 60),
-                  GestureDetector(
-                    // todo: implement version dialog
-                    onTap: () {},
-                    child: SizedBox(
-                      height: 40,
-                      width: 120,
-                      child: Center(
-                        child: Text(
-                          'Версия 1.0.0',
-                          style:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
-                                    color: AppColors.grey1,
-                                    decoration: TextDecoration.underline,
-                                  ),
+                          SettingsBlocksContent.getAccountBlockContent(
+                        changeNameCallback: () {},
+                        changeHandlerCallback: () {},
+                        hideAccountSwitch: CupertinoSwitch(
+                          value: false,
+                          onChanged: (bool newValue) {},
+                        ),
+                      ),
+                      description:
+                          'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',
+                    ),
+                    SettingsBlock(
+                      title: 'Приложение',
+                      settingsContent:
+                          SettingsBlocksContent.getApplicationBlockContent(
+                        notificationSwitch: CupertinoSwitch(
+                          value: true,
+                          onChanged: (bool newValue) {},
+                        ),
+                        soundsSwitch: CupertinoSwitch(
+                          value: true,
+                          onChanged: (bool newValue) {},
+                        ),
+                        vibrationSwitch: CupertinoSwitch(
+                          value: true,
+                          onChanged: (bool newValue) {},
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                ],
+                    SettingsBlock(
+                      title: 'Списки покупок',
+                      settingsContent:
+                          SettingsBlocksContent.getShoppingBlockContent(
+                        productsPicturesSwitch: CupertinoSwitch(
+                          value: true,
+                          onChanged: (bool newValue) {},
+                        ),
+                      ),
+                      description:
+                          'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',
+                    ),
+                    SettingsBlock(
+                        title: 'Дополнительно',
+                        settingsContent:
+                            SettingsBlocksContent.getOtherBlockContent(),
+                        description: ''),
+                    const SizedBox(height: 60),
+                    GestureDetector(
+                      // todo: implement version dialog
+                      onTap: () {},
+                      child: SizedBox(
+                        height: 40,
+                        width: 120,
+                        child: Center(
+                          child: Text(
+                            'Версия 1.0.0',
+                            style:
+                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                      color: AppColors.grey1,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
               ),
             ),
           ),

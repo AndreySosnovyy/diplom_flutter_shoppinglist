@@ -1,6 +1,8 @@
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
+import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_viewmodel.dart';
+import 'package:diplom/features/workspace/presentation/widgets/shopping_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -27,7 +29,63 @@ class ListsView extends StatelessWidget {
             trailing: settingsIcon,
             trailingCallback: viewModel.openSettings,
           ),
-          body: Column(),
+          body: Scrollbar(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 8),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.red,
+                  ),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.green,
+                  ),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.blue,
+                  ),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.indigo,
+                  ),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.yellow,
+                  ),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.pink,
+                  ),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.teal,
+                  ),
+                  ShoppingListTile(
+                    title: 'Название',
+                    description: 'Описание Описание Описание Описание Описание Описание Описание ',
+                    shoppingList: ShoppingList(),
+                    tileColor: ShoppingListTileColor.black,
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );

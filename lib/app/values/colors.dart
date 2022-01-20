@@ -17,19 +17,18 @@ class AppColors {
   static const pink = CupertinoColors.systemPink;
   static const teal = CupertinoColors.systemTeal;
 
-  static final mainGradientColors =  [
-    AppColors.palette1.flickrPink,
-    AppColors.palette1.trypanBlue1,
-    AppColors.palette1.vividSkyBlue
+  static final mainGradientColors = [
+    AppColors.palette.flickrPink,
+    AppColors.palette.trypanBlue1,
+    AppColors.palette.vividSkyBlue
   ];
 
   // palettes
-  static const palette1 = Palette1();
-  static const palette2 = Palette2();
+  static const palette = Palette();
 }
 
-class Palette1 {
-  const Palette1();
+class Palette {
+  const Palette();
 
   final flickrPink = const Color(0xFFF72585);
   final byzantine = const Color(0xFFB5179E);
@@ -43,17 +42,13 @@ class Palette1 {
   final vividSkyBlue = const Color(0xFF4CC9F0);
 }
 
-class Palette2 {
-  const Palette2();
-
-  final violetBlueCrayola1 = const Color(0xFF757BC8);
-  final violetBlueCrayola2 = const Color(0xFF8187DC);
-  final cornflowerBlue = const Color(0xFF8E94F2);
-  final maximumBluePurple1 = const Color(0xFF9FA0FF);
-  final maximumBluePurple2 = const Color(0xFFADA7FF);
-  final maximumBluePurple3 = const Color(0xFFBBADFF);
-  final mauve1 = const Color(0xFFCBB2FE);
-  final mauve2 = const Color(0xFFDAB6FC);
-  final mauve3 = const Color(0xFFDDBDFC);
-  final mauve4 = const Color(0xFFE0C3FC);
+class ShoppingListTileColor {
+  static const red = AppColors.red;
+  static const green = AppColors.green;
+  static const blue = AppColors.blue;
+  static const yellow = AppColors.yellow;
+  static const indigo = AppColors.indigo;
+  static const pink = AppColors.pink;
+  static const teal = AppColors.teal;
+  static const black = AppColors.black;
 }
