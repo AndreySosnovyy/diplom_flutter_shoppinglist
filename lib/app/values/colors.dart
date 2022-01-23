@@ -46,9 +46,10 @@ class ShoppingListTileColors {
   static const red = AppColors.red;
   static const green = AppColors.green;
   static const blue = AppColors.blue;
-  static const yellow = AppColors.yellow;
+  static const orange = AppColors.orange;
   static const indigo = AppColors.indigo;
   static const pink = AppColors.pink;
   static const teal = AppColors.teal;
   static const black = AppColors.black;
+  static const grey = AppColors.grey1;
 }

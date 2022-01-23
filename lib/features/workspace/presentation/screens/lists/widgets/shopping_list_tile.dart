@@ -10,7 +10,7 @@ class ShoppingListTile extends StatefulWidget {
   final String title;
   final String? description;
   final ShoppingList shoppingList;
-  final bool hasMarker;
+  final bool isMarked;
   final Color tileColor;
 
   const ShoppingListTile({
@@ -18,7 +18,7 @@ class ShoppingListTile extends StatefulWidget {
     required this.title,
     this.description,
     required this.shoppingList,
-    this.hasMarker = false,
+    this.isMarked = false,
     required this.tileColor,
   }) : super(key: key);
 
@@ -32,7 +32,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
     final String title = widget.title;
     final String? description = widget.description;
     final ShoppingList shoppingList = widget.shoppingList;
-    final bool hasMarker = widget.hasMarker;
+    final bool isMarked = widget.isMarked;
     final Color tileColor = widget.tileColor;
 
     return Stack(
@@ -44,14 +44,14 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(20)),
               gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.centerRight,
+                begin: Alignment.centerRight,
+                end: Alignment.topLeft,
                 colors: [
                   Color.fromARGB(
                     255,
-                    min(tileColor.red + 40, 255),
-                    min(tileColor.green + 40, 255),
-                    min(tileColor.blue + 40, 255),
+                    min(tileColor.red + 30, 255),
+                    min(tileColor.green + 30, 255),
+                    min(tileColor.blue + 30, 255),
                   ),
                   Color.fromARGB(
                     255,
@@ -61,13 +61,10 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
                   ),
                 ],
               ),
+              // color: tileColor,
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(
-                      255,
-                      min(tileColor.red + 100, 255),
-                      min(tileColor.green + 100, 255),
-                      min(tileColor.blue + 100, 255)),
+                  color: AppColors.grey1.withOpacity(0.3),
                   spreadRadius: 3,
                   blurRadius: 7,
                   offset: const Offset(0, 3),
@@ -91,7 +88,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: hasMarker
+                      icon: isMarked
                           ? const Icon(
                               CupertinoIcons.bookmark_fill,
                               size: 36,
