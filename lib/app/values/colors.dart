@@ -42,7 +42,7 @@ class Palette {
   final vividSkyBlue = const Color(0xFF4CC9F0);
 }
 
-class ShoppingListTileColor {
+class ShoppingListTileColors {
   static const red = AppColors.red;
   static const green = AppColors.green;
   static const blue = AppColors.blue;

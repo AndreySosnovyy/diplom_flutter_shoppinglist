@@ -66,6 +66,7 @@ class SettingsView extends StatelessWidget {
                           value: false,
                           onChanged: (bool newValue) {},
                         ),
+                        logOutCallback: () {},
                       ),
                       description:
                           'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',

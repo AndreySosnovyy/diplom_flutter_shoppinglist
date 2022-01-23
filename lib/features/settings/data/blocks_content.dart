@@ -7,6 +7,7 @@ class SettingsBlocksContent {
     required VoidCallback changeNameCallback,
     required VoidCallback changeHandlerCallback,
     required CupertinoSwitch hideAccountSwitch,
+    required VoidCallback logOutCallback,
   }) {
     return <SettingsTileModel>[
       SettingsTileModel(
@@ -23,9 +24,28 @@ class SettingsBlocksContent {
       ),
       SettingsTileModel(
         icon: const Icon(CupertinoIcons.at, color: AppColors.white),
-        iconColor: AppColors.red,
+        iconColor: AppColors.teal,
         title: 'Скрыть аккаунт',
         trailingSwitch: hideAccountSwitch,
+      ),
+      SettingsTileModel(
+        icon: const Icon(CupertinoIcons.arrow_left_square, color: AppColors.white),
+        iconColor: AppColors.red,
+        title: 'Выйти',
+        callback: logOutCallback,
+      ),
+    ];
+  }
+
+  static List<SettingsTileModel> getAuthBlockContent({
+    required VoidCallback logInCallback,
+  }) {
+    return <SettingsTileModel>[
+      SettingsTileModel(
+        icon: const Icon(CupertinoIcons.arrow_right_square, color: AppColors.white),
+        iconColor: AppColors.green,
+        title: 'Войти',
+        callback: logInCallback,
       ),
     ];
   }
