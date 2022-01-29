@@ -1,5 +1,6 @@
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
+import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/co_authors_handler.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,22 +46,31 @@ class ListCreationView extends StatelessWidget {
                 maxLength: 300,
                 maxLines: 8,
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                color: AppColors.grey1,
-                width: double.infinity,
-                height: 1,
-              ),
+              const SizedBox(height: 10),
               CoAuthorsHandler(
                 addCoAuthorCallback: () {},
-                coAuthors: [],
+                coAuthors: [
+                  CoAuthor(
+                    name: 'Андрей Сосновый',
+                    handler: '@andreysosnovyy',
+                    avatarUrl:
+                        'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
+                  ),
+                  CoAuthor(
+                    name: 'Андрей Сосновый',
+                    handler: '@andreysosnovyy',
+                    avatarUrl:
+                    'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
+                  ),
+                  CoAuthor(
+                    name: 'Андрей Сосновый',
+                    handler: '@andreysosnovyy',
+                    avatarUrl:
+                    'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                color: AppColors.grey1,
-                width: double.infinity,
-                height: 1,
-              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

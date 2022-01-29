@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-
 class CoAuthor {
   final String name;
-  final Image avatar;
+  final String handler;
+  final String avatarUrl;
 
   CoAuthor({
     required this.name,
-    required this.avatar,
+    required this.handler,
+    required this.avatarUrl,
   });
 }

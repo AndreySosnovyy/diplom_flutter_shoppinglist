@@ -25,6 +25,7 @@ class CommonTextField extends StatelessWidget {
       controller: controller,
       maxLines: null,
       maxLength: maxLength,
+      cursorColor: AppColors.blue,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: isBold ? FontWeight.bold : null,
