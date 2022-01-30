@@ -3,5 +3,9 @@ import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:flutter/foundation.dart';
 
 class SettingsViewModel extends ChangeNotifier {
- void backButtonCallback() => sl.get<AppRouter>().pop();
+  final router = sl.get<AppRouter>();
+
+  void backButtonCallback() => router.pop();
+
+  void openAuthScreen() => router.push(const SignInViewRoute());
 }

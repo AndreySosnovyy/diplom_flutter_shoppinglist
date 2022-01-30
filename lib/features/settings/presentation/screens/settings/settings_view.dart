@@ -72,6 +72,14 @@ class SettingsView extends StatelessWidget {
                           'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',
                     ),
                     SettingsBlock(
+                      title: 'Авторизация',
+                      settingsContent:
+                          SettingsBlocksContent.getAuthBlockContent(
+                        signInCallback: viewModel.openAuthScreen,
+                      ),
+                      description: 'Авторизированный пользователь может добавлять или быть добавленным соавтором в списки покупок других пользователей, а также пользоваться своими списками на других устройствах',
+                    ),
+                    SettingsBlock(
                       title: 'Приложение',
                       settingsContent:
                           SettingsBlocksContent.getApplicationBlockContent(

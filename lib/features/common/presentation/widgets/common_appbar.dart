@@ -10,6 +10,7 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? trailing;
   final VoidCallback? trailingCallback;
   final bool hasNameHero;
+  final Color backgroundColor;
 
   const CommonAppbar({
     Key? key,
@@ -20,6 +21,7 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.trailing,
     this.trailingCallback,
     this.hasNameHero = false,
+    this.backgroundColor = AppColors.grey3,
   })  : height = title == null ? 56 : 102,
         super(key: key);
 
@@ -37,17 +39,19 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
     );
 
     return AppBar(
-      backgroundColor: AppColors.grey3,
+      backgroundColor: backgroundColor,
       elevation: 0,
       automaticallyImplyLeading: false,
+      leadingWidth: leading.runtimeType == Row ? 100 : 56,
       leading: GestureDetector(
-          child: Container(
-            width: 12,
-            height: 12,
-            color: Colors.transparent,
-            child: leading,
-          ),
-          onTap: leadingCallback),
+        child: Container(
+          width: 12,
+          height: 12,
+          color: Colors.transparent,
+          child: leading,
+        ),
+        onTap: leadingCallback,
+      ),
       actions: [
         GestureDetector(
           child: Padding(

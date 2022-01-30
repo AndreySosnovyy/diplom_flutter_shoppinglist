@@ -38,14 +38,14 @@ class SettingsBlocksContent {
   }
 
   static List<SettingsTileModel> getAuthBlockContent({
-    required VoidCallback logInCallback,
+    required VoidCallback signInCallback,
   }) {
     return <SettingsTileModel>[
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.arrow_right_square, color: AppColors.white),
+        icon: const Icon(CupertinoIcons.arrow_right, color: AppColors.white),
         iconColor: AppColors.green,
         title: 'Войти',
-        callback: logInCallback,
+        callback: signInCallback,
       ),
     ];
   }

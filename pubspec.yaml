@@ -48,6 +48,9 @@ dependencies:
   intl: ^0.17.0
   uuid: ^3.0.5
   auto_size_text_field: ^1.0.1
+  google_sign_in: ^5.2.3
+  sign_in_with_apple: ^3.3.0
+  font_awesome_flutter: ^9.2.0
 
 dev_dependencies:
   flutter_test:
@@ -63,4 +66,5 @@ flutter:
   assets:
     - assets/images/
     - assets/illustrations/
+    - assets/logos/
 

@@ -22,46 +22,52 @@ class SettingsTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 14, vertical: tileVerticalPadding),
+          padding: EdgeInsets.symmetric(
+              horizontal: 14, vertical: tileVerticalPadding),
           child: SizedBox(
             height: tileHeight,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: tileHeight,
-                      height: tileHeight,
-                      decoration: BoxDecoration(
-                        color: content.iconColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+            child: GestureDetector(
+              onTap: content.callback,
+              behavior: HitTestBehavior.translucent,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: tileHeight,
+                        height: tileHeight,
+                        decoration: BoxDecoration(
+                          color: content.iconColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Center(child: content.icon),
                       ),
-                      child: Center(child: content.icon),
-                    ),
-                    const SizedBox(width: 14),
-                    Text(
-                      content.title,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                ),
-                content.trailingSwitch ??
-                    const Icon(
-                      CupertinoIcons.forward,
-                      color: AppColors.grey2,
-                    ),
-              ],
+                      const SizedBox(width: 14),
+                      Text(
+                        content.title,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ],
+                  ),
+                  content.trailingSwitch ??
+                      const Icon(
+                        CupertinoIcons.forward,
+                        color: AppColors.grey2,
+                      ),
+                ],
+              ),
             ),
           ),
         ),
         if (hasBottomBorder)
-        Container(
-          height: 1,
-          width: MediaQuery.of(context).size.width - 88,
-          color: AppColors.grey2,
-        ),
+          Container(
+            height: 1,
+            width: MediaQuery.of(context).size.width - 88,
+            color: AppColors.grey2,
+          ),
       ],
     );
   }

@@ -6,7 +6,6 @@ import 'package:diplom/features/workspace/presentation/screens/list_creation/wid
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:stacked/stacked.dart';
 
 import 'list_creation_viewmodel.dart';
@@ -48,7 +47,12 @@ class ListCreationView extends StatelessWidget {
                 maxLength: 300,
                 maxLines: 8,
               ),
-              const SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                height: 1,
+                width: double.infinity,
+                color: AppColors.grey3,
+              ),
               CoAuthorsHandler(
                 addCoAuthorCallback: () {},
                 coAuthors: [
@@ -69,19 +73,13 @@ class ListCreationView extends StatelessWidget {
                 ],
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 16),
+                margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                 height: 1,
                 width: double.infinity,
                 color: AppColors.grey3,
               ),
-              Center(
-                child: Text(
-                  'Товары:',
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-              ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: CommonSearchLine(
                   controller: viewModel.productController,
                   onChanged: viewModel.onSearchChanged,
@@ -115,6 +113,7 @@ class ListCreationView extends StatelessWidget {
                             .copyWith(color: AppColors.grey2),
                         textAlign: TextAlign.center,
                       ),
+                      const SizedBox(height: 54),
                     ],
                   ),
                 ),
