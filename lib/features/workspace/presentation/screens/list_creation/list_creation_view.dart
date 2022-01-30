@@ -2,6 +2,7 @@ import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/co_authors_handler.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_search_line.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,24 +54,48 @@ class ListCreationView extends StatelessWidget {
                   CoAuthor(
                     name: 'Андрей Сосновый',
                     handler: '@andreysosnovyy',
+                  ),
+                  CoAuthor(
+                    name: 'Андрей Сосновый',
+                    handler: '@andreysosnovyy',
+                  ),
+                  CoAuthor(
+                    name: 'Андрей Сосновый',
+                    handler: '@andreysosnovyy',
                     avatarUrl:
                         'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
                   ),
-                  CoAuthor(
-                    name: 'Андрей Сосновый',
-                    handler: '@andreysosnovyy',
-                    avatarUrl:
-                    'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
-                  ),
-                  CoAuthor(
-                    name: 'Андрей Сосновый',
-                    handler: '@andreysosnovyy',
-                    avatarUrl:
-                    'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
-                  ),
                 ],
               ),
-              const SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                height: 1,
+                width: double.infinity,
+                color: AppColors.grey3,
+              ),
+              Center(
+                child: Text(
+                  'Товары:',
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: CommonSearchLine(
+                  controller: viewModel.productController,
+                  onChanged: viewModel.onSearchChanged,
+                  hint: 'Название товара',
+                ),
+              ),
+              if (viewModel.products.isEmpty)
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+
+                  ],
+                ),
             ],
           ),
         ),

@@ -32,7 +32,7 @@ class CoAuthorsHandler extends StatelessWidget {
                     child: Icon(
                       CupertinoIcons.plus_circled,
                       size: 54,
-                      color: AppColors.grey1,
+                      color: AppColors.blue,
                     ),
                   ),
                 ),
@@ -48,22 +48,24 @@ class CoAuthorsHandler extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(width: 12),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 98,
-                  height: 54,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: coAuthors.length,
-                    itemBuilder: (context, index) => CoAuthorTile(
-                      avatarUrl: coAuthors[index].avatarUrl,
-                      name: coAuthors[index].name,
-                      handler: coAuthors[index].handler,
+                if (coAuthors.isNotEmpty)
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 98,
+                    height: 54,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: coAuthors.length,
+                      itemBuilder: (context, index) => CoAuthorTile(
+                        avatarUrl: coAuthors[index].avatarUrl,
+                        name: coAuthors[index].name,
+                        handler: coAuthors[index].handler,
+                        deleteCallback: () {},
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 12),
                     ),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 12),
                   ),
-                ),
               ],
             ),
           ],

@@ -1,11 +1,11 @@
 class CoAuthor {
   final String name;
   final String handler;
-  final String avatarUrl;
+  final String? avatarUrl;
 
   CoAuthor({
     required this.name,
     required this.handler,
-    required this.avatarUrl,
+    this.avatarUrl,
   });
 }

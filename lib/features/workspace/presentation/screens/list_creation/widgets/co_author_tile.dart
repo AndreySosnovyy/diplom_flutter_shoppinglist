@@ -1,30 +1,39 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CoAuthorTile extends StatelessWidget {
-  final String avatarUrl;
+  final String? avatarUrl;
   final String name;
   final String handler;
+  final VoidCallback deleteCallback;
 
   const CoAuthorTile({
     Key? key,
-    required this.avatarUrl,
+    this.avatarUrl,
     required this.name,
     required this.handler,
+    required this.deleteCallback,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // todo: implement delete button
     return Row(
       children: [
         ClipOval(
-          child: CachedNetworkImage(
-            imageUrl: avatarUrl,
+          child: SizedBox(
             width: 54,
             height: 54,
-            fit: BoxFit.fill,
+            child: avatarUrl != null
+                ? CachedNetworkImage(
+                    imageUrl: avatarUrl!,
+                    fit: BoxFit.fill,
+                  )
+                : Image.asset(
+                    'assets/images/avatar_grey.png',
+                    fit: BoxFit.fill,
+                  ),
           ),
         ),
         const SizedBox(width: 8),

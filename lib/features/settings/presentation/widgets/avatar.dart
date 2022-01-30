@@ -19,7 +19,7 @@ class Avatar extends StatelessWidget {
         children: [
           image ??
               Image.asset(
-                'assets/avatar.png',
+                'assets/images/avatar_grey.png',
                 height: 140.0,
                 width: 140.0,
               ),
