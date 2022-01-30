@@ -3,21 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class SignInWithGoogleButton extends StatelessWidget {
+class SignInWithMailButton extends StatelessWidget {
   final double height;
-  final SignInWithGoogleButtonStyle style;
+  final SignInWithMailButtonStyle style;
   final IconAlignment iconAlignment;
   final BorderRadius borderRadius;
   final VoidCallback onPressed;
   final String text;
 
-  final _googleIconSizeScale = 28 / 44;
+  final _mailIconSizeScale = 28 / 44;
 
-  const SignInWithGoogleButton({
+  const SignInWithMailButton({
     Key? key,
     required this.onPressed,
     this.height = 44,
-    this.style = SignInWithGoogleButtonStyle.light,
+    this.style = SignInWithMailButtonStyle.light,
     this.iconAlignment = IconAlignment.left,
     this.borderRadius = const BorderRadius.all(Radius.circular(8.0)),
     required this.text,
@@ -25,18 +25,19 @@ class SignInWithGoogleButton extends StatelessWidget {
 
   Color get _backgroundColor {
     switch (style) {
-      case SignInWithGoogleButtonStyle.light:
+      case SignInWithMailButtonStyle.light:
         return AppColors.white;
-      case SignInWithGoogleButtonStyle.dark:
-        return const Color(0xFF4285F4);
+      case SignInWithMailButtonStyle.dark:
+        // return AppColors.orange;
+        return AppColors.jellyBean;
     }
   }
 
   Color get _contrastColor {
     switch (style) {
-      case SignInWithGoogleButtonStyle.light:
-        return AppColors.grey1;
-      case SignInWithGoogleButtonStyle.dark:
+      case SignInWithMailButtonStyle.light:
+        return AppColors.black;
+      case SignInWithMailButtonStyle.dark:
         return AppColors.white;
     }
   }
@@ -52,15 +53,12 @@ class SignInWithGoogleButton extends StatelessWidget {
           .copyWith(color: _contrastColor),
     );
 
-    final googleIcon = SizedBox(
+    final mailIcon = SizedBox(
       height: height - 4,
       width: height - 4,
       child: ClipRRect(
         borderRadius: borderRadius,
-        child: Image.asset(
-          'assets/logos/google_button.png',
-          fit: BoxFit.fill,
-        ),
+        child: Icon(CupertinoIcons.mail_solid, color: _contrastColor,),
       ),
     );
 
@@ -69,7 +67,7 @@ class SignInWithGoogleButton extends StatelessWidget {
     switch (iconAlignment) {
       case IconAlignment.center:
         children = [
-          googleIcon,
+          mailIcon,
           Flexible(child: textWidget),
         ];
         break;
@@ -77,9 +75,9 @@ class SignInWithGoogleButton extends StatelessWidget {
       case IconAlignment.left:
         children = [
           const SizedBox(width: 12),
-          googleIcon,
+          mailIcon,
           Expanded(child: textWidget),
-          SizedBox(width: _googleIconSizeScale * height + 24),
+          SizedBox(width: _mailIconSizeScale * height + 24),
         ];
         break;
     }
@@ -105,4 +103,4 @@ class SignInWithGoogleButton extends StatelessWidget {
   }
 }
 
-enum SignInWithGoogleButtonStyle { light, dark }
+enum SignInWithMailButtonStyle { light, dark }

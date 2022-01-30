@@ -16,6 +16,7 @@ class AppColors {
   static const orange = CupertinoColors.systemOrange;
   static const pink = CupertinoColors.systemPink;
   static const teal = CupertinoColors.systemTeal;
+  static const jellyBean = Color(0xFF2b93a1);
 
   static final mainGradientColors = [
     AppColors.palette.flickrPink,

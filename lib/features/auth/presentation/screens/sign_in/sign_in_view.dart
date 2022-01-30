@@ -1,6 +1,7 @@
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/presentation/screens/sign_in/sign_in_viewmodel.dart';
 import 'package:diplom/features/auth/presentation/widgets/sign_in_with_google_button.dart';
+import 'package:diplom/features/auth/presentation/widgets/sign_in_with_main_button.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,17 +45,65 @@ class SignInView extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  'Авторизация',
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'используйте одну из своих\nучетных записей',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: AppColors.grey1),
+                ),
+                const SizedBox(height: 66),
                 SignInWithGoogleButton(
                   style: SignInWithGoogleButtonStyle.dark,
                   onPressed: viewModel.signInWithGoogle,
                   text: 'Войти с Google',
                 ),
-                const SizedBox(height: 22),
+                const SizedBox(height: 12),
                 SignInWithAppleButton(
                   onPressed: viewModel.signInWithApple,
                   text: 'Войти с Apple',
                   iconAlignment: IconAlignment.left,
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 1,
+                        width: (MediaQuery.of(context).size.width - 152) / 2,
+                        color: AppColors.grey2,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'или',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: AppColors.grey1),
+                        ),
+                      ),
+                      Container(
+                        height: 1,
+                        width: (MediaQuery.of(context).size.width - 152) / 2,
+                        color: AppColors.grey2,
+                      ),
+                    ],
+                  ),
+                ),
+                SignInWithMailButton(
+                  onPressed: viewModel.signInWithMail,
+                  text: 'Войти через почту',
+                  style: SignInWithMailButtonStyle.dark,
+                ),
+                const SizedBox(height: 88),
               ],
             ),
           ),

@@ -10,4 +10,6 @@ class SignInViewModel extends ChangeNotifier {
   void signInWithGoogle() {}
 
   void signInWithApple() {}
+
+  void signInWithMail() {}
 }
