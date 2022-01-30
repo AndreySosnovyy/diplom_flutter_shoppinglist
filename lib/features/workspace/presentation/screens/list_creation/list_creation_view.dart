@@ -6,6 +6,7 @@ import 'package:diplom/features/workspace/presentation/screens/list_creation/wid
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:stacked/stacked.dart';
 
 import 'list_creation_viewmodel.dart';
@@ -88,13 +89,34 @@ class ListCreationView extends StatelessWidget {
                 ),
               ),
               if (viewModel.products.isEmpty)
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-
-                  ],
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/illustrations/empty_box.png',
+                        width: 244,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Пока здесь ничего нет',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(color: AppColors.grey1),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Начните вводить название товара,\nзатем выберете его из списка и укажите количество',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: AppColors.grey2),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
             ],
           ),
