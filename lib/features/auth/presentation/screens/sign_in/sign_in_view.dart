@@ -43,13 +43,20 @@ class SignInView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const SizedBox(height: 54),
+                Image.asset(
+                  'assets/illustrations/keys.png',
+                  width: 244,
+                  fit: BoxFit.fitWidth,
+                ),
+                const SizedBox(height: 10),
                 Text(
                   'Авторизация',
                   style: Theme.of(context).textTheme.headline2,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 4),
                 Text(
                   'используйте одну из своих\nучетных записей',
                   textAlign: TextAlign.center,
@@ -103,7 +110,6 @@ class SignInView extends StatelessWidget {
                   text: 'Войти через почту',
                   style: SignInWithMailButtonStyle.dark,
                 ),
-                const SizedBox(height: 88),
               ],
             ),
           ),

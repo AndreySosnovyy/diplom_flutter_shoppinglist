@@ -31,7 +31,7 @@ class CoAuthorsHandler extends StatelessWidget {
                   child: const SizedBox(
                     child: Icon(
                       CupertinoIcons.plus_circled,
-                      size: 54,
+                      size: 64,
                       color: AppColors.blue,
                     ),
                   ),
@@ -50,7 +50,7 @@ class CoAuthorsHandler extends StatelessWidget {
                 const SizedBox(width: 12),
                 if (coAuthors.isNotEmpty)
                   SizedBox(
-                    width: MediaQuery.of(context).size.width - 98,
+                    width: MediaQuery.of(context).size.width - 108,
                     height: 54,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
