@@ -1,5 +1,6 @@
 import 'package:diplom/app/values/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -39,6 +40,7 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
     );
 
     return AppBar(
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
       backgroundColor: backgroundColor,
       elevation: 0,
       automaticallyImplyLeading: false,

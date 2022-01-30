@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/presentation/screens/sign_in/sign_in_viewmodel.dart';
 import 'package:diplom/features/auth/presentation/widgets/sign_in_with_google_button.dart';
@@ -66,17 +68,37 @@ class SignInView extends StatelessWidget {
                       .copyWith(color: AppColors.grey1),
                 ),
                 const SizedBox(height: 66),
-                SignInWithGoogleButton(
-                  style: SignInWithGoogleButtonStyle.dark,
-                  onPressed: viewModel.signInWithGoogle,
-                  text: 'Войти с Google',
-                ),
-                const SizedBox(height: 12),
-                SignInWithAppleButton(
-                  onPressed: viewModel.signInWithApple,
-                  text: 'Войти с Apple',
-                  iconAlignment: IconAlignment.left,
-                ),
+                Platform.isAndroid
+                    ? Column(
+                        children: [
+                          SignInWithGoogleButton(
+                            style: SignInWithGoogleButtonStyle.dark,
+                            onPressed: viewModel.signInWithGoogle,
+                            text: 'Войти с Google',
+                          ),
+                          const SizedBox(height: 12),
+                          SignInWithAppleButton(
+                            onPressed: viewModel.signInWithApple,
+                            text: 'Войти с Apple',
+                            iconAlignment: IconAlignment.left,
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          SignInWithAppleButton(
+                            onPressed: viewModel.signInWithApple,
+                            text: 'Войти с Apple',
+                            iconAlignment: IconAlignment.left,
+                          ),
+                          const SizedBox(height: 12),
+                          SignInWithGoogleButton(
+                            style: SignInWithGoogleButtonStyle.dark,
+                            onPressed: viewModel.signInWithGoogle,
+                            text: 'Войти с Google',
+                          ),
+                        ],
+                      ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Row(
