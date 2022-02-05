@@ -18,5 +18,16 @@ class SignInViewModel extends ChangeNotifier {
 
   Future signInWithApple() async {}
 
-  Future signInWithMail() async {}
+  Future signInWithEmail({
+    required String email,
+    required String password,
+  }) async {}
+
+  Future signUpWithEmail({
+    required String email,
+    required String password,
+  }) async {}
+
+  Future openMailScreen() async =>
+      _router.push(const SignInWithEmailViewRoute());
 }

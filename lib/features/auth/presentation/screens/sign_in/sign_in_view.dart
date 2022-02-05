@@ -122,7 +122,7 @@ class SignInView extends StatelessWidget {
                   ),
                 ),
                 SignInWithMailButton(
-                  onPressed: viewModel.signInWithMail,
+                  onPressed: viewModel.openMailScreen,
                   text: 'Войти через почту',
                   style: SignInWithMailButtonStyle.dark,
                 ),
