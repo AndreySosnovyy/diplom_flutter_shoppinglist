@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../sign_in_viewmodel.dart';
+import '../sign_in/sign_in_viewmodel.dart';
 
 class SignInWithEmailView extends StatelessWidget {
   const SignInWithEmailView({Key? key}) : super(key: key);

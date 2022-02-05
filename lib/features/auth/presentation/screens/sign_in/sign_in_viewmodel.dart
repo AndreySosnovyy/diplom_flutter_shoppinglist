@@ -13,7 +13,7 @@ class SignInViewModel extends ChangeNotifier {
 
   Future signInWithGoogle() async {
     final user = await _auth.signInWithGoogle();
-    logger.d('Sign in with google: user - ${user?.email}');
+    logger.i('Sign in with google: user - ${user?.email}');
   }
 
   Future signInWithApple() async {}
