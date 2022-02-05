@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/features/auth/presentation/screens/sign_in/sign_in_viewmodel.dart';
+import 'package:diplom/features/auth/presentation/screens/sign_in_viewmodel.dart';
 import 'package:diplom/features/auth/presentation/widgets/sign_in_with_google_button.dart';
-import 'package:diplom/features/auth/presentation/widgets/sign_in_with_main_button.dart';
+import 'package:diplom/features/auth/presentation/widgets/sign_in_with_mail_button.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

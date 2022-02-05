@@ -28,6 +28,7 @@ class ListCreationView extends StatelessWidget {
           ),
           leadingCallback: viewModel.backButtonCallback,
         ),
+        resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

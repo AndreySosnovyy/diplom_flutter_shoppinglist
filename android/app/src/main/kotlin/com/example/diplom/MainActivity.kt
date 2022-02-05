@@ -1,4 +1,4 @@
-package com.example.diplom
+package ru.andreysosnoyy.diplom
 
 import io.flutter.embedding.android.FlutterActivity
 
