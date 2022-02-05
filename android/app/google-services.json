@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:406626587302:android:27f8dd83a23a7ae0355a67",
+        "mobilesdk_app_id": "1:406626587302:android:0e175b4179f68478355a67",
         "android_client_info": {
-          "package_name": "ru.andreysosnovyy.diplom"
+          "package_name": "com.example.diplom"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "406626587302-tgfg686gu6mb7vqvcmqq33c1844l9dri.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "406626587302-2nqep1v4sdgfrp9bt8qiqt225i8t7fut.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.diplom"
+              }
             }
           ]
         }

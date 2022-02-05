@@ -5,7 +5,7 @@ import 'navigation/app_router.gr.dart';
 
 final sl = GetIt.instance;
 
-Future<void> setupDependencies() async {
+Future setupDependencies() async {
   sl.registerSingleton<AuthService>(AuthService());
   sl.registerSingleton<AppRouter>(AppRouter());
 }

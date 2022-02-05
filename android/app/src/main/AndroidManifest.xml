@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.andreysosnovyy.diplom">
+    package="com.example.diplom">
    <application
         android:label="diplom"
         android:name="${applicationName}"

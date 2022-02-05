@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>406626587302-2nqep1v4sdgfrp9bt8qiqt225i8t7fut.apps.googleusercontent.com</string>
+	<string>406626587302-n8okph1n2br5m4akjg8hpfk3bc1lhg6u.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.406626587302-2nqep1v4sdgfrp9bt8qiqt225i8t7fut</string>
+	<string>com.googleusercontent.apps.406626587302-n8okph1n2br5m4akjg8hpfk3bc1lhg6u</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBcYXh4NDWAbFtJNU5kdJ9G4YwlZB8YW1M</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>ru.andreysosnovyy.diplom</string>
+	<string>com.example.diplom</string>
 	<key>PROJECT_ID</key>
 	<string>diplom-f06ae</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:406626587302:ios:69d23e3346e59b13355a67</string>
+	<string>1:406626587302:ios:1ea1e0b4bc329749355a67</string>
 </dict>
 </plist>
