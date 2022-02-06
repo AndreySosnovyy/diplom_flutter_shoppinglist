@@ -17,6 +17,7 @@ class SignInViewModel extends ChangeNotifier {
   final logger = Logger();
 
   final phoneController = TextEditingController();
+  final codeController = TextEditingController();
   var phoneImageVisible = true;
 
   SignInViewModel({required this.context}) {
