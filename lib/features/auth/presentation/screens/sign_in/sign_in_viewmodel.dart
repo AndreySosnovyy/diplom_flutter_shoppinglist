@@ -4,7 +4,6 @@ import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/data/auth_service.dart';
 import 'package:diplom/features/common/presentation/dialogs/common_cupertino_dialog.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:logger/logger.dart';
@@ -17,14 +16,13 @@ class SignInViewModel extends ChangeNotifier {
   final _auth = sl.get<AuthService>();
   final logger = Logger();
 
-  final emailController = TextEditingController();
-  final emailErrorText = '';
-  var mailboxVisible = true;
+  final phoneController = TextEditingController();
+  var phoneImageVisible = true;
 
   SignInViewModel({required this.context}) {
     _keyboardSubscription =
         KeyboardVisibilityController().onChange.listen((visible) {
-      mailboxVisible = !visible;
+      phoneImageVisible = !visible;
       notifyListeners();
     });
   }
@@ -41,15 +39,16 @@ class SignInViewModel extends ChangeNotifier {
 
   Future signInWithApple() async {}
 
-  Future signInWithEmail() async {
-    final email = emailController.text;
-    if (_validateEmail(email)) {
+  Future signInWithPhone() async {
+    final phone = phoneController.text;
+    if (_validatePhoneNumber(phone)) {
+      _auth.signInWithPhone(phone: phone);
     } else {
       showCupertinoDialog(
         context: context,
         builder: (context) => const CommonCupertinoDialog(
           title: 'Ошибка',
-          text: 'Введите корректную электронную почту',
+          text: 'Введите корректный номер телефона',
           buttonText: 'ОК',
         ),
       );
@@ -57,7 +56,9 @@ class SignInViewModel extends ChangeNotifier {
   }
 
   Future openMailScreen() async =>
-      _router.push(const SignInWithEmailViewRoute());
+      _router.push(const SignInWithPhoneViewRoute());
 
-  bool _validateEmail(String email) => EmailValidator.validate(email);
+  bool _validatePhoneNumber(String phone) => RegExp(
+          r'^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$')
+      .hasMatch(phone);
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/presentation/screens/sign_in/sign_in_viewmodel.dart';
 import 'package:diplom/features/auth/presentation/widgets/sign_in_with_google_button.dart';
-import 'package:diplom/features/auth/presentation/widgets/sign_in_with_mail_button.dart';
+import 'package:diplom/features/auth/presentation/widgets/sign_in_with_phone_button.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:diplom/generated/assets.dart';
 import 'package:flutter/cupertino.dart';
@@ -122,9 +122,9 @@ class SignInView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SignInWithMailButton(
+                SignInWithPhoneButton(
                   onPressed: viewModel.openMailScreen,
-                  text: 'Войти через почту',
+                  text: 'Войти по телефону',
                   style: SignInWithMailButtonStyle.dark,
                 ),
               ],

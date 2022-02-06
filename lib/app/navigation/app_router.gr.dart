@@ -13,7 +13,7 @@
 import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:diplom/features/auth/presentation/screens/sign_in/sign_in_view.dart'
     as _i4;
-import 'package:diplom/features/auth/presentation/screens/sign_in_with_email_view/sign_in_with_email_view.dart'
+import 'package:diplom/features/auth/presentation/screens/sign_in_with_phone_view/sign_in_with_phone_view.dart'
     as _i5;
 import 'package:diplom/features/settings/presentation/screens/settings/settings_view.dart'
     as _i3;
@@ -45,9 +45,9 @@ class AppRouter extends _i6.RootStackRouter {
       return _i6.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i4.SignInView());
     },
-    SignInWithEmailViewRoute.name: (routeData) {
+    SignInWithPhoneViewRoute.name: (routeData) {
       return _i6.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i5.SignInWithEmailView());
+          routeData: routeData, child: const _i5.SignInWithPhoneView());
     }
   };
 
@@ -58,8 +58,8 @@ class AppRouter extends _i6.RootStackRouter {
             path: '/list-creation-view'),
         _i6.RouteConfig(SettingsViewRoute.name, path: '/settings-view'),
         _i6.RouteConfig(SignInViewRoute.name, path: '/sign-in-view'),
-        _i6.RouteConfig(SignInWithEmailViewRoute.name,
-            path: '/sign-in-with-email-view')
+        _i6.RouteConfig(SignInWithPhoneViewRoute.name,
+            path: '/sign-in-with-phone-view')
       ];
 }
 
@@ -98,10 +98,10 @@ class SignInViewRoute extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.SignInWithEmailView]
-class SignInWithEmailViewRoute extends _i6.PageRouteInfo<void> {
-  const SignInWithEmailViewRoute()
-      : super(SignInWithEmailViewRoute.name, path: '/sign-in-with-email-view');
+/// [_i5.SignInWithPhoneView]
+class SignInWithPhoneViewRoute extends _i6.PageRouteInfo<void> {
+  const SignInWithPhoneViewRoute()
+      : super(SignInWithPhoneViewRoute.name, path: '/sign-in-with-phone-view');
 
-  static const String name = 'SignInWithEmailViewRoute';
+  static const String name = 'SignInWithPhoneViewRoute';
 }

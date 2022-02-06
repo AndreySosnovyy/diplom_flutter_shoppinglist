@@ -28,8 +28,7 @@ class AuthService {
   /// Returns firebase user
   Future<User?> signInWithApple() async {}
 
-  /// Returns firebase user
-  Future<User?> signInWithEmail() async {}
+  Future<User?> signInWithPhone({required String phone}) async {}
 
   bool get isSignedIn => _firebaseAuth.currentUser != null;
 

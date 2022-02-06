@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class SignInWithMailButton extends StatelessWidget {
+class SignInWithPhoneButton extends StatelessWidget {
   final double height;
   final SignInWithMailButtonStyle style;
   final IconAlignment iconAlignment;
@@ -13,7 +13,7 @@ class SignInWithMailButton extends StatelessWidget {
 
   final _mailIconSizeScale = 28 / 44;
 
-  const SignInWithMailButton({
+  const SignInWithPhoneButton({
     Key? key,
     required this.onPressed,
     this.height = 44,
@@ -58,7 +58,7 @@ class SignInWithMailButton extends StatelessWidget {
       width: height - 4,
       child: ClipRRect(
         borderRadius: borderRadius,
-        child: Icon(CupertinoIcons.mail_solid, color: _contrastColor,),
+        child: Icon(CupertinoIcons.phone_fill, color: _contrastColor,),
       ),
     );
 
