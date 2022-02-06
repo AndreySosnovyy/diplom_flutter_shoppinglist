@@ -16,7 +16,7 @@ class SignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignInViewModel>.reactive(
-      viewModelBuilder: () => SignInViewModel(),
+      viewModelBuilder: () => SignInViewModel(context: context),
       builder: (context, viewModel, child) => Scaffold(
         appBar: CommonAppbar(
           backgroundColor: Colors.transparent,

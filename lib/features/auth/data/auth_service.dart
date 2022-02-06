@@ -7,7 +7,6 @@ class AuthService {
   final _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email'],
-    // 406626587302-n8okph1n2br5m4akjg8hpfk3bc1lhg6u.apps.googleusercontent.com
   );
 
   /// Returns firebase user
