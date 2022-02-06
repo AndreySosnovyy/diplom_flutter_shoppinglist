@@ -33,6 +33,8 @@ class SignInViewModel extends ChangeNotifier {
     _router.pop();
   }
 
+  void popCodeScreen() => _router.pop<String>(codeController.text);
+
   Future signInWithGoogle() async {
     final user = await _auth.signInWithGoogle();
     logger.i('Sign in with google: user - ${user?.email}');

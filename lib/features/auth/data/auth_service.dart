@@ -4,6 +4,7 @@ import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 
 class AuthService {
   final _firebaseAuth = FirebaseAuth.instance;
@@ -30,7 +31,7 @@ class AuthService {
   /// Returns firebase user
   Future<User?> signInWithApple() async {}
 
-  Future<String?> _openCodeScreenAndAwait() async => await sl
+  Future<String?> _openCodeScreenAndAwaitForCode() async => await sl
       .get<AppRouter>()
       .push<String>(const SignInWithPhoneCodeViewRoute());
 
@@ -41,10 +42,10 @@ class AuthService {
       verificationCompleted: (PhoneAuthCredential credential) async =>
           await _firebaseAuth.signInWithCredential(credential),
       verificationFailed: (FirebaseAuthException e) {
-        print('Error: ${e.toString()}');
+        Logger().e('Phone verification error: ${e.toString()}');
       },
       codeSent: (String verificationId, int? resendToken) async {
-        String? smsCode = await _openCodeScreenAndAwait();
+        String? smsCode = await _openCodeScreenAndAwaitForCode();
         if (smsCode != null) {
           PhoneAuthCredential credential = PhoneAuthProvider.credential(
               verificationId: verificationId, smsCode: smsCode);

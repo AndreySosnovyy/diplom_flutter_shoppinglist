@@ -1,5 +1,3 @@
-import 'package:diplom/app/dependencies.dart';
-import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:diplom/features/common/presentation/widgets/common_cupertino_button.dart';
@@ -70,9 +68,7 @@ class SignInWithPhoneCodeView extends StatelessWidget {
                   ),
                   const SizedBox(height: 22),
                   CommonCupertinoButton(
-                    onTap: () => sl
-                        .get<AppRouter>()
-                        .pop<String>(viewModel.codeController.text),
+                    onTap: viewModel.popCodeScreen,
                     text: 'Подтвердить',
                     height: 66,
                   ),
