@@ -49,13 +49,17 @@ dependencies:
   auto_size_text: ^3.0.0
   auto_size_text_field: ^1.0.1
 
+  # services
+  flutter_keyboard_visibility: ^5.1.1
+  connectivity_plus: ^2.2.0
+
   # other
   url_launcher: ^6.0.18
   intl: ^0.17.0
   uuid: ^3.0.5
-  connectivity_plus: ^2.2.0
   logger: ^1.1.0
   email_validator: ^2.0.1
+
 
 dev_dependencies:
   flutter_test:

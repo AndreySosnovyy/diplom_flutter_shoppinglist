@@ -44,15 +44,17 @@ class SignInWithEmailView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.10),
-                Image.asset(
-                  Assets.illustrationsMailbox,
-                  width: 244,
-                  fit: BoxFit.fitWidth,
-                ),
-                const SizedBox(height: 10),
+                if (viewModel.mailboxVisible)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Image.asset(
+                      Assets.illustrationsMailbox,
+                      width: 244,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
                 Text(
                   'Авторизация',
                   style: Theme.of(context).textTheme.headline2,
@@ -66,16 +68,17 @@ class SignInWithEmailView extends StatelessWidget {
                       .bodyText1!
                       .copyWith(color: AppColors.grey1),
                 ),
-                const SizedBox(height: 66),
+                const SizedBox(height: 22),
                 CommonCupertinoTextField(
                   hint: 'Электронная почта',
+                  inputType: TextInputType.emailAddress,
                   controller: viewModel.emailController,
                 ),
                 const SizedBox(height: 22),
                 CommonCupertinoButton(
                   onTap: viewModel.signInWithEmail,
                   text: 'Получить письмо',
-                  height: 54,
+                  height: 66,
                 ),
               ],
             ),

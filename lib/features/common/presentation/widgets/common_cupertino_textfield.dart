@@ -6,6 +6,8 @@ class CommonCupertinoTextField extends StatelessWidget {
   final String errorText;
   final double height;
   final double width;
+  final TextInputType? inputType;
+
 
   const CommonCupertinoTextField({
     Key? key,
@@ -14,6 +16,7 @@ class CommonCupertinoTextField extends StatelessWidget {
     this.height = 44,
     this.width = double.infinity,
     this.errorText = '',
+    this.inputType,
   }) : super(key: key);
 
   @override
@@ -22,6 +25,7 @@ class CommonCupertinoTextField extends StatelessWidget {
       height: height,
       width: width,
       child: CupertinoTextField(
+        keyboardType: inputType,
         controller: controller,
         placeholder: hint,
       ),
