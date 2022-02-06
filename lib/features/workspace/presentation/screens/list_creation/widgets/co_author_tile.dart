@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diplom/app/values/colors.dart';
+import 'package:diplom/generated/assets.dart';
 import 'package:flutter/material.dart';
 
 class CoAuthorTile extends StatelessWidget {
@@ -31,7 +32,7 @@ class CoAuthorTile extends StatelessWidget {
                     fit: BoxFit.fill,
                   )
                 : Image.asset(
-                    'assets/images/avatar_grey.png',
+                    Assets.imagesAvatarGrey,
                     fit: BoxFit.fill,
                   ),
           ),

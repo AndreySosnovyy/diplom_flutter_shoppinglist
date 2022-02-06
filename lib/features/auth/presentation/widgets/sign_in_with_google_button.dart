@@ -1,4 +1,5 @@
 import 'package:diplom/app/values/colors.dart';
+import 'package:diplom/generated/assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -58,7 +59,7 @@ class SignInWithGoogleButton extends StatelessWidget {
       child: ClipRRect(
         borderRadius: borderRadius,
         child: Image.asset(
-          'assets/logos/google_button.png',
+          Assets.logosGoogleButton,
           fit: BoxFit.fill,
         ),
       ),

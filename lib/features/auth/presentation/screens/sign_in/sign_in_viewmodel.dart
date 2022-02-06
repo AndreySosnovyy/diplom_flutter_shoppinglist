@@ -32,14 +32,13 @@ class SignInViewModel extends ChangeNotifier {
     if (_validateEmail(email)) {
     } else {
       showCupertinoDialog(
-          context: context,
-          builder: (context) {
-            return const CommonCupertinoDialog(
-              title: 'Ошибка',
-              text: 'Введите корректную электронную почту',
-              buttonText: 'ОК',
-            );
-          });
+        context: context,
+        builder: (context) => const CommonCupertinoDialog(
+          title: 'Ошибка',
+          text: 'Введите корректную электронную почту',
+          buttonText: 'ОК',
+        ),
+      );
     }
   }
 

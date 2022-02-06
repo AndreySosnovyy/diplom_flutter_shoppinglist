@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class AppColors {
+  AppColors._();
+
   // core colors
   static const white = CupertinoColors.white;
   static const black = CupertinoColors.black;

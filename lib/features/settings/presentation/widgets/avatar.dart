@@ -1,4 +1,5 @@
 import 'package:diplom/app/values/colors.dart';
+import 'package:diplom/generated/assets.dart';
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
@@ -19,7 +20,7 @@ class Avatar extends StatelessWidget {
         children: [
           image ??
               Image.asset(
-                'assets/images/avatar_grey.png',
+                Assets.imagesAvatarGrey,
                 height: 140.0,
                 width: 140.0,
               ),
