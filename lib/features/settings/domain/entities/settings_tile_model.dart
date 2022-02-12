@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class SettingsTileModel {
   final String title;
-  final Icon icon;
+  final Widget icon;
   final Color iconColor;
   final VoidCallback? callback;
   final Widget? trailingSwitch;

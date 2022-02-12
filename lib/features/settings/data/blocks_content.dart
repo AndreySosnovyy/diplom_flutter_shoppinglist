@@ -1,6 +1,8 @@
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/settings/domain/entities/settings_tile_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class SettingsBlocksContent {
   static List<SettingsTileModel> getAccountBlockContent({
@@ -61,7 +63,7 @@ class SettingsBlocksContent {
   }) {
     return <SettingsTileModel>[
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.app_badge, color: AppColors.white),
+        icon: const FaIcon(FontAwesomeIcons.bell, color: AppColors.white),
         iconColor: AppColors.pink,
         title: 'Уведомления',
         trailingSwitch: notificationSwitch,
@@ -102,12 +104,12 @@ class SettingsBlocksContent {
   static List<SettingsTileModel> getOtherBlockContent() {
     return <SettingsTileModel>[
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.creditcard, color: AppColors.white),
+        icon: const FaIcon(FontAwesomeIcons.dollarSign, color: AppColors.white),
         iconColor: AppColors.green,
         title: 'Снять ограничения',
       ),
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.ellipsis, color: AppColors.white),
+        icon: const FaIcon(FontAwesomeIcons.ellipsisH, color: AppColors.white),
         iconColor: AppColors.black,
         title: 'Прочее',
       ),

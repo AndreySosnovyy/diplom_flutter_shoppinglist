@@ -57,15 +57,18 @@ class SettingsView extends StatelessWidget {
                                 .headline1,
                           ),
                         ),
-                        const SizedBox(height: 6),
-                        AutoSizeText(
-                          viewModel.displayHandler,
-                          maxLines: 1,
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: AppColors.grey1),
+                        if (viewModel.isSignedIn)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: AutoSizeText(
+                            viewModel.displayHandler,
+                            maxLines: 1,
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(color: AppColors.grey1),
+                          ),
                         ),
                         const SizedBox(height: 20),
                         // todo: hide edit name and edit handler for google/apple users
