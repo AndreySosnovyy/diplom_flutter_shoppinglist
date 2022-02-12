@@ -4,24 +4,27 @@ import 'package:flutter/cupertino.dart';
 
 class SettingsBlocksContent {
   static List<SettingsTileModel> getAccountBlockContent({
-    required VoidCallback changeNameCallback,
-    required VoidCallback changeHandlerCallback,
+    required bool hideNameTiles,
+    VoidCallback? changeNameCallback,
+    VoidCallback? changeHandlerCallback,
     required CupertinoSwitch hideAccountSwitch,
     required VoidCallback signOutCallback,
   }) {
     return <SettingsTileModel>[
-      SettingsTileModel(
-        icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
-        iconColor: AppColors.green,
-        title: 'Сменить имя и фамилию',
-        callback: changeNameCallback,
-      ),
-      SettingsTileModel(
-        icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
-        iconColor: AppColors.yellow,
-        title: 'Сменить имя пользователя',
-        callback: changeHandlerCallback,
-      ),
+      if (!hideNameTiles)
+        SettingsTileModel(
+          icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
+          iconColor: AppColors.green,
+          title: 'Сменить имя и фамилию',
+          callback: changeNameCallback,
+        ),
+      if (!hideNameTiles)
+        SettingsTileModel(
+          icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
+          iconColor: AppColors.yellow,
+          title: 'Сменить имя пользователя',
+          callback: changeHandlerCallback,
+        ),
       SettingsTileModel(
         icon: const Icon(CupertinoIcons.at, color: AppColors.white),
         iconColor: AppColors.teal,
@@ -29,7 +32,8 @@ class SettingsBlocksContent {
         trailingSwitch: hideAccountSwitch,
       ),
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.arrow_left_square, color: AppColors.white),
+        icon: const Icon(CupertinoIcons.arrow_left_square,
+            color: AppColors.white),
         iconColor: AppColors.red,
         title: 'Выйти',
         callback: signOutCallback,
