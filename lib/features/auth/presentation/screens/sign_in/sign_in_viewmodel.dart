@@ -37,6 +37,9 @@ class SignInViewModel extends ChangeNotifier {
 
   Future signInWithGoogle() async {
     final user = await _auth.signInWithGoogle();
+    if (user != null) {
+      _router.popUntilRouteWithName('SettingsViewRoute');
+    }
     logger.i('Sign in with google: user - ${user?.email}');
   }
 
@@ -45,7 +48,11 @@ class SignInViewModel extends ChangeNotifier {
   Future signInWithPhone() async {
     final phone = phoneController.text;
     if (_validatePhoneNumber(phone)) {
-      _auth.signInWithPhone(phone: phone);
+      final user = await _auth.signInWithPhone(phone: phone);
+      if (user != null) {
+        // todo: check if works
+        _router.popUntilRouteWithName('SettingsViewRoute');
+      }
     } else {
       showCupertinoDialog(
         context: context,

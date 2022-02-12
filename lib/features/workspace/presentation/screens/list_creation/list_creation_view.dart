@@ -4,11 +4,11 @@ import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/co_authors_handler.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_search_line.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
-import 'package:diplom/generated/assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../../app/values/assets.dart';
 import 'list_creation_viewmodel.dart';
 
 class ListCreationView extends StatelessWidget {

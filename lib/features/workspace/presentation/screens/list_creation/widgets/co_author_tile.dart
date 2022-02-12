@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/generated/assets.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../app/values/assets.dart';
 
 class CoAuthorTile extends StatelessWidget {
   final String? avatarUrl;

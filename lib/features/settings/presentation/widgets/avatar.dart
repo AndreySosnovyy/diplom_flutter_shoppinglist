@@ -1,6 +1,7 @@
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/generated/assets.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../app/values/assets.dart';
 
 class Avatar extends StatelessWidget {
   final Image? image;

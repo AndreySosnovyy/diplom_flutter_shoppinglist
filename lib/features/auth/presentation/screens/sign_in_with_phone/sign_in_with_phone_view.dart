@@ -2,11 +2,11 @@ import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:diplom/features/common/presentation/widgets/common_cupertino_button.dart';
 import 'package:diplom/features/common/presentation/widgets/common_cupertino_textfield.dart';
-import 'package:diplom/generated/assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../../app/values/assets.dart';
 import '../sign_in/sign_in_viewmodel.dart';
 
 class SignInWithPhoneView extends StatelessWidget {

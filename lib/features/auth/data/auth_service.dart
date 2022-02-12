@@ -25,11 +25,14 @@ class AuthService {
       return firebaseAuth.user;
     } catch (error) {
       print(error);
+      return null;
     }
   }
 
   /// Returns firebase user
-  Future<User?> signInWithApple() async {}
+  Future<User?> signInWithApple() async {
+    return null;
+  }
 
   Future<String?> _openCodeScreenAndAwaitForCode() async => await sl
       .get<AppRouter>()
