@@ -71,7 +71,7 @@ class AuthService {
 
   bool get isSignedIn => _firebaseAuth.currentUser != null;
 
-  User? getCurrentUser() => _firebaseAuth.currentUser;
+  User? get currentUser => _firebaseAuth.currentUser;
 
   Stream<User?> get userStream => _firebaseAuth.userChanges();
 

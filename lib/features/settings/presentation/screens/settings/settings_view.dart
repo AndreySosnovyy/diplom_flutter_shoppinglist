@@ -36,6 +36,8 @@ class SettingsView extends StatelessWidget {
                   children: [
                     const SizedBox(height: 14),
                     Avatar(
+                      imageUrl: viewModel.currentUser?.photoURL,
+                      canBeEdited: viewModel.authProvider == AuthProvider.phone,
                       onTap: () {},
                     ),
                     const SizedBox(height: 14),

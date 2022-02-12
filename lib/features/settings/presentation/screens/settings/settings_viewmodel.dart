@@ -1,6 +1,7 @@
 import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/data/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class SettingsViewModel extends ChangeNotifier {
@@ -14,8 +15,21 @@ class SettingsViewModel extends ChangeNotifier {
   void backButtonCallback() => _router.pop();
 
   void openAuthScreen() => _router.push(const SignInViewRoute());
-  
+
   Future signOut() async => await _auth.signOut();
 
   bool get isSignedIn => _auth.isSignedIn;
+
+  User? get currentUser => _auth.currentUser;
+
+  AuthProvider get authProvider {
+    switch (currentUser!.providerData.first.providerId) {
+      case 'google.com': return AuthProvider.google;
+      case 'apple.com' : return AuthProvider.apple;
+      case 'phone' : return  AuthProvider.phone;
+    }
+    throw Exception('Unknown authentication provider');
+  }
 }
+
+enum AuthProvider { google, apple, phone }
