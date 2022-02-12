@@ -8,9 +8,7 @@ import 'package:logger/logger.dart';
 
 class AuthService {
   final _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email'],
-  );
+  final _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   /// Returns firebase user
   Future<User?> signInWithGoogle() async {
@@ -39,27 +37,29 @@ class AuthService {
       .push<String>(const SignInWithPhoneCodeViewRoute());
 
   Future<User?> signInWithPhone({required String phone}) async {
-    User? user;
-    await _firebaseAuth.verifyPhoneNumber(
-      phoneNumber: phone,
-      verificationCompleted: (PhoneAuthCredential credential) async =>
-          await _firebaseAuth.signInWithCredential(credential),
-      verificationFailed: (FirebaseAuthException e) {
-        Logger().e('Phone verification error: ${e.toString()}');
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        String? smsCode = await _openCodeScreenAndAwaitForCode();
-        if (smsCode != null) {
-          PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: smsCode);
-          user = (await _firebaseAuth.signInWithCredential(credential)).user;
-        } else {
-          return;
-        }
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-    return user;
+    if (_firebaseAuth.currentUser == null) {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (PhoneAuthCredential credential) async =>
+            await _firebaseAuth.signInWithCredential(credential),
+        verificationFailed: (FirebaseAuthException e) {
+          Logger().e('Phone verification error: ${e.toString()}');
+          // todo: show error dialog
+        },
+        codeSent: (String verificationId, int? resendToken) async {
+          String? smsCode = await _openCodeScreenAndAwaitForCode();
+          if (smsCode != null) {
+            final credential = PhoneAuthProvider.credential(
+                verificationId: verificationId, smsCode: smsCode);
+            await _firebaseAuth.signInWithCredential(credential);
+          }
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+      return await userStream.firstWhere((user) => user != null);
+    } else {
+      return _firebaseAuth.currentUser;
+    }
   }
 
   bool get isSignedIn => _firebaseAuth.currentUser != null;

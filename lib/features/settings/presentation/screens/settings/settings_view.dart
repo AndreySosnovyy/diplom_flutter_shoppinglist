@@ -36,7 +36,6 @@ class SettingsView extends StatelessWidget {
                   children: [
                     const SizedBox(height: 14),
                     Avatar(
-                      // todo:
                       onTap: () {},
                     ),
                     const SizedBox(height: 14),
@@ -56,29 +55,32 @@ class SettingsView extends StatelessWidget {
                           .copyWith(color: AppColors.grey1),
                     ),
                     const SizedBox(height: 20),
-                    SettingsBlock(
-                      title: 'Мой аккаунт',
-                      settingsContent:
-                          SettingsBlocksContent.getAccountBlockContent(
-                        changeNameCallback: () {},
-                        changeHandlerCallback: () {},
-                        hideAccountSwitch: CupertinoSwitch(
-                          value: false,
-                          onChanged: (bool newValue) {},
+                    if (viewModel.isSignedIn)
+                      SettingsBlock(
+                        title: 'Мой аккаунт',
+                        settingsContent:
+                            SettingsBlocksContent.getAccountBlockContent(
+                          changeNameCallback: () {},
+                          changeHandlerCallback: () {},
+                          hideAccountSwitch: CupertinoSwitch(
+                            value: false,
+                            onChanged: (bool newValue) {},
+                          ),
+                          signOutCallback: viewModel.signOut,
                         ),
-                        logOutCallback: () {},
+                        description:
+                            'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',
+                      )
+                    else
+                      SettingsBlock(
+                        title: 'Авторизация',
+                        settingsContent:
+                            SettingsBlocksContent.getAuthBlockContent(
+                          signInCallback: viewModel.openAuthScreen,
+                        ),
+                        description:
+                            'Авторизированный пользователь может добавлять или быть добавленным соавтором в списки покупок других пользователей, а также пользоваться своими списками на других устройствах',
                       ),
-                      description:
-                          'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',
-                    ),
-                    SettingsBlock(
-                      title: 'Авторизация',
-                      settingsContent:
-                          SettingsBlocksContent.getAuthBlockContent(
-                        signInCallback: viewModel.openAuthScreen,
-                      ),
-                      description: 'Авторизированный пользователь может добавлять или быть добавленным соавтором в списки покупок других пользователей, а также пользоваться своими списками на других устройствах',
-                    ),
                     SettingsBlock(
                       title: 'Приложение',
                       settingsContent:

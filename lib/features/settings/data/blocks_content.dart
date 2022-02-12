@@ -7,7 +7,7 @@ class SettingsBlocksContent {
     required VoidCallback changeNameCallback,
     required VoidCallback changeHandlerCallback,
     required CupertinoSwitch hideAccountSwitch,
-    required VoidCallback logOutCallback,
+    required VoidCallback signOutCallback,
   }) {
     return <SettingsTileModel>[
       SettingsTileModel(
@@ -32,7 +32,7 @@ class SettingsBlocksContent {
         icon: const Icon(CupertinoIcons.arrow_left_square, color: AppColors.white),
         iconColor: AppColors.red,
         title: 'Выйти',
-        callback: logOutCallback,
+        callback: signOutCallback,
       ),
     ];
   }

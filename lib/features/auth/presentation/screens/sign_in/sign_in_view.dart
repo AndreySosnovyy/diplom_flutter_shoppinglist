@@ -124,7 +124,7 @@ class SignInView extends StatelessWidget {
                   ),
                 ),
                 SignInWithPhoneButton(
-                  onPressed: viewModel.openMailScreen,
+                  onPressed: viewModel.openSignInWithPhoneScreen,
                   text: 'Войти по телефону',
                   style: SignInWithMailButtonStyle.dark,
                 ),

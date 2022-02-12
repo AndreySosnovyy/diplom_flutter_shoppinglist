@@ -21,14 +21,16 @@ class SettingsTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: 14, vertical: tileVerticalPadding),
-          child: SizedBox(
-            height: tileHeight,
-            child: GestureDetector(
-              onTap: content.callback,
-              behavior: HitTestBehavior.translucent,
+        GestureDetector(
+          onTap: content.callback,
+          behavior: HitTestBehavior.translucent,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: tileVerticalPadding,
+            ),
+            child: SizedBox(
+              height: tileHeight,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

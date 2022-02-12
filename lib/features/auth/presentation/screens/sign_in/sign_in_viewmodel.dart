@@ -40,7 +40,7 @@ class SignInViewModel extends ChangeNotifier {
     if (user != null) {
       _router.popUntilRouteWithName('SettingsViewRoute');
     }
-    logger.i('Sign in with google: user - ${user?.email}');
+    logger.i('Signed in with google: ${user?.email}');
   }
 
   Future signInWithApple() async {}
@@ -48,11 +48,10 @@ class SignInViewModel extends ChangeNotifier {
   Future signInWithPhone() async {
     final phone = phoneController.text;
     if (_validatePhoneNumber(phone)) {
-      final user = await _auth.signInWithPhone(phone: phone);
-      if (user != null) {
-        // todo: check if works
-        _router.popUntilRouteWithName('SettingsViewRoute');
-      }
+      await _auth.signInWithPhone(phone: phone).then((user) {
+        logger.i('Signed in with phone: ${user?.phoneNumber}');
+        if (user != null) _router.popUntilRouteWithName('SettingsViewRoute');
+      });
     } else {
       showCupertinoDialog(
         context: context,
@@ -65,7 +64,7 @@ class SignInViewModel extends ChangeNotifier {
     }
   }
 
-  Future openMailScreen() async =>
+  Future openSignInWithPhoneScreen() async =>
       _router.push(const SignInWithPhoneViewRoute());
 
   bool _validatePhoneNumber(String phone) => RegExp(

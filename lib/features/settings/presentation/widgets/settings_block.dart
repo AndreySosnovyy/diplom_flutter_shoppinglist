@@ -49,7 +49,8 @@ class SettingsBlock extends StatelessWidget {
           ),
           if (description != null)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),              child: Text(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+              child: Text(
                 description!,
                 style: Theme.of(context)
                     .textTheme

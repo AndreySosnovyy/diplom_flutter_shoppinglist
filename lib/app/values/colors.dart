@@ -20,12 +20,6 @@ class AppColors {
   static const teal = CupertinoColors.systemTeal;
   static const jellyBean = Color(0xFF2b93a1);
 
-  static final mainGradientColors = [
-    AppColors.palette.flickrPink,
-    AppColors.palette.trypanBlue1,
-    AppColors.palette.vividSkyBlue
-  ];
-
   // palettes
   static const palette = Palette();
 }
