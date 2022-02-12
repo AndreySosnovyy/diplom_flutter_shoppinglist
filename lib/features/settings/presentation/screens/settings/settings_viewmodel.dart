@@ -22,14 +22,21 @@ class SettingsViewModel extends ChangeNotifier {
 
   User? get currentUser => _auth.currentUser;
 
-  AuthProvider get authProvider {
+  String get displayName =>
+      _auth.currentUser?.displayName ?? 'Анонимный пользователь';
+
+  String get displayHandler => '@user_handler';
+
+  AuthProvider? get authProvider {
+    if (currentUser == null) return null;
     switch (currentUser!.providerData.first.providerId) {
-      case 'google.com': return AuthProvider.google;
-      case 'apple.com' : return AuthProvider.apple;
-      case 'phone' : return  AuthProvider.phone;
+      case 'google.com':
+        return AuthProvider.google;
+      case 'apple.com':
+        return AuthProvider.apple;
+      case 'phone':
+        return AuthProvider.phone;
     }
     throw Exception('Unknown authentication provider');
   }
 }
-
-enum AuthProvider { google, apple, phone }

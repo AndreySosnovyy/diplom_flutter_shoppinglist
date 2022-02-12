@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +16,10 @@ class Avatar extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  Image _buildImage() {
+  Widget _buildImage() {
     if (imageUrl != null) {
-      return Image.network(
-        imageUrl!,
+      return CachedNetworkImage(
+        imageUrl: imageUrl!,
         height: 140.0,
         width: 140.0,
         fit: BoxFit.fill,

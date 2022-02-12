@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:diplom/features/settings/data/blocks_content.dart';
@@ -7,6 +8,8 @@ import 'package:diplom/features/settings/presentation/widgets/settings_block.dar
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../../auth/data/auth_service.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -43,20 +46,23 @@ class SettingsView extends StatelessWidget {
                     const SizedBox(height: 14),
                     Hero(
                       tag: 'name',
-                      child: Text(
-                        ' Андрей Сосновый ',
+                      child: AutoSizeText(
+                        viewModel.displayName,
+                        maxLines: 1,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    Text(
-                      'AndreySosnovyy',
+                    AutoSizeText(
+                      viewModel.displayHandler,
+                      maxLines: 1,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
                           .copyWith(color: AppColors.grey1),
                     ),
                     const SizedBox(height: 20),
+                    // todo: hide edit name and edit handler for google/apple users
                     if (viewModel.isSignedIn)
                       SettingsBlock(
                         title: 'Мой аккаунт',

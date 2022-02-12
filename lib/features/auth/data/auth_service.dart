@@ -77,3 +77,5 @@ class AuthService {
 
   Future signOut() async => await _firebaseAuth.signOut();
 }
+
+enum AuthProvider { google, apple, phone }

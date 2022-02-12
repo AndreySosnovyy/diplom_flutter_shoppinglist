@@ -5,6 +5,7 @@ import 'app/app.dart';
 import 'app/dependencies.dart';
 
 void main() async {
+  // todo: add Firebase Crachlytics or Sentry
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await setupDependencies();
