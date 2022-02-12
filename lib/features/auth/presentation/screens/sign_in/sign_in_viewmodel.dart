@@ -48,7 +48,19 @@ class SignInViewModel extends ChangeNotifier {
   Future signInWithPhone() async {
     final phone = phoneController.text;
     if (_validatePhoneNumber(phone)) {
-      await _auth.signInWithPhone(phone: phone).then((user) {
+      await _auth
+          .signInWithPhone(
+        phone: phone,
+        onErrorCallback: () => showCupertinoDialog(
+          context: context,
+          builder: (context) => const CommonCupertinoDialog(
+            title: 'Ошибка',
+            text: 'Введен неверный код',
+            buttonText: 'ОК',
+          ),
+        ),
+      )
+          .then((user) {
         logger.i('Signed in with phone: ${user?.phoneNumber}');
         if (user != null) _router.popUntilRouteWithName('SettingsViewRoute');
       });

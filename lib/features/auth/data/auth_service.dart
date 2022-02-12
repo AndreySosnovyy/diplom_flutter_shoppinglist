@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
@@ -36,7 +37,10 @@ class AuthService {
       .get<AppRouter>()
       .push<String>(const SignInWithPhoneCodeViewRoute());
 
-  Future<User?> signInWithPhone({required String phone}) async {
+  Future<User?> signInWithPhone({
+    required String phone,
+    required VoidCallback onErrorCallback,
+  }) async {
     if (_firebaseAuth.currentUser == null) {
       await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phone,
@@ -44,14 +48,17 @@ class AuthService {
             await _firebaseAuth.signInWithCredential(credential),
         verificationFailed: (FirebaseAuthException e) {
           Logger().e('Phone verification error: ${e.toString()}');
-          // todo: show error dialog
         },
         codeSent: (String verificationId, int? resendToken) async {
           String? smsCode = await _openCodeScreenAndAwaitForCode();
           if (smsCode != null) {
             final credential = PhoneAuthProvider.credential(
                 verificationId: verificationId, smsCode: smsCode);
-            await _firebaseAuth.signInWithCredential(credential);
+            try {
+              await _firebaseAuth.signInWithCredential(credential);
+            } catch (e) {
+              onErrorCallback();
+            }
           }
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
