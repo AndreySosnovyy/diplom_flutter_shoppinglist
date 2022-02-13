@@ -3,30 +3,28 @@ import 'package:diplom/features/settings/domain/entities/settings_tile_model.dar
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class SettingsBlocksContent {
   static List<SettingsTileModel> getAccountBlockContent({
-    required bool hideNameTiles,
+    required bool hideEditNameTile,
     VoidCallback? changeNameCallback,
     VoidCallback? changeHandlerCallback,
     required CupertinoSwitch hideAccountSwitch,
     required VoidCallback signOutCallback,
   }) {
     return <SettingsTileModel>[
-      if (!hideNameTiles)
+      if (!hideEditNameTile)
         SettingsTileModel(
           icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
           iconColor: AppColors.green,
           title: 'Сменить имя и фамилию',
           callback: changeNameCallback,
         ),
-      if (!hideNameTiles)
-        SettingsTileModel(
-          icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
-          iconColor: AppColors.yellow,
-          title: 'Сменить имя пользователя',
-          callback: changeHandlerCallback,
-        ),
+      SettingsTileModel(
+        icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
+        iconColor: AppColors.yellow,
+        title: 'Сменить хэндлер пользователя',
+        callback: changeHandlerCallback,
+      ),
       SettingsTileModel(
         icon: const Icon(CupertinoIcons.at, color: AppColors.white),
         iconColor: AppColors.teal,

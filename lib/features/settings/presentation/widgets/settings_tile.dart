@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/settings/domain/entities/settings_tile_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,24 +36,25 @@ class SettingsTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: tileHeight,
-                        height: tileHeight,
-                        decoration: BoxDecoration(
-                          color: content.iconColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Center(child: content.icon),
-                      ),
-                      const SizedBox(width: 14),
-                      Text(
-                        content.title,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
+                  Container(
+                    width: tileHeight,
+                    height: tileHeight,
+                    decoration: BoxDecoration(
+                      color: content.iconColor,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Center(child: content.icon),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: AutoSizeText(
+                      content.title,
+                      maxLines: 2,
+                      minFontSize: 14,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ),
                   content.trailingSwitch ??
                       const Icon(

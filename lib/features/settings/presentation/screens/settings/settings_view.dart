@@ -71,13 +71,12 @@ class SettingsView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        // todo: hide edit name and edit handler for google/apple users
                         if (viewModel.isSignedIn)
                           SettingsBlock(
                             title: 'Мой аккаунт',
                             settingsContent:
                             SettingsBlocksContent.getAccountBlockContent(
-                              hideNameTiles: viewModel.authProvider !=
+                              hideEditNameTile: viewModel.authProvider !=
                                   AuthProvider.phone,
                               changeNameCallback: () {},
                               changeHandlerCallback: () {},
