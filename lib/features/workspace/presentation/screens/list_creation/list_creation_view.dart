@@ -32,94 +32,107 @@ class ListCreationView extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CommonTextField(
-                controller: viewModel.nameController,
-                hint: 'Название',
-                isBold: true,
-                fontSize: 38,
-                maxLength: 24,
-              ),
-              CommonTextField(
-                controller: viewModel.descriptionController,
-                hint: 'Описание (необязательно)',
-                fontSize: 20,
-                maxLength: 300,
-                maxLines: 8,
-              ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 16, 0, 8),
-                height: 1,
-                width: double.infinity,
-                color: AppColors.grey3,
-              ),
-              CoAuthorsHandler(
-                addCoAuthorCallback: () {},
-                coAuthors: [
-                  CoAuthor(
-                    name: 'Андрей Сосновый',
-                    handler: '@andreysosnovyy',
-                  ),
-                  CoAuthor(
-                    name: 'Андрей Сосновый',
-                    handler: '@andreysosnovyy',
-                  ),
-                  CoAuthor(
-                    name: 'Андрей Сосновый',
-                    handler: '@andreysosnovyy',
-                    avatarUrl:
-                        'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
-                  ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                height: 1,
-                width: double.infinity,
-                color: AppColors.grey3,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: CommonSearchLine(
-                  controller: viewModel.productController,
-                  onChanged: viewModel.onSearchChanged,
-                  hint: 'Название товара',
-                ),
-              ),
-              if (viewModel.products.isEmpty)
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              viewModel.setScreenModeToNormal();
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (viewModel.displayTopInputs)
+                  Column(
                     children: [
-                      Image.asset(
-                        Assets.illustrationsEmptyBox,
-                        width: 244,
-                        fit: BoxFit.fitWidth,
+                      CommonTextField(
+                        controller: viewModel.nameController,
+                        hint: 'Название',
+                        isBold: true,
+                        fontSize: 38,
+                        maxLength: 24,
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Пока здесь ничего нет',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: AppColors.grey1),
+                      CommonTextField(
+                        controller: viewModel.descriptionController,
+                        hint: 'Описание (необязательно)',
+                        fontSize: 20,
+                        maxLength: 300,
+                        maxLines: 8,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Начните вводить название товара,\nзатем выберете его из списка и укажите количество',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(color: AppColors.grey2),
-                        textAlign: TextAlign.center,
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                        height: 1,
+                        width: double.infinity,
+                        color: AppColors.grey3,
                       ),
-                      const SizedBox(height: 54),
+                      CoAuthorsHandler(
+                        addCoAuthorCallback: () {},
+                        coAuthors: [
+                          CoAuthor(
+                            name: 'Андрей Сосновый',
+                            handler: '@andreysosnovyy',
+                          ),
+                          CoAuthor(
+                            name: 'Андрей Сосновый',
+                            handler: '@andreysosnovyy',
+                          ),
+                          CoAuthor(
+                            name: 'Андрей Сосновый',
+                            handler: '@andreysosnovyy',
+                            avatarUrl:
+                                'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        height: 1,
+                        width: double.infinity,
+                        color: AppColors.grey3,
+                      ),
                     ],
                   ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: CommonSearchLine(
+                    controller: viewModel.productController,
+                    onChanged: viewModel.onSearchChanged,
+                    hint: 'Название товара',
+                    onTap: viewModel.setScreenModeToSearch,
+                  ),
                 ),
-            ],
+                if (viewModel.products.isEmpty)
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          Assets.illustrationsEmptyBox,
+                          width: 244,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Пока здесь ничего нет',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(color: AppColors.grey1),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Начните вводить название товара,\nзатем выберете его из списка и укажите количество',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: AppColors.grey2),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 54),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
