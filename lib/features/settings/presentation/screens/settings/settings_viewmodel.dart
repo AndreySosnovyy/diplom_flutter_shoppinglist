@@ -4,9 +4,12 @@ import 'package:diplom/features/auth/data/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../data/setting_service.dart';
+
 class SettingsViewModel extends ChangeNotifier {
   final _router = sl.get<AppRouter>();
   final _auth = sl.get<AuthService>();
+  final _settings = sl.get<SettingsService>();
 
   SettingsViewModel() {
     _auth.userStream.listen((_) => notifyListeners());
@@ -26,6 +29,8 @@ class SettingsViewModel extends ChangeNotifier {
       _auth.currentUser?.displayName ?? 'Анонимный пользователь';
 
   String get displayHandler => '@user_handler';
+
+  String get displayVersion => _settings.displayVersion;
 
   AuthProvider? get authProvider {
     if (currentUser == null) return null;

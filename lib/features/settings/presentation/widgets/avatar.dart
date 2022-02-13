@@ -17,21 +17,19 @@ class Avatar extends StatelessWidget {
   }) : super(key: key);
 
   Widget _buildImage() {
-    if (imageUrl != null) {
-      return CachedNetworkImage(
-        imageUrl: imageUrl!,
-        height: 140.0,
-        width: 140.0,
-        fit: BoxFit.fill,
-      );
-    } else {
-      return Image.asset(
-        Assets.imagesAvatarGrey,
-        height: 140.0,
-        width: 140.0,
-        fit: BoxFit.fill,
-      );
-    }
+    return SizedBox(
+      width: 140.0,
+      height: 140.0,
+      child: imageUrl != null
+          ? CachedNetworkImage(
+              imageUrl: imageUrl!,
+              fit: BoxFit.fill,
+            )
+          : Image.asset(
+              Assets.imagesAvatarGrey,
+              fit: BoxFit.fill,
+            ),
+    );
   }
 
   @override

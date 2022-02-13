@@ -59,7 +59,7 @@ class ListCreationView extends StatelessWidget {
                         maxLines: 8,
                       ),
                       Container(
-                        margin: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                        margin: const EdgeInsets.only(top: 16),
                         height: 1,
                         width: double.infinity,
                         color: AppColors.grey3,
@@ -84,7 +84,7 @@ class ListCreationView extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        margin: const EdgeInsets.only(bottom: 8),
                         height: 1,
                         width: double.infinity,
                         color: AppColors.grey3,

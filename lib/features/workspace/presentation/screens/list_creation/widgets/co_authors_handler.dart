@@ -51,7 +51,7 @@ class CoAuthorsHandler extends StatelessWidget {
                 if (coAuthors.isNotEmpty)
                   SizedBox(
                     width: MediaQuery.of(context).size.width - 108,
-                    height: 54,
+                    height: 70,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,

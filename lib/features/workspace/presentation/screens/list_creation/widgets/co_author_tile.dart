@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diplom/app/values/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../app/values/assets.dart';
@@ -20,44 +21,74 @@ class CoAuthorTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // todo: implement delete button
-    return Row(
-      children: [
-        ClipOval(
-          child: SizedBox(
-            width: 54,
-            height: 54,
-            child: avatarUrl != null
-                ? CachedNetworkImage(
-                    imageUrl: avatarUrl!,
-                    fit: BoxFit.fill,
-                  )
-                : Image.asset(
-                    Assets.imagesAvatarGrey,
-                    fit: BoxFit.fill,
-                  ),
+    return CupertinoContextMenu(
+      actions: [
+        CupertinoContextMenuAction(
+          child: Row(
+            children: const [
+              Icon(
+                Icons.delete,
+                color: AppColors.red,
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Удалить',
+                style: TextStyle(color: AppColors.red),
+              ),
+            ],
           ),
+          onPressed: () {
+            deleteCallback();
+            Navigator.pop(context);
+          },
         ),
-        const SizedBox(width: 8),
-        Column(
-          mainAxisSize: MainAxisSize.min,
+      ],
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: const BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              name,
-              style: Theme.of(context).textTheme.bodyText1,
+            ClipOval(
+              child: SizedBox(
+                width: 54,
+                height: 54,
+                child: avatarUrl != null
+                    ? CachedNetworkImage(
+                        imageUrl: avatarUrl!,
+                        fit: BoxFit.fill,
+                      )
+                    : Image.asset(
+                        Assets.imagesAvatarGrey,
+                        fit: BoxFit.fill,
+                      ),
+              ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              handler,
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: AppColors.grey1,
-                  ),
+            const SizedBox(width: 8),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  handler,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        color: AppColors.grey1,
+                      ),
+                ),
+              ],
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }

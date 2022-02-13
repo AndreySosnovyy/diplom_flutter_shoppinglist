@@ -135,24 +135,20 @@ class SettingsView extends StatelessWidget {
                             SettingsBlocksContent.getOtherBlockContent(),
                             description: ''),
                         const SizedBox(height: 60),
-                        GestureDetector(
-                          // todo: implement version dialog
-                          onTap: () {},
-                          child: SizedBox(
-                            height: 40,
-                            width: 120,
-                            child: Center(
-                              child: Text(
-                                'Версия 1.0.0',
-                                style:
-                                Theme
-                                    .of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(
-                                  color: AppColors.grey1,
-                                  decoration: TextDecoration.underline,
-                                ),
+                        SizedBox(
+                          height: 40,
+                          width: 120,
+                          child: Center(
+                            child: Text(
+                              'Версия ${viewModel.displayVersion}',
+                              style:
+                              Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                color: AppColors.grey1,
+                                decoration: TextDecoration.underline,
                               ),
                             ),
                           ),
