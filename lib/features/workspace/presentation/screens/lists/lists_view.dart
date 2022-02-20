@@ -42,63 +42,90 @@ class ListsView extends StatelessWidget {
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.red,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.green,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.blue,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.indigo,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.orange,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.pink,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.teal,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.black,
                   ),
                   ShoppingListTile(
                     title: 'Название',
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
-                    shoppingList: ShoppingList(listedProducts: []),
+                    shoppingList: ShoppingList(
+                      listedProducts: [],
+                      coauthors: [],
+                    ),
                     tileColor: ShoppingListTileColors.grey,
                   ),
                   const SizedBox(height: 120),
