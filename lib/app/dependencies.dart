@@ -1,7 +1,7 @@
-import 'package:diplom/features/auth/data/auth_service.dart';
+import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:get_it/get_it.dart';
 
-import '../features/settings/data/setting_service.dart';
+import '../features/settings/domain/setting_service.dart';
 import 'navigation/app_router.gr.dart';
 
 final sl = GetIt.instance;

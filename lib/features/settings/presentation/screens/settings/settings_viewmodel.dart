@@ -1,10 +1,10 @@
 import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
-import 'package:diplom/features/auth/data/auth_service.dart';
+import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../data/setting_service.dart';
+import '../../../domain/setting_service.dart';
 
 class SettingsViewModel extends ChangeNotifier {
   final _router = sl.get<AppRouter>();

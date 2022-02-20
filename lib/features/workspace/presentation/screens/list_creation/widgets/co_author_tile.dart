@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,12 +74,12 @@ class CoAuthorTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                AutoSizeText(
                   name,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 const SizedBox(height: 4),
-                Text(
+                AutoSizeText(
                   handler,
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: AppColors.grey1,
