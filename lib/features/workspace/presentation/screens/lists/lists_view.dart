@@ -43,6 +43,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -53,6 +54,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -63,6 +65,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -73,6 +76,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -83,6 +87,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -93,6 +98,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -103,6 +109,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -113,6 +120,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
@@ -123,6 +131,7 @@ class ListsView extends StatelessWidget {
                     description:
                         'Описание Описание Описание Описание Описание Описание Описание ',
                     shoppingList: ShoppingList(
+                      id: '',
                       listedProducts: [],
                       coauthors: [],
                     ),
