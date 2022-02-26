@@ -2,8 +2,11 @@ import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../../workspace/domain/services/remote_data_service.dart';
 import '../../../domain/setting_service.dart';
 
 class SettingsViewModel extends ChangeNotifier {
@@ -12,7 +15,17 @@ class SettingsViewModel extends ChangeNotifier {
   final _settings = sl.get<SettingsService>();
 
   SettingsViewModel() {
-    _auth.userStream.listen((_) => notifyListeners());
+    _auth.userStream.listen((user) {
+      notifyListeners();
+      if (user != null) {
+        sl.registerSingleton<RemoteDataService>(RemoteDataService(
+          database: FirebaseDatabase.instanceFor(app: Firebase.app()),
+          user: _auth.currentUser!,
+        ));
+      } else {
+        sl.unregister<RemoteDataService>();
+      }
+    });
   }
 
   void backButtonCallback() => _router.pop();

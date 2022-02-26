@@ -1,13 +1,23 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'app/app.dart';
 import 'app/dependencies.dart';
 
 void main() async {
-  // todo: add Firebase Crachlytics or Sentry
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  await setupDependencies();
-  runApp(const App());
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await setupSentry();
+    await Firebase.initializeApp();
+    await setupHive();
+    await setupDependencies();
+    runApp(const App());
+  }, (exception, stackTrace) async {
+    await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
+    await Sentry.captureException(exception, stackTrace: stackTrace);
+  });
 }

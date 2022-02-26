@@ -1,8 +1,13 @@
 import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/services/abstract_data_service.dart';
+import 'package:hive/hive.dart';
 
 class LocalDataService extends DataService {
+  LocalDataService({required Box shoppingListsHiveBox});
+
+  var shoppingLists = <ShoppingList>[];
+
   @override
   Future<List<ShoppingList>> fetch() {
     throw UnimplementedError();

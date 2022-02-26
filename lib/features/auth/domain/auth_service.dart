@@ -23,15 +23,13 @@ class AuthService {
       final firebaseAuth = await _firebaseAuth.signInWithCredential(credential);
       return firebaseAuth.user;
     } catch (error) {
-      print(error);
+      // print(error);
       return null;
     }
   }
 
   /// Returns firebase user
-  Future<User?> signInWithApple() async {
-    return null;
-  }
+  Future<User?> signInWithApple() async => throw UnimplementedError();
 
   Future<String?> _openCodeScreenAndAwaitForCode() async => await sl
       .get<AppRouter>()
