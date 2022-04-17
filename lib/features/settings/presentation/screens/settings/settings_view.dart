@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:diplom/features/settings/data/blocks_content.dart';
 import 'package:diplom/features/settings/presentation/screens/settings/settings_viewmodel.dart';
 import 'package:diplom/features/settings/presentation/widgets/avatar.dart';

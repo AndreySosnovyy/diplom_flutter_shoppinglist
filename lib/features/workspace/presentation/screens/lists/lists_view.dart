@@ -1,5 +1,8 @@
+import 'package:diplom/app/dependencies.dart';
+import 'package:diplom/app/navigation/app_router.gr.dart';
+import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
+import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_viewmodel.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/widgets/add_list_fab.dart';
@@ -20,12 +23,15 @@ class ListsView extends StatelessWidget {
     );
 
     return ViewModelBuilder<ListsViewModel>.reactive(
-      viewModelBuilder: () => ListsViewModel(),
+      viewModelBuilder: () => ListsViewModel(
+        auth: sl.get<AuthService>(),
+        router: sl.get<AppRouter>(),
+      ),
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: CommonAppbar(
             title: 'Мои списки',
-            subtitle: 'Андрей Сосновый',
+            subtitle: viewModel.userName,
             hasNameHero: true,
             trailing: settingsIcon,
             trailingCallback: viewModel.openSettings,

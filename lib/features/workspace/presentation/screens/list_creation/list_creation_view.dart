@@ -1,5 +1,5 @@
+import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/features/common/presentation/widgets/common_appbar.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/co_authors_handler.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_search_line.dart';

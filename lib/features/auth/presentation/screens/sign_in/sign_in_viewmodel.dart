@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
+import 'package:diplom/app/presentation/dialogs/common_cupertino_dialog.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
-import 'package:diplom/features/common/presentation/dialogs/common_cupertino_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:logger/logger.dart';
