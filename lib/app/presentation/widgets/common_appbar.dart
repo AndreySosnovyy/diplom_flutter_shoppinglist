@@ -9,7 +9,6 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? leadingCallback;
   final Widget? trailing;
   final VoidCallback? trailingCallback;
-  final bool hasNameHero;
   final Color backgroundColor;
 
   const CommonAppbar({
@@ -19,7 +18,6 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingCallback,
     this.trailing,
     this.trailingCallback,
-    this.hasNameHero = false,
     this.backgroundColor = AppColors.grey3,
   })  : height = 56,
         super(key: key);

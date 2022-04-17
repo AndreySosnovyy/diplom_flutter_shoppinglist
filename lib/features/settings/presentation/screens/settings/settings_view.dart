@@ -60,16 +60,15 @@ class SettingsView extends StatelessWidget {
                           onTap: () {},
                         ),
                         const SizedBox(height: 14),
-                        Hero(
-                          tag: 'name',
-                          child: AutoSizeText(
-                            viewModel.displayName,
-                            maxLines: 1,
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .headline1,
-                          ),
+                        AutoSizeText(
+                          viewModel.displayName,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline1,
                         ),
                         if (viewModel.isSignedIn)
                         Padding(

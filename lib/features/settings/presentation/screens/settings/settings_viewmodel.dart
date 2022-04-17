@@ -23,7 +23,9 @@ class SettingsViewModel extends ChangeNotifier {
           user: _auth.currentUser!,
         ));
       } else {
-        sl.unregister<RemoteDataService>();
+        if (sl.isRegistered<RemoteDataService>()) {
+          sl.unregister<RemoteDataService>();
+        }
       }
     });
   }

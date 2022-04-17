@@ -31,7 +31,6 @@ class ListsView extends StatelessWidget {
         return Scaffold(
           appBar: CommonAppbar(
             title: 'Мои списки',
-            hasNameHero: true,
             trailing: settingsIcon,
             trailingCallback: viewModel.openSettings,
           ),

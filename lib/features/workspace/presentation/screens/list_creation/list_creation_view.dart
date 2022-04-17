@@ -21,10 +21,24 @@ class ListCreationView extends StatelessWidget {
       builder: (context, viewModel, child) => Scaffold(
         appBar: CommonAppbar(
           title: 'Новый список',
-          leading: const Icon(
-            CupertinoIcons.back,
-            size: 26,
-            color: AppColors.blue,
+          leading: Row(
+            children: [
+              const SizedBox(width: 10),
+              const Icon(
+                CupertinoIcons.back,
+                size: 26,
+                color: AppColors.blue,
+              ),
+              const SizedBox(width: 2),
+              Text(
+                'Назад',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(color: AppColors.blue),
+              ),
+            ],
           ),
           leadingCallback: viewModel.backButtonCallback,
         ),
