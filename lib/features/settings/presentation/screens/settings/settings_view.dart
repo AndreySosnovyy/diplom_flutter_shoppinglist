@@ -22,11 +22,25 @@ class SettingsView extends StatelessWidget {
           Scaffold(
             backgroundColor: AppColors.grey3,
             appBar: CommonAppbar(
-              subtitle: 'Настройки',
-              leading: const Icon(
-                CupertinoIcons.back,
-                size: 26,
-                color: AppColors.blue,
+              title: 'Настройки',
+              leading: Row(
+                children: [
+                  const SizedBox(width: 10),
+                  const Icon(
+                    CupertinoIcons.back,
+                    size: 26,
+                    color: AppColors.blue,
+                  ),
+                  const SizedBox(width: 2),
+                  Text(
+                    'Назад',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: AppColors.blue),
+                  ),
+                ],
               ),
               leadingCallback: viewModel.backButtonCallback,
             ),

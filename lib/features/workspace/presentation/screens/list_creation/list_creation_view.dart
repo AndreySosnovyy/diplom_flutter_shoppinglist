@@ -21,7 +21,6 @@ class ListCreationView extends StatelessWidget {
       builder: (context, viewModel, child) => Scaffold(
         appBar: CommonAppbar(
           title: 'Новый список',
-          subtitle: 'Андрей Сосновый',
           leading: const Icon(
             CupertinoIcons.back,
             size: 26,
