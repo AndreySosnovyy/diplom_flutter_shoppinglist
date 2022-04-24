@@ -7,7 +7,6 @@ import 'package:diplom/features/auth/presentation/widgets/sign_in_with_google_bu
 import 'package:diplom/features/auth/presentation/widgets/sign_in_with_phone_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../../app/values/assets.dart';
@@ -88,12 +87,6 @@ class SignInView extends StatelessWidget {
                     )
                         : Column(
                       children: [
-                        SignInWithAppleButton(
-                          onPressed: viewModel.signInWithApple,
-                          text: 'Войти с Apple',
-                          iconAlignment: IconAlignment.left,
-                        ),
-                        const SizedBox(height: 12),
                         SignInWithGoogleButton(
                           style: SignInWithGoogleButtonStyle.dark,
                           onPressed: viewModel.signInWithGoogle,

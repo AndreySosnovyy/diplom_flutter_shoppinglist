@@ -1,7 +1,6 @@
 import 'package:diplom/app/values/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../../app/values/assets.dart';
 
@@ -108,3 +107,5 @@ class SignInWithGoogleButton extends StatelessWidget {
 }
 
 enum SignInWithGoogleButtonStyle { light, dark }
+
+enum IconAlignment { left, center }

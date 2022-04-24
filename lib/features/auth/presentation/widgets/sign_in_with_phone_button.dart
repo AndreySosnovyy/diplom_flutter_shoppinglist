@@ -1,7 +1,7 @@
 import 'package:diplom/app/values/colors.dart';
+import 'package:diplom/features/auth/presentation/widgets/sign_in_with_google_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SignInWithPhoneButton extends StatelessWidget {
   final double height;
