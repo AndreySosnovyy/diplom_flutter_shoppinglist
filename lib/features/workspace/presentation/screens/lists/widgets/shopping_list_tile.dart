@@ -8,21 +8,23 @@ import 'package:flutter/material.dart';
 
 class ShoppingListTile extends StatefulWidget {
   const ShoppingListTile({
+    required this.id,
     required this.title,
     required this.shoppingList,
     required this.tileColor,
-    required this.toggleIsMarked,
+    required this.setIsMarked,
     this.isMarked = false,
     this.description,
     Key? key,
   }) : super(key: key);
 
+  final String id;
   final String title;
   final String? description;
   final ShoppingList shoppingList;
   final bool isMarked;
   final Color tileColor;
-  final VoidCallback toggleIsMarked;
+  final Function(bool value) setIsMarked;
 
   @override
   State<StatefulWidget> createState() => _ShoppingListTileState();
@@ -85,7 +87,10 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
                     .copyWith(color: AppColors.white),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() => isMarked = !isMarked);
+                  widget.setIsMarked(isMarked);
+                },
                 icon: isMarked
                     ? const Icon(
                         CupertinoIcons.bookmark_fill,
@@ -107,7 +112,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
               color: AppColors.white,
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
-            margin: const EdgeInsets.symmetric(vertical: 14),
+            margin: const EdgeInsets.symmetric(vertical: 8),
           ),
           if (description != null)
             AutoSizeText(

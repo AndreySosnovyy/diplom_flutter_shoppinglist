@@ -19,25 +19,29 @@ class ListsViewModel extends FutureViewModel {
   final AppRouter router;
   final LocalDataService localDataService;
   final RemoteDataService? remoteDataService;
-  late final List<ShoppingListTile> shoppingLists;
+  final List<ShoppingListTile> shoppingLists = <ShoppingListTile>[];
 
   @override
-  Future futureToRun() async => shoppingLists = await fetchShoppingLists();
+  Future futureToRun() async =>
+      shoppingLists.addAll(await fetchShoppingLists());
 
   Future<List<ShoppingListTile>> fetchShoppingLists() async {
     return [
       for (var i = 0; i < 10; i++)
         ShoppingListTile(
+          id: '123',
           title: 'Название',
           description:
-              'Описание Описание Описание Описание Описание Описание Описание ',
+              'Описание Описание Описание Описание Описание Описание Описание',
           shoppingList: ShoppingList(
             id: '',
             listedProducts: [],
             coauthors: [],
           ),
           tileColor: ShoppingListTileColors.red,
-          toggleIsMarked: () {},
+          setIsMarked: (bool isMarked) {
+            print(isMarked);
+          },
         ),
     ];
   }
@@ -47,6 +51,4 @@ class ListsViewModel extends FutureViewModel {
   void openSettings() => router.push(const SettingsViewRoute());
 
   void openListCreationView() => router.push(const ListCreationViewRoute());
-
-  void toggleIsMarked() {}
 }
