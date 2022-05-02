@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
@@ -20,41 +21,24 @@ class _SuggestionTileState extends State<SuggestionTile> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            SizedBox(
-              width: 24,
-              height: 24,
-              child: widget.suggestion.imageUrl != null
-                  ? CachedNetworkImage(imageUrl: widget.suggestion.imageUrl!)
-                  : GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.grey2,
-                        ),
-                        padding: const EdgeInsets.all(4),
-                        child: const Icon(
-                          CupertinoIcons.photo_camera,
-                          color: AppColors.blue,
-                        ),
-                      ),
-                    ),
+        widget.suggestion.imageUrl != null
+            ? CachedNetworkImage(imageUrl: widget.suggestion.imageUrl!)
+            : Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.white,
+              ),
+              padding: const EdgeInsets.all(4),
+              child: Icon(
+                CupertinoIcons.question,
+                color: AppColors.blue.withOpacity(0.3),
+              ),
             ),
-            const SizedBox(width: 8),
-            Text(
-              widget.suggestion.name,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ],
-        ),
-        Container(
-          width: 20,
-          height: 10,
-          color: AppColors.blue,
+        const SizedBox(width: 16),
+        AutoSizeText(
+          widget.suggestion.name,
+          style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
     );

@@ -29,15 +29,15 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
                   color: AppColors.grey3,
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
-                padding: const EdgeInsets.all(8),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 8),
                   shrinkWrap: true,
                   itemCount: min(widget.suggestionsNotifier.value.length, 3),
                   itemBuilder: (context, index) => SuggestionTile(
                     suggestion: widget.suggestionsNotifier.value[index],
                   ),
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
                 ),
               )
             : const SizedBox();
