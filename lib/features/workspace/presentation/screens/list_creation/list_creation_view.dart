@@ -1,14 +1,13 @@
 import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/co_authors_handler.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_search_line.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/empty_banner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../../../app/values/assets.dart';
 import 'list_creation_viewmodel.dart';
 
 class ListCreationView extends StatelessWidget {
@@ -32,8 +31,7 @@ class ListCreationView extends StatelessWidget {
               const SizedBox(width: 2),
               Text(
                 'Назад',
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .textTheme
                     .bodyText1!
                     .copyWith(color: AppColors.blue),
@@ -50,6 +48,7 @@ class ListCreationView extends StatelessWidget {
             onTap: () {
               viewModel.setScreenModeToNormal();
               FocusManager.instance.primaryFocus?.unfocus();
+              viewModel.productController.text = '';
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,23 +77,9 @@ class ListCreationView extends StatelessWidget {
                         color: AppColors.grey3,
                       ),
                       CoAuthorsHandler(
-                        addCoAuthorCallback: () {},
-                        coAuthors: [
-                          CoAuthor(
-                            name: 'Андрей Сосновый',
-                            handler: '@andreysosnovyy',
-                          ),
-                          CoAuthor(
-                            name: 'Андрей Сосновый',
-                            handler: '@andreysosnovyy',
-                          ),
-                          CoAuthor(
-                            name: 'Андрей Сосновый',
-                            handler: '@andreysosnovyy',
-                            avatarUrl:
-                                'https://www.pathwaysvermont.org/wp-content/uploads/2017/03/avatar-placeholder-e1490629554738.png',
-                          ),
-                        ],
+                        addCoAuthorCallback: (coAuthor) =>
+                            viewModel.coAuthors.add(coAuthor),
+                        coAuthors: viewModel.coAuthors,
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
@@ -114,36 +99,7 @@ class ListCreationView extends StatelessWidget {
                   ),
                 ),
                 if (viewModel.products.isEmpty)
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Assets.illustrationsEmptyBox,
-                          width: 244,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Пока здесь ничего нет',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: AppColors.grey1),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Начните вводить название товара,\nзатем выберете его из списка и укажите количество',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: AppColors.grey2),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 54),
-                      ],
-                    ),
-                  ),
+                  const Expanded(child: EmptyBanner()),
               ],
             ),
           ),
