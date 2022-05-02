@@ -33,6 +33,7 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       automaticallyImplyLeading: false,
       leadingWidth: leading.runtimeType == Row ? 120 : 56,
+      centerTitle: true,
       leading: GestureDetector(
         onTap: leadingCallback,
         behavior: HitTestBehavior.opaque,
