@@ -46,6 +46,10 @@ class ListCreationViewModel extends ChangeNotifier {
 
   void onSearchChanged(String text) {
     suggestionsNotifier.value.clear();
+    if (text.isEmpty) {
+      notifyListeners();
+      return;
+    }
     for (final suggestion in suggestionsSource.suggestions) {
       if (suggestion.name
           .toLowerCase()

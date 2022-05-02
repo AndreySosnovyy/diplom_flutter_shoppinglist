@@ -22,19 +22,23 @@ class _SuggestionTileState extends State<SuggestionTile> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        widget.suggestion.imageUrl != null
-            ? CachedNetworkImage(imageUrl: widget.suggestion.imageUrl!)
-            : Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.white,
+        SizedBox(
+          width: 36,
+          height: 36,
+          child: widget.suggestion.imageUrl != null
+              ? CachedNetworkImage(imageUrl: widget.suggestion.imageUrl!)
+              : Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.white,
+                ),
+                padding: const EdgeInsets.all(4),
+                child: Icon(
+                  CupertinoIcons.question,
+                  color: AppColors.blue.withOpacity(0.3),
+                ),
               ),
-              padding: const EdgeInsets.all(4),
-              child: Icon(
-                CupertinoIcons.question,
-                color: AppColors.blue.withOpacity(0.3),
-              ),
-            ),
+        ),
         const SizedBox(width: 16),
         AutoSizeText(
           widget.suggestion.name,
