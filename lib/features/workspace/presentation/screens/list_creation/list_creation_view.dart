@@ -4,6 +4,7 @@ import 'package:diplom/features/workspace/presentation/screens/list_creation/wid
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_search_line.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/empty_banner.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/suggestions_block.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -49,6 +50,7 @@ class ListCreationView extends StatelessWidget {
               viewModel.setScreenModeToNormal();
               FocusManager.instance.primaryFocus?.unfocus();
               viewModel.productController.text = '';
+              viewModel.onSearchChanged('');
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,6 +99,9 @@ class ListCreationView extends StatelessWidget {
                     hint: 'Название товара',
                     onTap: viewModel.setScreenModeToSearch,
                   ),
+                ),
+                SuggestionsBlock(
+                  suggestionsNotifier: viewModel.suggestionsNotifier,
                 ),
                 if (viewModel.products.isEmpty)
                   const Expanded(child: EmptyBanner()),
