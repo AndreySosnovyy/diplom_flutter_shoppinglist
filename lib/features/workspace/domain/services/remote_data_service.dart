@@ -6,11 +6,13 @@ import 'package:firebase_database/firebase_database.dart';
 
 class RemoteDataService extends DataService {
   RemoteDataService({
-    required User user,
-    required FirebaseDatabase database,
+    required this.user,
+    required this.database,
   });
 
-  var shoppingLists = <ShoppingList>[];
+  final shoppingLists = <ShoppingList>[];
+  final User? user;
+  final FirebaseDatabase database;
 
   @override
   Future<List<ShoppingList>> fetch() async => throw UnimplementedError();

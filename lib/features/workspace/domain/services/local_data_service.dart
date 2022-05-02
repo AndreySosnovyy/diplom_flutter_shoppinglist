@@ -4,9 +4,12 @@ import 'package:diplom/features/workspace/domain/services/abstract_data_service.
 import 'package:hive/hive.dart';
 
 class LocalDataService extends DataService {
-  LocalDataService({required Box shoppingListsHiveBox});
+  LocalDataService({
+    required this.shoppingListsHiveBox,
+  });
 
-  var shoppingLists = <ShoppingList>[];
+  final shoppingLists = <ShoppingList>[];
+  final Box shoppingListsHiveBox;
 
   @override
   Future<List<ShoppingList>> fetch() {
