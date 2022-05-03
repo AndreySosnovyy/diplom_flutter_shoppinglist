@@ -1,3 +1,4 @@
+import 'package:diplom/features/workspace/domain/entities/product.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
 
 // todo: add images urls
@@ -30,14 +31,17 @@ class SuggestionsSource {
     Suggestion(
       name: 'Яблоки',
       imageUrl: null,
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Бананы',
       imageUrl: null,
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Молоко',
       imageUrl: 'https://e7.pngegg.com/pngimages/506/654/png-clipart-milk-bottle-milk-bottle-drink-milk-rectangle-pink.png',
+      unit: Unit.liter,
     ),
     Suggestion(
       name: 'Сметана',
@@ -50,22 +54,27 @@ class SuggestionsSource {
     Suggestion(
       name: 'Морковь',
       imageUrl: 'https://w7.pngwing.com/pngs/517/983/png-transparent-carrot-fig-carrot-vegetables-fruit-thumbnail.png',
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Капуста',
       imageUrl: null,
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Картофель',
       imageUrl: null,
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Огурцы',
       imageUrl: 'https://envato-shoebox-0.imgix.net/7d03/9561-82ab-4aa4-a147-9733f03381b9/FreshSnackCucumberInWoodenBowl.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=700&s=074c976a625f64f0a33c6254a85bf6ad',
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Помидоры',
       imageUrl: null,
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Чай',
@@ -98,10 +107,12 @@ class SuggestionsSource {
     Suggestion(
       name: 'Свинина',
       imageUrl: null,
+      unit: Unit.kilos,
     ),
     Suggestion(
       name: 'Сок',
       imageUrl: 'https://img1.freepng.ru/20180219/ooe/kisspng-orange-juice-pineapple-jus-dananas-fruit-pineapple-juice-5a8b7c878f0143.1766474415190908235858.jpg',
+      unit: Unit.liter,
     ),
     Suggestion(
       name: 'Сосиски',
@@ -146,10 +157,12 @@ class SuggestionsSource {
     Suggestion(
       name: 'Вино',
       imageUrl: null,
+      unit: Unit.liter,
     ),
     Suggestion(
       name: 'Пиво',
       imageUrl: 'https://w7.pngwing.com/pngs/116/398/png-transparent-ice-beer-decoration-pattern-icy-beer-glass.png',
+      unit: Unit.liter,
     ),
     Suggestion(
       name: 'Яйца',
@@ -166,6 +179,7 @@ class SuggestionsSource {
     Suggestion(
       name: 'Шоколадка',
       imageUrl: 'https://png.pngtree.com/png-vector/20201124/ourmid/pngtree-large-and-small-pieces-of-twill-chocolate-stacked-png-image_2465216.jpg',
+      unit: Unit.grams,
     ),
     Suggestion(
       name: 'Макароны',

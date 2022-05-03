@@ -31,10 +31,10 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
   final List<Suggestion> currentSuggestions = <Suggestion>[];
 
   double get blockHeight {
-    const double defaultHeight = 74;
+    const double defaultHeight = 54;
     if (widget.searchTextNotifier.value.isEmpty) return 0;
     if (currentSuggestions.isEmpty) return defaultHeight;
-    return min(currentSuggestions.length, 3) * 45 + defaultHeight;
+    return min(currentSuggestions.length, 3) * 45 + defaultHeight + 24;
   }
 
   void onSearchUpdate(String text) {
@@ -97,20 +97,25 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
                     ],
                   ),
                 ),
-                Container(
-                  height: 1,
-                  margin: const EdgeInsets.only(top: 6, bottom: 6),
-                  color: AppColors.blue,
-                ),
-                Center(
-                  child: Text(
-                    'Возможно вы искали:',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(color: AppColors.grey1),
+                if (currentSuggestions.isNotEmpty)
+                  Column(
+                    children: [
+                      Container(
+                        height: 1,
+                        margin: const EdgeInsets.only(top: 6, bottom: 6),
+                        color: AppColors.blue,
+                      ),
+                      Center(
+                        child: Text(
+                          'Возможно вы искали:',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: AppColors.grey1),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
                 Expanded(
                   child: Scrollbar(
                     child: ListView.separated(
