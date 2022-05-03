@@ -6,7 +6,7 @@ import 'package:diplom/app/utils/string_extensions.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/data/suggestions_source.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/suggestion_tile.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/suggestion_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

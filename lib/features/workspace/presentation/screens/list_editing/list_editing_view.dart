@@ -1,23 +1,27 @@
+import 'package:diplom/app/dependencies.dart';
+import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/co_authors_handler.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_search_line.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/common_textfield.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/empty_banner.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/suggestions_block.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/co_authors_handler.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/common_search_line.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/common_textfield.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/empty_banner.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/suggestions_block.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'list_creation_viewmodel.dart';
+import 'list_editing_viewmodel.dart';
 
-class ListCreationView extends StatelessWidget {
-  const ListCreationView({Key? key}) : super(key: key);
+class ListEditingView extends StatelessWidget {
+  const ListEditingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<ListCreationViewModel>.reactive(
-      viewModelBuilder: () => ListCreationViewModel(),
+    return ViewModelBuilder<ListEditingViewModel>.reactive(
+      viewModelBuilder: () => ListEditingViewModel(
+        router: sl.get<AppRouter>(),
+      ),
       builder: (context, viewModel, child) => Scaffold(
         appBar: CommonAppbar(
           title: 'Новый список',

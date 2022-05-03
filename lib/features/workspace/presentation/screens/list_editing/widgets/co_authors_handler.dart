@@ -1,7 +1,7 @@
 import 'package:diplom/app/presentation/widgets/common_scroll_behavior.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_creation/widgets/co_author_tile.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/co_author_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -39,9 +39,7 @@ class ListsViewModel extends FutureViewModel {
             coauthors: [],
           ),
           tileColor: ShoppingListTileColors.red,
-          setIsMarked: (bool isMarked) {
-            print(isMarked);
-          },
+          setIsMarked: (bool isMarked) {},
         ),
     ];
   }
@@ -50,5 +48,5 @@ class ListsViewModel extends FutureViewModel {
 
   void openSettings() => router.push(const SettingsViewRoute());
 
-  void openListCreationView() => router.push(const ListCreationViewRoute());
+  void openListCreationView() => router.push(const ListEditingViewRoute());
 }

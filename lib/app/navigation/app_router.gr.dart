@@ -19,7 +19,7 @@ import 'package:diplom/features/auth/presentation/screens/sign_in_with_phone/sig
     as _i5;
 import 'package:diplom/features/settings/presentation/screens/settings/settings_view.dart'
     as _i3;
-import 'package:diplom/features/workspace/presentation/screens/list_creation/list_creation_view.dart'
+import 'package:diplom/features/workspace/presentation/screens/list_editing/list_editing_view.dart'
     as _i2;
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_view.dart'
     as _i1;
@@ -35,9 +35,9 @@ class AppRouter extends _i7.RootStackRouter {
       return _i7.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i1.ListsView());
     },
-    ListCreationViewRoute.name: (routeData) {
+    ListEditingViewRoute.name: (routeData) {
       return _i7.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i2.ListCreationView());
+          routeData: routeData, child: const _i2.ListEditingView());
     },
     SettingsViewRoute.name: (routeData) {
       return _i7.AdaptivePage<dynamic>(
@@ -60,8 +60,7 @@ class AppRouter extends _i7.RootStackRouter {
   @override
   List<_i7.RouteConfig> get routes => [
         _i7.RouteConfig(ListsViewRoute.name, path: '/'),
-        _i7.RouteConfig(ListCreationViewRoute.name,
-            path: '/list-creation-view'),
+        _i7.RouteConfig(ListEditingViewRoute.name, path: '/list-editing-view'),
         _i7.RouteConfig(SettingsViewRoute.name, path: '/settings-view'),
         _i7.RouteConfig(SignInViewRoute.name, path: '/sign-in-view'),
         _i7.RouteConfig(SignInWithPhoneViewRoute.name,
@@ -80,12 +79,12 @@ class ListsViewRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.ListCreationView]
-class ListCreationViewRoute extends _i7.PageRouteInfo<void> {
-  const ListCreationViewRoute()
-      : super(ListCreationViewRoute.name, path: '/list-creation-view');
+/// [_i2.ListEditingView]
+class ListEditingViewRoute extends _i7.PageRouteInfo<void> {
+  const ListEditingViewRoute()
+      : super(ListEditingViewRoute.name, path: '/list-editing-view');
 
-  static const String name = 'ListCreationViewRoute';
+  static const String name = 'ListEditingViewRoute';
 }
 
 /// generated route for

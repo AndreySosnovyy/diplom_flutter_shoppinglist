@@ -1,5 +1,4 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
@@ -7,22 +6,14 @@ import 'package:diplom/features/workspace/domain/entities/product.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:stacked/stacked.dart';
 
-class ListCreationViewModel extends ChangeNotifier {
-  final router = sl.get<AppRouter>();
+class ListEditingViewModel extends BaseViewModel {
+  ListEditingViewModel({required this.router});
 
-  final ValueNotifier<List<CoAuthor>> coAuthorsNotifier = ValueNotifier([
-    // CoAuthor(
-    //   name: 'Андрей Сосновый',
-    //   handler: '@andreysosnovyy',
-    // ),
-    // CoAuthor(
-    //   name: 'Андрей Сосновый',
-    //   handler: '@andreysosnovyy',
-    // ),
-  ]);
+  final AppRouter router;
 
-  // final ValueNotifier<List<Suggestion>> suggestionsNotifier = ValueNotifier([]);
+  final ValueNotifier<List<CoAuthor>> coAuthorsNotifier = ValueNotifier([]);
   final ValueNotifier<String> searchNotifier = ValueNotifier('');
 
   final nameController = TextEditingController();
