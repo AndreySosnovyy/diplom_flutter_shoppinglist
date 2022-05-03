@@ -48,7 +48,12 @@ class _SuggestionTileState extends State<SuggestionTile> {
                 width: 36,
                 height: 36,
                 child: widget.suggestion.imageUrl != null
-                    ? CachedNetworkImage(imageUrl: widget.suggestion.imageUrl!)
+                    ? ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: widget.suggestion.imageUrl!,
+                          fit: BoxFit.cover,
+                        ),
+                      )
                     : Container(
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,

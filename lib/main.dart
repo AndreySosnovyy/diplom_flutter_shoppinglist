@@ -18,6 +18,7 @@ void main() async {
     await setupDependencies();
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     runApp(const App());
   }, (exception, stackTrace) async {
     await FirebaseCrashlytics.instance.recordError(exception, stackTrace);
