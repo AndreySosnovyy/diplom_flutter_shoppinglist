@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:diplom/app/presentation/widgets/common_scroll_behavior.dart';
+import 'package:diplom/app/utils/string_extensions.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/data/suggestions_source.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
@@ -9,12 +13,14 @@ import 'package:flutter/material.dart';
 class SuggestionsBlock extends StatefulWidget {
   const SuggestionsBlock({
     required this.searchTextNotifier,
-    required this.onTap,
+    required this.onSuggestionTap,
+    required this.addByProductName,
     Key? key,
   }) : super(key: key);
 
   final ValueNotifier<String> searchTextNotifier;
-  final Function(Suggestion suggestion) onTap;
+  final Function(Suggestion suggestion) onSuggestionTap;
+  final Function(String productName) addByProductName;
 
   @override
   State<StatefulWidget> createState() => _SuggestionsBlockState();
@@ -24,12 +30,11 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
   final suggestionsSource = SuggestionsSource();
   final List<Suggestion> currentSuggestions = <Suggestion>[];
 
-  double get height {
-    if (currentSuggestions.length < 3) {
-      return currentSuggestions.length * 45;
-    } else {
-      return 3 * 45;
-    }
+  double get blockHeight {
+    const double defaultHeight = 74;
+    if (widget.searchTextNotifier.value.isEmpty) return 0;
+    if (currentSuggestions.isEmpty) return defaultHeight;
+    return min(currentSuggestions.length, 3) * 45 + defaultHeight;
   }
 
   void onSearchUpdate(String text) {
@@ -49,7 +54,7 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
       builder: (context, String value, child) {
         onSearchUpdate(value);
         return Container(
-          height: height,
+          height: blockHeight,
           clipBehavior: Clip.hardEdge,
           decoration: const BoxDecoration(
             color: AppColors.grey3,
@@ -58,28 +63,81 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
           padding: const EdgeInsets.only(left: 16),
           child: ScrollConfiguration(
             behavior: CommonScrollBehavior(),
-            child: ListView.separated(
-              shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              itemCount: currentSuggestions.length,
-              itemBuilder: (context, index) => SuggestionTile(
-                suggestion: currentSuggestions[index],
-                onTap: () => widget.onTap(currentSuggestions[index]),
-              ),
-              separatorBuilder: (_, __) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(),
-                    Container(
-                      height: 0.8,
-                      margin: const EdgeInsets.symmetric(vertical: 2.6),
-                      width: MediaQuery.of(context).size.width * 0.76,
-                      color: AppColors.grey2,
+            child: Column(
+              children: [
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () => widget.addByProductName(value),
+                  behavior: HitTestBehavior.opaque,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 36,
+                        height: 36,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.white,
+                          ),
+                          padding: const EdgeInsets.all(4),
+                          child: const Center(
+                            child: Icon(
+                              CupertinoIcons.plus,
+                              color: AppColors.blue,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      AutoSizeText(
+                        'Добавить «${value.capitalize()}»',
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 1,
+                  margin: const EdgeInsets.only(top: 6, bottom: 6),
+                  color: AppColors.blue,
+                ),
+                Center(
+                  child: Text(
+                    'Возможно вы искали:',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(color: AppColors.grey1),
+                  ),
+                ),
+                Expanded(
+                  child: Scrollbar(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(top: 4, bottom: 6),
+                      itemCount: currentSuggestions.length,
+                      itemBuilder: (context, index) => SuggestionTile(
+                        suggestion: currentSuggestions[index],
+                        onTap: () =>
+                            widget.onSuggestionTap(currentSuggestions[index]),
+                      ),
+                      separatorBuilder: (_, __) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(),
+                          Container(
+                            height: 0.6,
+                            width: MediaQuery.of(context).size.width * 0.76,
+                            margin: const EdgeInsets.symmetric(vertical: 2.6),
+                            color: AppColors.grey2,
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                );
-              },
+                  ),
+                ),
+              ],
             ),
           ),
         );

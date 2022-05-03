@@ -2,6 +2,10 @@ import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
 
 // todo: add images urls
 class SuggestionsSource {
+  SuggestionsSource() {
+    suggestions.sort((a, b) => a.name.compareTo(b.name));
+  }
+
   final List<Suggestion> suggestions = <Suggestion>[
     Suggestion(
       name: 'Колбаса',

@@ -51,6 +51,9 @@ class ListCreationViewModel extends ChangeNotifier {
   // todo: implement method
   void addProductViaSuggestion(Suggestion suggestion) =>
       throw UnimplementedError();
+
+  // todo: implement method
+  void addProductByName(String productName) => throw UnimplementedError();
 }
 
 enum _ScreenMode { normal, search }

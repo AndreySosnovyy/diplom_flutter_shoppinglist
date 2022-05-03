@@ -33,18 +33,20 @@ class _SuggestionTileState extends State<SuggestionTile> {
             child: widget.suggestion.imageUrl != null
                 ? CachedNetworkImage(imageUrl: widget.suggestion.imageUrl!)
                 : Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.white,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.white,
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: Center(
+                      child: Icon(
+                        CupertinoIcons.question,
+                        color: AppColors.blue.withOpacity(0.3),
+                      ),
+                    ),
                   ),
-                  padding: const EdgeInsets.all(4),
-                  child: Icon(
-                    CupertinoIcons.question,
-                    color: AppColors.blue.withOpacity(0.3),
-                  ),
-                ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 8),
           AutoSizeText(
             widget.suggestion.name,
             style: Theme.of(context).textTheme.bodyText1,
