@@ -101,7 +101,8 @@ class ListCreationView extends StatelessWidget {
                   ),
                 ),
                 SuggestionsBlock(
-                  suggestionsNotifier: viewModel.suggestionsNotifier,
+                  searchTextNotifier: viewModel.searchNotifier,
+                  onTap: viewModel.addProductViaSuggestion,
                 ),
                 if (viewModel.products.isEmpty)
                   const Expanded(child: EmptyBanner()),

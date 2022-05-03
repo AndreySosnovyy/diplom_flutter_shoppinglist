@@ -1,6 +1,5 @@
 import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
-import 'package:diplom/features/workspace/data/suggestions_source.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/domain/entities/product.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
@@ -20,13 +19,13 @@ class ListCreationViewModel extends ChangeNotifier {
     ),
   ];
 
-  final ValueNotifier<List<Suggestion>> suggestionsNotifier = ValueNotifier([]);
+  // final ValueNotifier<List<Suggestion>> suggestionsNotifier = ValueNotifier([]);
+  final ValueNotifier<String> searchNotifier = ValueNotifier('');
 
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final productController = TextEditingController();
   var _screenMode = _ScreenMode.normal;
-  final suggestionsSource = SuggestionsSource();
 
   void setScreenModeToSearch() {
     _screenMode = _ScreenMode.search;
@@ -45,20 +44,13 @@ class ListCreationViewModel extends ChangeNotifier {
   void backButtonCallback() => router.pop();
 
   void onSearchChanged(String text) {
-    suggestionsNotifier.value.clear();
-    if (text.isEmpty) {
-      notifyListeners();
-      return;
-    }
-    for (final suggestion in suggestionsSource.suggestions) {
-      if (suggestion.name
-          .toLowerCase()
-          .contains(productController.text.toLowerCase())) {
-        suggestionsNotifier.value.add(suggestion);
-      }
-    }
+    searchNotifier.value = text;
     notifyListeners();
   }
+
+  // todo: implement method
+  void addProductViaSuggestion(Suggestion suggestion) =>
+      throw UnimplementedError();
 }
 
 enum _ScreenMode { normal, search }
