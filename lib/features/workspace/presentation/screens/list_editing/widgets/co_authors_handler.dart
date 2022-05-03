@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 class CoAuthorsHandler extends StatelessWidget {
   const CoAuthorsHandler({
     Key? key,
-    required this.coAuthorsNotifier,
+    // required this.coAuthorsNotifier,
+    required this.coAuthors,
     required this.showAddingCoAuthorDialog,
     required this.deleteCoAuthor,
   }) : super(key: key);
 
-  final ValueNotifier<List<CoAuthor>> coAuthorsNotifier;
+  // final ValueNotifier<List<CoAuthor>> coAuthorsNotifier;
+  final List<CoAuthor> coAuthors;
   final Function() showAddingCoAuthorDialog;
   final Function(String userHandler) deleteCoAuthor;
 
@@ -39,30 +41,26 @@ class CoAuthorsHandler extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            ValueListenableBuilder(
-              valueListenable: coAuthorsNotifier,
-              builder: (context, List<CoAuthor> value, _) {
-                if (coAuthorsNotifier.value.isNotEmpty) {
-                  return SizedBox(
+            coAuthors.isNotEmpty
+                ? SizedBox(
                     width: MediaQuery.of(context).size.width - 108,
                     height: 70,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: coAuthorsNotifier.value.length,
+                      itemCount: coAuthors.length,
                       itemBuilder: (context, index) => CoAuthorTile(
-                        avatarUrl: coAuthorsNotifier.value[index].avatarUrl,
-                        name: coAuthorsNotifier.value[index].name,
-                        handler: coAuthorsNotifier.value[index].handler,
-                        deleteCallback: () => deleteCoAuthor(
-                            coAuthorsNotifier.value[index].handler),
+                        avatarUrl: coAuthors[index].avatarUrl,
+                        name: coAuthors[index].name,
+                        handler: coAuthors[index].handler,
+                        deleteCallback: () =>
+                            deleteCoAuthor(coAuthors[index].handler),
                       ),
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 12),
                     ),
-                  );
-                } else {
-                  return Padding(
+                  )
+                : Padding(
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
                       'Соавторы',
@@ -71,10 +69,7 @@ class CoAuthorsHandler extends StatelessWidget {
                           .subtitle1!
                           .copyWith(color: AppColors.grey1),
                     ),
-                  );
-                }
-              },
-            ),
+                  ),
           ],
         ),
       ),

@@ -33,11 +33,7 @@ class ListsViewModel extends FutureViewModel {
           title: 'Название',
           description:
               'Описание Описание Описание Описание Описание Описание Описание',
-          shoppingList: ShoppingList(
-            id: '',
-            listedProducts: [],
-            coauthors: [],
-          ),
+          shoppingList: ShoppingList(id: ''),
           tileColor: ShoppingListTileColors.red,
           setIsMarked: (bool isMarked) {},
         ),

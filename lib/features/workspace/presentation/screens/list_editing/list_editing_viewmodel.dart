@@ -2,18 +2,22 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
-import 'package:diplom/features/workspace/domain/entities/product.dart';
+import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stacked/stacked.dart';
 
 class ListEditingViewModel extends BaseViewModel {
-  ListEditingViewModel({required this.router});
+  ListEditingViewModel({
+    required this.router,
+    required this.shoppingList,
+
+  });
 
   final AppRouter router;
+  final ShoppingList shoppingList;
 
-  final ValueNotifier<List<CoAuthor>> coAuthorsNotifier = ValueNotifier([]);
   final ValueNotifier<String> searchNotifier = ValueNotifier('');
 
   final nameController = TextEditingController();
@@ -32,8 +36,6 @@ class ListEditingViewModel extends BaseViewModel {
   }
 
   bool get displayTopInputs => _screenMode == _ScreenMode.normal;
-
-  final products = <Product>[];
 
   void backButtonCallback() => router.pop();
 
@@ -67,10 +69,13 @@ class ListEditingViewModel extends BaseViewModel {
       final String userHandler = result[0];
       // todo: check if user exists and his profile is open (+ get his username)
       if (true) {
-        coAuthorsNotifier.value.add(CoAuthor(
-          name: 'User name',
-          handler: userHandler,
-        ));
+        shoppingList.coAuthors.add(
+          CoAuthor(
+            name: 'User name',
+            handler: userHandler,
+          ),
+        );
+        print(shoppingList.coAuthors.length);
         notifyListeners();
       } else {
         Fluttertoast.showToast(
@@ -83,7 +88,7 @@ class ListEditingViewModel extends BaseViewModel {
   }
 
   void deleteCoAuthorByUserHandler(String userHandler) {
-    coAuthorsNotifier.value
+    shoppingList.coAuthors
         .removeWhere((coAuthor) => coAuthor.handler == userHandler);
     notifyListeners();
   }

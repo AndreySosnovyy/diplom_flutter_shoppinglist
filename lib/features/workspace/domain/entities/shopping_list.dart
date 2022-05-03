@@ -4,20 +4,13 @@ import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 /// The class represents a list of products the user has created
 class ShoppingList {
   final String id;
-  List<ListedProduct> listedProducts;
-  List<CoAuthor> coauthors;
+  final List<ListedProduct> listedProducts = [];
+  final List<CoAuthor> coAuthors = [];
   DateTime? deadline;
   double? budget;
-  bool isPinned;
+  bool isPinned = false;
 
-  ShoppingList({
-    required this.id,
-    this.listedProducts = const [],
-    this.coauthors = const [],
-    this.budget,
-    this.deadline,
-    this.isPinned = false,
-  });
+  ShoppingList({required this.id});
 
   /// Returns the expected total price of all products in this list
   /// according to added listed products
