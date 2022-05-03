@@ -13,4 +13,4 @@ class Product {
   });
 }
 
-enum Unit { pcs, kilos, grams }
+enum Unit { pcs, kilos, grams, liter }
