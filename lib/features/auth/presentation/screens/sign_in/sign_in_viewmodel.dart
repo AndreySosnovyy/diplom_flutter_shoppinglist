@@ -7,8 +7,9 @@ import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:logger/logger.dart';
+import 'package:stacked/stacked.dart';
 
-class SignInViewModel extends ChangeNotifier {
+class SignInViewModel extends BaseViewModel {
   late final BuildContext context;
   late final StreamSubscription<bool> _keyboardSubscription;
 
@@ -26,6 +27,13 @@ class SignInViewModel extends ChangeNotifier {
       phoneImageVisible = !visible;
       notifyListeners();
     });
+  }
+
+
+  @override
+  void dispose() {
+    _keyboardSubscription.cancel();
+    super.dispose();
   }
 
   void backButtonCallback() {

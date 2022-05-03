@@ -6,14 +6,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CoAuthorsHandler extends StatelessWidget {
-  final List<CoAuthor> coAuthors;
-  final Function(CoAuthor coAuthor) addCoAuthorCallback;
-
   const CoAuthorsHandler({
     Key? key,
-    required this.coAuthors,
-    required this.addCoAuthorCallback,
+    required this.coAuthorsNotifier,
+    required this.showAddingCoAuthorDialog,
+    required this.deleteCoAuthor,
   }) : super(key: key);
+
+  final ValueNotifier<List<CoAuthor>> coAuthorsNotifier;
+  final Function() showAddingCoAuthorDialog;
+  final Function(String userHandler) deleteCoAuthor;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class CoAuthorsHandler extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: showAddingCoAuthorDialog,
               child: const SizedBox(
                 child: Icon(
                   CupertinoIcons.plus_circled,
@@ -36,36 +38,43 @@ class CoAuthorsHandler extends StatelessWidget {
                 ),
               ),
             ),
-            if (coAuthors.isEmpty)
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text(
-                  'Соавторы',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: AppColors.grey1),
-                ),
-              ),
             const SizedBox(width: 12),
-            if (coAuthors.isNotEmpty)
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 108,
-                height: 70,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: coAuthors.length,
-                  itemBuilder: (context, index) => CoAuthorTile(
-                    avatarUrl: coAuthors[index].avatarUrl,
-                    name: coAuthors[index].name,
-                    handler: coAuthors[index].handler,
-                    deleteCallback: () {},
-                  ),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 12),
-                ),
-              ),
+            ValueListenableBuilder(
+              valueListenable: coAuthorsNotifier,
+              builder: (context, List<CoAuthor> value, _) {
+                if (coAuthorsNotifier.value.isNotEmpty) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width - 108,
+                    height: 70,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: coAuthorsNotifier.value.length,
+                      itemBuilder: (context, index) => CoAuthorTile(
+                        avatarUrl: coAuthorsNotifier.value[index].avatarUrl,
+                        name: coAuthorsNotifier.value[index].name,
+                        handler: coAuthorsNotifier.value[index].handler,
+                        deleteCallback: () => deleteCoAuthor(
+                            coAuthorsNotifier.value[index].handler),
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 12),
+                    ),
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Соавторы',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(color: AppColors.grey1),
+                    ),
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

@@ -79,9 +79,10 @@ class ListCreationView extends StatelessWidget {
                         color: AppColors.grey3,
                       ),
                       CoAuthorsHandler(
-                        addCoAuthorCallback: (coAuthor) =>
-                            viewModel.coAuthors.add(coAuthor),
-                        coAuthors: viewModel.coAuthors,
+                        coAuthorsNotifier: viewModel.coAuthorsNotifier,
+                        showAddingCoAuthorDialog: () =>
+                            viewModel.showAddingCoAuthorDialog(context),
+                        deleteCoAuthor: viewModel.deleteCoAuthorByUserHandler,
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
