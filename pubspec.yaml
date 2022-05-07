@@ -63,6 +63,7 @@ dependencies:
   sentry_flutter: ^6.5.1
   firebase_crashlytics: ^2.6.3
   adaptive_dialog: ^1.6.2+1
+  image_picker: ^0.8.5
 
 
 dev_dependencies:

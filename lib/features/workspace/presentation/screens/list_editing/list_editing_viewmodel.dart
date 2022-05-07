@@ -14,15 +14,7 @@ class ListEditingViewModel extends BaseViewModel {
   ListEditingViewModel({
     required this.router,
     required this.shoppingList,
-  }) {
-    shoppingList.listedProducts.add(
-      ListedProduct(
-        name: 'Колбаса',
-        unit: Unit.pcs,
-        amount: 1,
-      ),
-    );
-  }
+  });
 
   final AppRouter router;
   final ShoppingList shoppingList;
@@ -53,15 +45,46 @@ class ListEditingViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // todo: implement method
-  void addProductViaSuggestion(Suggestion suggestion) =>
-      throw UnimplementedError();
+  void addProductViaSuggestion(Suggestion suggestion) {
+    if (shoppingList.listedProducts
+        .where((product) => product.name == suggestion.name)
+        .isNotEmpty) {
+      incQuantity(shoppingList.listedProducts
+          .indexWhere((product) => product.name == suggestion.name));
+      return;
+    }
+    shoppingList.listedProducts.add(
+      ListedProduct(
+        name: suggestion.name,
+        unit: suggestion.unit,
+        imageUrl: suggestion.imageUrl,
+        amount: 1,
+      ),
+    );
+    notifyListeners();
+  }
 
-  // todo: implement method
-  void addProductByName(String productName) => throw UnimplementedError();
+  void addProductByName(String productName) {
+    shoppingList.listedProducts.add(
+      ListedProduct(
+        name: productName,
+        unit: Unit.pcs,
+        amount: 1,
+      ),
+    );
+    notifyListeners();
+  }
+
+  Future setImage(int productIndex) async {
+    // todo: add dialog (image from gallery/camera)
+    // todo: add image picker action
+    // todo: update database
+    notifyListeners();
+  }
 
   void incQuantity(int productIndex) {
     shoppingList.listedProducts[productIndex].amount += 1;
+    notifyListeners();
     // todo: update database
   }
 
@@ -69,8 +92,8 @@ class ListEditingViewModel extends BaseViewModel {
     shoppingList.listedProducts[productIndex].amount -= 1;
     if (shoppingList.listedProducts[productIndex].amount == 0) {
       shoppingList.listedProducts.removeAt(productIndex);
-      notifyListeners();
     }
+    notifyListeners();
     // todo: update database
   }
 

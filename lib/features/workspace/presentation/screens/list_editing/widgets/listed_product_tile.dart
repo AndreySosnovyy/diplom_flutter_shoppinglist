@@ -10,21 +10,26 @@ class ListedProductTile extends StatefulWidget {
   const ListedProductTile({
     required this.index,
     required this.product,
-    required this.incQuantity,
-    required this.decQuantity,
+    required this.incQuantityCallback,
+    required this.decQuantityCallback,
+    required this.setImageCallback,
     Key? key,
   }) : super(key: key);
 
   final int index;
   final ListedProduct product;
-  final VoidCallback incQuantity;
-  final VoidCallback decQuantity;
+  final VoidCallback incQuantityCallback;
+  final VoidCallback decQuantityCallback;
+  final VoidCallback setImageCallback;
 
   @override
   State<StatefulWidget> createState() => _ListedProductTileState();
 }
 
 class _ListedProductTileState extends State<ListedProductTile> {
+  bool isIncPressed = false;
+  bool isDecPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -32,28 +37,31 @@ class _ListedProductTileState extends State<ListedProductTile> {
       children: [
         Row(
           children: [
-            SizedBox(
-              width: 46,
-              height: 46,
-              child: widget.product.imageUrl != null
-                  ? ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: widget.product.imageUrl!,
-                      ),
-                    )
-                  : Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.grey3,
-                      ),
-                      padding: const EdgeInsets.all(4),
-                      child: Center(
-                        child: Icon(
-                          CupertinoIcons.question,
-                          color: AppColors.blue.withOpacity(0.5),
+            GestureDetector(
+              onTap: widget.setImageCallback,
+              child: SizedBox(
+                width: 46,
+                height: 46,
+                child: widget.product.imageUrl != null
+                    ? ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: widget.product.imageUrl!,
+                        ),
+                      )
+                    : Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.grey3,
+                        ),
+                        padding: const EdgeInsets.all(4),
+                        child: Center(
+                          child: Icon(
+                            CupertinoIcons.photo_camera,
+                            color: AppColors.blue.withOpacity(0.5),
+                          ),
                         ),
                       ),
-                    ),
+              ),
             ),
             const SizedBox(width: 8),
             SizedBox(
@@ -70,23 +78,28 @@ class _ListedProductTileState extends State<ListedProductTile> {
           children: [
             GestureDetector(
               onTap: () {
-                widget.decQuantity();
+                widget.decQuantityCallback();
                 setState(() {});
               },
+              onLongPressStart: (_) async {
+                isDecPressed = true;
+                do {
+                  widget.decQuantityCallback();
+                  await Future.delayed(const Duration(milliseconds: 10));
+                } while (isDecPressed);
+              },
+              onLongPressEnd: (_) => isDecPressed = false,
               child: Container(
                 padding: const EdgeInsets.all(2),
                 decoration: const BoxDecoration(
                   color: AppColors.red,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
                   ),
                 ),
                 child: const Center(
-                  child: Icon(
-                    CupertinoIcons.minus,
-                    color: AppColors.white,
-                  ),
+                  child: Icon(CupertinoIcons.minus, color: AppColors.white),
                 ),
               ),
             ),
@@ -104,23 +117,28 @@ class _ListedProductTileState extends State<ListedProductTile> {
             ),
             GestureDetector(
               onTap: () {
-                widget.incQuantity();
+                widget.incQuantityCallback();
                 setState(() {});
               },
+              onLongPressStart: (_) async {
+                isIncPressed = true;
+                do {
+                  widget.incQuantityCallback();
+                  await Future.delayed(const Duration(milliseconds: 10));
+                } while (isIncPressed);
+              },
+              onLongPressEnd: (_) => isIncPressed = false,
               child: Container(
                 padding: const EdgeInsets.all(2),
                 decoration: const BoxDecoration(
                   color: AppColors.green,
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
                   ),
                 ),
                 child: const Center(
-                  child: Icon(
-                    CupertinoIcons.plus,
-                    color: AppColors.white,
-                  ),
+                  child: Icon(CupertinoIcons.plus, color: AppColors.white),
                 ),
               ),
             ),

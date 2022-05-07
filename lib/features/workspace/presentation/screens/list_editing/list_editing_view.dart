@@ -121,21 +121,25 @@ class ListEditingView extends StatelessWidget {
                 ),
                 viewModel.shoppingList.listedProducts.isEmpty
                     ? const Expanded(child: EmptyBanner())
-                    : ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: viewModel.shoppingList.listedProducts.length,
-                        itemBuilder: (context, index) {
-                          return ListedProductTile(
-                            index: index,
-                            product:
-                                viewModel.shoppingList.listedProducts[index],
-                            incQuantity: () => viewModel.incQuantity(index),
-                            decQuantity: () => viewModel.decQuantity(index),
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(height: 16);
-                        },
+                    : Expanded(
+                        child: ListView.separated(
+                          itemCount:
+                              viewModel.shoppingList.listedProducts.length,
+                          itemBuilder: (context, index) {
+                            return ListedProductTile(
+                              index: index,
+                              product:
+                                  viewModel.shoppingList.listedProducts[index],
+                              incQuantityCallback: () =>
+                                  viewModel.incQuantity(index),
+                              decQuantityCallback: () =>
+                                  viewModel.decQuantity(index),
+                              setImageCallback: () => viewModel.setImage(index),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 12),
+                        ),
                       ),
               ],
             ),
