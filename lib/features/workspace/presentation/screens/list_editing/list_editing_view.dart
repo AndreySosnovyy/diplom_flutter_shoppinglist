@@ -122,21 +122,21 @@ class ListEditingView extends StatelessWidget {
                 viewModel.shoppingList.listedProducts.isEmpty
                     ? const Expanded(child: EmptyBanner())
                     : ListView.separated(
-                      shrinkWrap: true,
-                      itemCount:
-                          viewModel.shoppingList.listedProducts.length,
-                      itemBuilder: (context, index) {
-                        return ListedProductTile(
-                          index: index,
-                          product:
-                              viewModel.shoppingList.listedProducts[index],
-                          setQuantity: (quantity) {},
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 16);
-                      },
-                    ),
+                        shrinkWrap: true,
+                        itemCount: viewModel.shoppingList.listedProducts.length,
+                        itemBuilder: (context, index) {
+                          return ListedProductTile(
+                            index: index,
+                            product:
+                                viewModel.shoppingList.listedProducts[index],
+                            incQuantity: () => viewModel.incQuantity(index),
+                            decQuantity: () => viewModel.decQuantity(index),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 16);
+                        },
+                      ),
               ],
             ),
           ),

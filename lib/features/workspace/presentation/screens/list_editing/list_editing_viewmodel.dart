@@ -60,6 +60,20 @@ class ListEditingViewModel extends BaseViewModel {
   // todo: implement method
   void addProductByName(String productName) => throw UnimplementedError();
 
+  void incQuantity(int productIndex) {
+    shoppingList.listedProducts[productIndex].amount += 1;
+    // todo: update database
+  }
+
+  void decQuantity(int productIndex) {
+    shoppingList.listedProducts[productIndex].amount -= 1;
+    if (shoppingList.listedProducts[productIndex].amount == 0) {
+      shoppingList.listedProducts.removeAt(productIndex);
+      notifyListeners();
+    }
+    // todo: update database
+  }
+
   Future showAddingCoAuthorDialog(BuildContext context) async {
     final List<String>? result = await showTextInputDialog(
       context: context,

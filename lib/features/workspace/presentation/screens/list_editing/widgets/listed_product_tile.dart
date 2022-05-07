@@ -10,27 +10,21 @@ class ListedProductTile extends StatefulWidget {
   const ListedProductTile({
     required this.index,
     required this.product,
-    required this.setQuantity,
+    required this.incQuantity,
+    required this.decQuantity,
     Key? key,
   }) : super(key: key);
 
   final int index;
   final ListedProduct product;
-  final Function(int quantity) setQuantity;
+  final VoidCallback incQuantity;
+  final VoidCallback decQuantity;
 
   @override
   State<StatefulWidget> createState() => _ListedProductTileState();
 }
 
 class _ListedProductTileState extends State<ListedProductTile> {
-  int increaseQuantity(int initialQuantity) {
-    return initialQuantity;
-  }
-
-  int decreaseQuantity(int initialQuantity) {
-    return initialQuantity;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -74,18 +68,25 @@ class _ListedProductTileState extends State<ListedProductTile> {
         ),
         Row(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColors.red,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
+            GestureDetector(
+              onTap: () {
+                widget.decQuantity();
+                setState(() {});
+              },
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: const BoxDecoration(
+                  color: AppColors.red,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
                 ),
-              ),
-              child: const Center(
-                child: Icon(
-                  CupertinoIcons.minus,
-                  color: AppColors.white,
+                child: const Center(
+                  child: Icon(
+                    CupertinoIcons.minus,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
             ),
@@ -96,23 +97,30 @@ class _ListedProductTileState extends State<ListedProductTile> {
                 '${WorkspaceUtils.unitToString(widget.product.unit)}',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .bodyText2!
                     .copyWith(color: AppColors.grey1),
                 maxLines: 2,
               ),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColors.green,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+            GestureDetector(
+              onTap: () {
+                widget.incQuantity();
+                setState(() {});
+              },
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: const BoxDecoration(
+                  color: AppColors.green,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
                 ),
-              ),
-              child: const Center(
-                child: Icon(
-                  CupertinoIcons.plus,
-                  color: AppColors.white,
+                child: const Center(
+                  child: Icon(
+                    CupertinoIcons.plus,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
             ),
