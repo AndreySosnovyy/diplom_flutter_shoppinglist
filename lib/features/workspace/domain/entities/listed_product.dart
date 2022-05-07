@@ -8,7 +8,7 @@ class ListedProduct extends Product {
   ListedProduct({
     required String name,
     String? description,
-    required String imageUrl,
+    String? imageUrl,
     required Unit unit,
     this.expectedPrice,
     required this.amount,

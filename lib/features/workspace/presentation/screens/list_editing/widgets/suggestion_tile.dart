@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:diplom/app/utils/common_utils.dart';
 import 'package:diplom/app/values/colors.dart';
-import 'package:diplom/features/workspace/domain/entities/product.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,19 +21,6 @@ class SuggestionTile extends StatefulWidget {
 }
 
 class _SuggestionTileState extends State<SuggestionTile> {
-  String get unit {
-    switch (widget.suggestion.unit) {
-      case Unit.pcs:
-        return 'шт';
-      case Unit.kilos:
-        return 'кг';
-      case Unit.grams:
-        return 'гр';
-      case Unit.liter:
-        return 'л';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -78,7 +65,7 @@ class _SuggestionTileState extends State<SuggestionTile> {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: Text(
-              unit,
+              WorkspaceUtils.unitToString(widget.suggestion.unit),
               style: Theme.of(context)
                   .textTheme
                   .bodyText2!

@@ -2,7 +2,7 @@
 class Product {
   final String name;
   final String? description;
-  final String imageUrl;
+  final String? imageUrl;
   final Unit unit;
 
   Product({

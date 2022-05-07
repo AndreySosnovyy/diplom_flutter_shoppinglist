@@ -2,6 +2,8 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
+import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
+import 'package:diplom/features/workspace/domain/entities/product.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,8 +14,15 @@ class ListEditingViewModel extends BaseViewModel {
   ListEditingViewModel({
     required this.router,
     required this.shoppingList,
-
-  });
+  }) {
+    shoppingList.listedProducts.add(
+      ListedProduct(
+        name: 'Колбаса',
+        unit: Unit.pcs,
+        amount: 1,
+      ),
+    );
+  }
 
   final AppRouter router;
   final ShoppingList shoppingList;
@@ -75,7 +84,6 @@ class ListEditingViewModel extends BaseViewModel {
             handler: userHandler,
           ),
         );
-        print(shoppingList.coAuthors.length);
         notifyListeners();
       } else {
         Fluttertoast.showToast(

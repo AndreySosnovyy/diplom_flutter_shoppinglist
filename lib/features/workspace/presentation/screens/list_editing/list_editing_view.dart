@@ -7,6 +7,7 @@ import 'package:diplom/features/workspace/presentation/screens/list_editing/widg
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/common_search_line.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/common_textfield.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/empty_banner.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/listed_product_tile.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/suggestions_block.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,22 @@ class ListEditingView extends StatelessWidget {
                 ),
                 viewModel.shoppingList.listedProducts.isEmpty
                     ? const Expanded(child: EmptyBanner())
-                    : Container(),
+                    : ListView.separated(
+                      shrinkWrap: true,
+                      itemCount:
+                          viewModel.shoppingList.listedProducts.length,
+                      itemBuilder: (context, index) {
+                        return ListedProductTile(
+                          index: index,
+                          product:
+                              viewModel.shoppingList.listedProducts[index],
+                          setQuantity: (quantity) {},
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 16);
+                      },
+                    ),
               ],
             ),
           ),
