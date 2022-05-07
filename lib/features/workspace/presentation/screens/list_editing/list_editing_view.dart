@@ -70,6 +70,7 @@ class ListEditingView extends StatelessWidget {
               children: [
                 if (viewModel.displayTopInputs)
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CommonTextField(
                         controller: viewModel.nameController,
@@ -122,25 +123,27 @@ class ListEditingView extends StatelessWidget {
                 viewModel.shoppingList.listedProducts.isEmpty
                     ? const Expanded(child: EmptyBanner())
                     : Expanded(
-                        child: ListView.separated(
-                          itemCount:
-                              viewModel.shoppingList.listedProducts.length,
-                          itemBuilder: (context, index) {
-                            return ListedProductTile(
-                              index: index,
-                              product:
-                                  viewModel.shoppingList.listedProducts[index],
-                              incQuantityCallback: () =>
-                                  viewModel.incQuantity(index),
-                              decQuantityCallback: () =>
-                                  viewModel.decQuantity(index),
-                              setImageCallback: () => viewModel.setImage(index),
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 12),
-                        ),
+                      child: ListView.separated(
+                        padding: const EdgeInsets.only(top: 16),
+                        itemCount:
+                            viewModel.shoppingList.listedProducts.length,
+                        itemBuilder: (context, index) {
+                          return ListedProductTile(
+                            index: index,
+                            product: viewModel
+                                .shoppingList.listedProducts[index],
+                            incQuantityCallback: () =>
+                                viewModel.incQuantity(index),
+                            decQuantityCallback: () =>
+                                viewModel.decQuantity(index),
+                            setImageCallback: () =>
+                                viewModel.setImage(index),
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
                       ),
+                    ),
               ],
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// todo: add ability to change product's unit
 class ListedProductTile extends StatefulWidget {
   const ListedProductTile({
     required this.index,

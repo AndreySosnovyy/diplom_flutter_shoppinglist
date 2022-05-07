@@ -1,5 +1,6 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
+import 'package:diplom/app/utils/string_extensions.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
@@ -47,10 +48,11 @@ class ListEditingViewModel extends BaseViewModel {
 
   void addProductViaSuggestion(Suggestion suggestion) {
     if (shoppingList.listedProducts
-        .where((product) => product.name == suggestion.name)
+        .where((product) =>
+            product.name.toLowerCase() == suggestion.name.toLowerCase())
         .isNotEmpty) {
-      incQuantity(shoppingList.listedProducts
-          .indexWhere((product) => product.name == suggestion.name));
+      incQuantity(shoppingList.listedProducts.indexWhere((product) =>
+          product.name.toLowerCase() == suggestion.name.toLowerCase()));
       return;
     }
     shoppingList.listedProducts.add(
@@ -65,9 +67,17 @@ class ListEditingViewModel extends BaseViewModel {
   }
 
   void addProductByName(String productName) {
+    if (shoppingList.listedProducts
+        .where((product) =>
+            product.name.toLowerCase() == productName.toLowerCase())
+        .isNotEmpty) {
+      incQuantity(shoppingList.listedProducts.indexWhere((product) =>
+          product.name.toLowerCase() == productName.toLowerCase()));
+      return;
+    }
     shoppingList.listedProducts.add(
       ListedProduct(
-        name: productName,
+        name: productName.capitalize(),
         unit: Unit.pcs,
         amount: 1,
       ),
