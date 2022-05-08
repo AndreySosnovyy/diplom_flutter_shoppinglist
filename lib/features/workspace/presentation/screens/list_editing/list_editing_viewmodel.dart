@@ -107,6 +107,10 @@ class ListEditingViewModel extends BaseViewModel {
     // todo: update database
   }
 
+  Future saveProductList() async {
+    // todo: update database
+  }
+
   Future showAddingCoAuthorDialog(BuildContext context) async {
     final List<String>? result = await showTextInputDialog(
       context: context,

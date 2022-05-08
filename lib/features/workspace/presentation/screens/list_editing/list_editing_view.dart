@@ -31,120 +31,126 @@ class ListEditingView extends StatelessWidget {
         router: sl.get<AppRouter>(),
         shoppingList: shoppingList ?? ShoppingList(id: const Uuid().v1()),
       ),
-      builder: (context, viewModel, child) => Scaffold(
-        appBar: CommonAppbar(
-          title: shoppingList != null ? 'Редактирование' : 'Новый список',
-          leading: Row(
-            children: [
-              const SizedBox(width: 10),
-              const Icon(
-                CupertinoIcons.back,
-                size: 26,
-                color: AppColors.blue,
-              ),
-              const SizedBox(width: 2),
-              Text(
-                'Назад',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: AppColors.blue),
-              ),
-            ],
-          ),
-          leadingCallback: viewModel.backButtonCallback,
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              viewModel.setScreenModeToNormal();
-              FocusManager.instance.primaryFocus?.unfocus();
-              viewModel.productController.text = '';
-              viewModel.onSearchChanged('');
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      builder: (context, viewModel, child) => WillPopScope(
+        onWillPop: () async {
+          await viewModel.saveProductList();
+          return true;
+        },
+        child: Scaffold(
+          appBar: CommonAppbar(
+            title: shoppingList != null ? 'Редактирование' : 'Новый список',
+            leading: Row(
               children: [
-                if (viewModel.displayTopInputs)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CommonTextField(
-                        controller: viewModel.nameController,
-                        hint: 'Название',
-                        isBold: true,
-                        fontSize: 38,
-                        maxLength: 24,
-                      ),
-                      CommonTextField(
-                        controller: viewModel.descriptionController,
-                        hint: 'Описание (необязательно)',
-                        fontSize: 20,
-                        maxLength: 300,
-                        maxLines: 8,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 16),
-                        height: 1,
-                        width: double.infinity,
-                        color: AppColors.grey3,
-                      ),
-                      CoAuthorsHandler(
-                        coAuthors: viewModel.shoppingList.coAuthors,
-                        showAddingCoAuthorDialog: () =>
-                            viewModel.showAddingCoAuthorDialog(context),
-                        deleteCoAuthor: viewModel.deleteCoAuthorByUserHandler,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        height: 1,
-                        width: double.infinity,
-                        color: AppColors.grey3,
-                      ),
-                    ],
-                  ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: CommonSearchLine(
-                    controller: viewModel.productController,
-                    onChanged: viewModel.onSearchChanged,
-                    hint: 'Название товара',
-                    onTap: viewModel.setScreenModeToSearch,
-                  ),
+                const SizedBox(width: 10),
+                const Icon(
+                  CupertinoIcons.back,
+                  size: 26,
+                  color: AppColors.blue,
                 ),
-                SuggestionsBlock(
-                  searchTextNotifier: viewModel.searchNotifier,
-                  onSuggestionTap: viewModel.addProductViaSuggestion,
-                  addByProductName: viewModel.addProductByName,
+                const SizedBox(width: 2),
+                Text(
+                  'Назад',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: AppColors.blue),
                 ),
-                viewModel.shoppingList.listedProducts.isEmpty
-                    ? const Expanded(child: EmptyBanner())
-                    : Expanded(
-                      child: ListView.separated(
-                        padding: const EdgeInsets.only(top: 16),
-                        itemCount:
-                            viewModel.shoppingList.listedProducts.length,
-                        itemBuilder: (context, index) {
-                          return ListedProductTile(
-                            index: index,
-                            product: viewModel
-                                .shoppingList.listedProducts[index],
-                            incQuantityCallback: () =>
-                                viewModel.incQuantity(index),
-                            decQuantityCallback: () =>
-                                viewModel.decQuantity(index),
-                            setImageCallback: () =>
-                                viewModel.setImage(index),
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
-                      ),
-                    ),
               ],
+            ),
+            leadingCallback: viewModel.backButtonCallback,
+          ),
+          resizeToAvoidBottomInset: false,
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                viewModel.setScreenModeToNormal();
+                FocusManager.instance.primaryFocus?.unfocus();
+                viewModel.productController.text = '';
+                viewModel.onSearchChanged('');
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (viewModel.displayTopInputs)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CommonTextField(
+                          controller: viewModel.nameController,
+                          hint: 'Название',
+                          isBold: true,
+                          fontSize: 38,
+                          maxLength: 24,
+                        ),
+                        CommonTextField(
+                          controller: viewModel.descriptionController,
+                          hint: 'Описание (необязательно)',
+                          fontSize: 20,
+                          maxLength: 300,
+                          maxLines: 8,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 16),
+                          height: 1,
+                          width: double.infinity,
+                          color: AppColors.grey3,
+                        ),
+                        CoAuthorsHandler(
+                          coAuthors: viewModel.shoppingList.coAuthors,
+                          showAddingCoAuthorDialog: () =>
+                              viewModel.showAddingCoAuthorDialog(context),
+                          deleteCoAuthor: viewModel.deleteCoAuthorByUserHandler,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          height: 1,
+                          width: double.infinity,
+                          color: AppColors.grey3,
+                        ),
+                      ],
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: CommonSearchLine(
+                      controller: viewModel.productController,
+                      onChanged: viewModel.onSearchChanged,
+                      hint: 'Название товара',
+                      onTap: viewModel.setScreenModeToSearch,
+                    ),
+                  ),
+                  SuggestionsBlock(
+                    searchTextNotifier: viewModel.searchNotifier,
+                    onSuggestionTap: viewModel.addProductViaSuggestion,
+                    addByProductName: viewModel.addProductByName,
+                  ),
+                  viewModel.shoppingList.listedProducts.isEmpty
+                      ? const Expanded(child: EmptyBanner())
+                      : Expanded(
+                        child: ListView.separated(
+                          padding: const EdgeInsets.only(top: 16),
+                          itemCount:
+                              viewModel.shoppingList.listedProducts.length,
+                          itemBuilder: (context, index) {
+                            return ListedProductTile(
+                              index: index,
+                              product: viewModel
+                                  .shoppingList.listedProducts[index],
+                              incQuantityCallback: () =>
+                                  viewModel.incQuantity(index),
+                              decQuantityCallback: () =>
+                                  viewModel.decQuantity(index),
+                              setImageCallback: () =>
+                                  viewModel.setImage(index),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 12),
+                        ),
+                      ),
+                ],
+              ),
             ),
           ),
         ),
