@@ -44,9 +44,11 @@ class SettingsViewModel extends BaseViewModel {
 
   User? get currentUser => auth.currentUser;
 
+  // todo: get name from database
   String get displayName =>
       auth.currentUser?.displayName ?? 'Анонимный пользователь';
 
+  // todo: get handler from database
   String get displayHandler => '@user_handler';
 
   String get displayVersion => settings.displayVersion;

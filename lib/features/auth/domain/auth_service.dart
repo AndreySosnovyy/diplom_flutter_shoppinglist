@@ -23,7 +23,6 @@ class AuthService {
       final firebaseAuth = await _firebaseAuth.signInWithCredential(credential);
       return firebaseAuth.user;
     } catch (error) {
-      // print(error);
       return null;
     }
   }

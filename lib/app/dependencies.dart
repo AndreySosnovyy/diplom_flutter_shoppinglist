@@ -28,7 +28,9 @@ Future setupDependencies() async {
     shoppingListsHiveBox: Hive.box(Strings.shoppingListsBox),
   ));
 
-  sl.registerSingleton<SettingsService>(SettingsService());
+  sl.registerSingleton<SettingsService>(SettingsService(
+    database: FirebaseDatabase.instance,
+  ));
   await sl.get<SettingsService>().init();
 
   sl.registerSingleton<AppRouter>(AppRouter());
