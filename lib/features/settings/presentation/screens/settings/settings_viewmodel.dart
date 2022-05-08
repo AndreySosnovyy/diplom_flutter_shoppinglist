@@ -4,23 +4,27 @@ import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
+import 'package:stacked/stacked.dart';
 
 import '../../../../workspace/domain/services/remote_data_service.dart';
 import '../../../domain/setting_service.dart';
 
-class SettingsViewModel extends ChangeNotifier {
-  final _router = sl.get<AppRouter>();
-  final _auth = sl.get<AuthService>();
-  final _settings = sl.get<SettingsService>();
+class SettingsViewModel extends BaseViewModel {
+  final AppRouter router;
+  final AuthService auth;
+  final SettingsService settings;
 
-  SettingsViewModel() {
-    _auth.userStream.listen((user) {
+  SettingsViewModel({
+    required this.router,
+    required this.auth,
+    required this.settings,
+  }) {
+    auth.userStream.listen((user) {
       notifyListeners();
       if (user != null) {
         sl.registerSingleton<RemoteDataService>(RemoteDataService(
           database: FirebaseDatabase.instanceFor(app: Firebase.app()),
-          user: _auth.currentUser!,
+          user: auth.currentUser!,
         ));
       } else {
         if (sl.isRegistered<RemoteDataService>()) {
@@ -30,22 +34,22 @@ class SettingsViewModel extends ChangeNotifier {
     });
   }
 
-  void backButtonCallback() => _router.pop();
+  void backButtonCallback() => router.pop();
 
-  void openAuthScreen() => _router.push(const SignInViewRoute());
+  void openAuthScreen() => router.push(const SignInViewRoute());
 
-  Future signOut() async => await _auth.signOut();
+  Future signOut() async => await auth.signOut();
 
-  bool get isSignedIn => _auth.isSignedIn;
+  bool get isSignedIn => auth.isSignedIn;
 
-  User? get currentUser => _auth.currentUser;
+  User? get currentUser => auth.currentUser;
 
   String get displayName =>
-      _auth.currentUser?.displayName ?? 'Анонимный пользователь';
+      auth.currentUser?.displayName ?? 'Анонимный пользователь';
 
   String get displayHandler => '@user_handler';
 
-  String get displayVersion => _settings.displayVersion;
+  String get displayVersion => settings.displayVersion;
 
   AuthProvider? get authProvider {
     if (currentUser == null) return null;
