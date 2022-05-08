@@ -12,6 +12,7 @@ import 'package:diplom/features/workspace/presentation/screens/list_editing/widg
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/suggestions_block.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:uuid/uuid.dart';
 
@@ -32,6 +33,7 @@ class ListEditingView extends StatelessWidget {
         router: sl.get<AppRouter>(),
         shoppingList: shoppingList ?? ShoppingList(id: const Uuid().v1()),
         settings: sl.get<SettingsService>(),
+        imagePicker: ImagePicker(),
       ),
       builder: (context, viewModel, child) => WillPopScope(
         onWillPop: () async {
@@ -144,8 +146,10 @@ class ListEditingView extends StatelessWidget {
                                     viewModel.incQuantity(index),
                                 decQuantityCallback: () =>
                                     viewModel.decQuantity(index),
-                                setImageCallback: () =>
-                                    viewModel.setImage(index),
+                                setImageCallback: () => viewModel.setImage(
+                                  context: context,
+                                  productIndex: index,
+                                ),
                                 showImages:
                                     viewModel.settings.showProductImages,
                               );

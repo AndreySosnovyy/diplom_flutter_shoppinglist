@@ -10,6 +10,7 @@ import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 class ListEditingViewModel extends BaseViewModel {
@@ -17,11 +18,13 @@ class ListEditingViewModel extends BaseViewModel {
     required this.router,
     required this.shoppingList,
     required this.settings,
+    required this.imagePicker,
   });
 
   final AppRouter router;
   final ShoppingList shoppingList;
   final SettingsService settings;
+  final ImagePicker imagePicker;
 
   final ValueNotifier<String> searchNotifier = ValueNotifier('');
 
@@ -88,11 +91,39 @@ class ListEditingViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future setImage(int productIndex) async {
-    // todo: add dialog (image from gallery/camera)
-    // todo: add image picker action
-    // todo: update database
+  Future setImage({
+    required BuildContext context,
+    required int productIndex,
+  }) async {
+    final result = await showModalActionSheet(
+      context: context,
+      actions: [
+        const SheetAction(
+          key: ImageSource.camera,
+          label: 'Сделать фото',
+          icon: CupertinoIcons.photo_camera,
+          isDefaultAction: true,
+        ),
+        const SheetAction(
+          key: ImageSource.gallery,
+          label: 'Выбрать из галереи',
+          icon: CupertinoIcons.photo,
+        )
+      ],
+    );
+    if (result == null) return;
+
+    final XFile? image = await imagePicker.pickImage(
+      source: result,
+      imageQuality: 20,
+    );
+    if (image == null) return;
+
+    // todo: upload image to storage
+    // shoppingList.listedProducts[productIndex].imageUrl = ;
     notifyListeners();
+
+    // todo: update database;
   }
 
   void incQuantity(int productIndex) {

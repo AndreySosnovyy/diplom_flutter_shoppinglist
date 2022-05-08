@@ -45,7 +45,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
               child: SizedBox(
                 width: 46,
                 height: 46,
-                child: widget.product.imageUrl != null
+                child: widget.product.imageUrl != null && widget.showImages
                     ? ClipOval(
                         child: CachedNetworkImage(
                           imageUrl: widget.product.imageUrl!,
