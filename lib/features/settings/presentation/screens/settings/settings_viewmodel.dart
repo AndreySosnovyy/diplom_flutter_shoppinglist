@@ -53,6 +53,16 @@ class SettingsViewModel extends BaseViewModel {
 
   String get displayVersion => settings.displayVersion;
 
+  void setIsHiddenAccount(bool value) {
+    settings.setIsHiddenAccount(value);
+    notifyListeners();
+  }
+
+  void setShowProductImages(bool value) {
+    settings.setShowProductImages(value);
+    notifyListeners();
+  }
+
   AuthProvider? get authProvider {
     if (currentUser == null) return null;
     switch (currentUser!.providerData.first.providerId) {
