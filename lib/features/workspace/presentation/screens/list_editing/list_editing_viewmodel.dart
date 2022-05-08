@@ -2,6 +2,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/utils/string_extensions.dart';
 import 'package:diplom/app/values/colors.dart';
+import 'package:diplom/features/settings/domain/setting_service.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:diplom/features/workspace/domain/entities/product.dart';
@@ -15,10 +16,12 @@ class ListEditingViewModel extends BaseViewModel {
   ListEditingViewModel({
     required this.router,
     required this.shoppingList,
+    required this.settings,
   });
 
   final AppRouter router;
   final ShoppingList shoppingList;
+  final SettingsService settings;
 
   final ValueNotifier<String> searchNotifier = ValueNotifier('');
 

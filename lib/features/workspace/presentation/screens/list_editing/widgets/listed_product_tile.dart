@@ -14,6 +14,7 @@ class ListedProductTile extends StatefulWidget {
     required this.incQuantityCallback,
     required this.decQuantityCallback,
     required this.setImageCallback,
+    this.showImages = true,
     Key? key,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class ListedProductTile extends StatefulWidget {
   final VoidCallback incQuantityCallback;
   final VoidCallback decQuantityCallback;
   final VoidCallback setImageCallback;
+  final bool showImages;
 
   @override
   State<StatefulWidget> createState() => _ListedProductTileState();

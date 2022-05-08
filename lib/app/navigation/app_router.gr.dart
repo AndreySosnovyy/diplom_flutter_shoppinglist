@@ -19,10 +19,13 @@ import 'package:diplom/features/auth/presentation/screens/sign_in_with_phone/sig
     as _i5;
 import 'package:diplom/features/settings/presentation/screens/settings/settings_view.dart'
     as _i3;
+import 'package:diplom/features/workspace/domain/entities/shopping_list.dart'
+    as _i9;
 import 'package:diplom/features/workspace/presentation/screens/list_editing/list_editing_view.dart'
     as _i2;
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_view.dart'
     as _i1;
+import 'package:flutter/cupertino.dart' as _i10;
 import 'package:flutter/material.dart' as _i8;
 
 class AppRouter extends _i7.RootStackRouter {
@@ -36,8 +39,12 @@ class AppRouter extends _i7.RootStackRouter {
           routeData: routeData, child: const _i1.ListsView());
     },
     ListEditingViewRoute.name: (routeData) {
+      final args = routeData.argsAs<ListEditingViewRouteArgs>(
+          orElse: () => const ListEditingViewRouteArgs());
       return _i7.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i2.ListEditingView());
+          routeData: routeData,
+          child: _i2.ListEditingView(
+              shoppingList: args.shoppingList, key: args.key));
     },
     SettingsViewRoute.name: (routeData) {
       return _i7.AdaptivePage<dynamic>(
@@ -80,11 +87,27 @@ class ListsViewRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.ListEditingView]
-class ListEditingViewRoute extends _i7.PageRouteInfo<void> {
-  const ListEditingViewRoute()
-      : super(ListEditingViewRoute.name, path: '/list-editing-view');
+class ListEditingViewRoute extends _i7.PageRouteInfo<ListEditingViewRouteArgs> {
+  ListEditingViewRoute({_i9.ShoppingList? shoppingList, _i10.Key? key})
+      : super(ListEditingViewRoute.name,
+            path: '/list-editing-view',
+            args:
+                ListEditingViewRouteArgs(shoppingList: shoppingList, key: key));
 
   static const String name = 'ListEditingViewRoute';
+}
+
+class ListEditingViewRouteArgs {
+  const ListEditingViewRouteArgs({this.shoppingList, this.key});
+
+  final _i9.ShoppingList? shoppingList;
+
+  final _i10.Key? key;
+
+  @override
+  String toString() {
+    return 'ListEditingViewRouteArgs{shoppingList: $shoppingList, key: $key}';
+  }
 }
 
 /// generated route for

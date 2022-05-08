@@ -15,10 +15,12 @@ class SuggestionsBlock extends StatefulWidget {
     required this.searchTextNotifier,
     required this.onSuggestionTap,
     required this.addByProductName,
+    this.showImages = true,
     Key? key,
   }) : super(key: key);
 
   final ValueNotifier<String> searchTextNotifier;
+  final bool showImages;
   final Function(Suggestion suggestion) onSuggestionTap;
   final Function(String productName) addByProductName;
 
@@ -126,6 +128,7 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
                         suggestion: currentSuggestions[index],
                         onTap: () =>
                             widget.onSuggestionTap(currentSuggestions[index]),
+                        showImages: widget.showImages,
                       ),
                       separatorBuilder: (_, __) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

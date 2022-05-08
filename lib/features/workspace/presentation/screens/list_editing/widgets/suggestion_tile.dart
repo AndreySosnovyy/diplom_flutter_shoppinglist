@@ -10,11 +10,13 @@ class SuggestionTile extends StatefulWidget {
   const SuggestionTile({
     required this.suggestion,
     required this.onTap,
+    this.showImages = true,
     Key? key,
   }) : super(key: key);
 
   final Suggestion suggestion;
   final VoidCallback onTap;
+  final bool showImages;
 
   @override
   State<StatefulWidget> createState() => _SuggestionTileState();
@@ -34,7 +36,7 @@ class _SuggestionTileState extends State<SuggestionTile> {
               SizedBox(
                 width: 36,
                 height: 36,
-                child: widget.suggestion.imageUrl != null
+                child: widget.suggestion.imageUrl != null && widget.showImages
                     ? ClipOval(
                         child: CachedNetworkImage(
                           imageUrl: widget.suggestion.imageUrl!,
