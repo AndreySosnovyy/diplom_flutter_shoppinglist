@@ -2,6 +2,7 @@ import 'package:diplom/app/values/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// todo: change text theme for adaptive dialogs
 mixin AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(

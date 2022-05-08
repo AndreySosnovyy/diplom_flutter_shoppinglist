@@ -8,8 +8,10 @@ import 'package:diplom/features/settings/domain/setting_service.dart';
 import 'package:diplom/features/settings/presentation/screens/settings/settings_viewmodel.dart';
 import 'package:diplom/features/settings/presentation/widgets/avatar.dart';
 import 'package:diplom/features/settings/presentation/widgets/settings_block.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../auth/domain/auth_service.dart';
@@ -24,6 +26,8 @@ class SettingsView extends StatelessWidget {
         router: sl.get<AppRouter>(),
         auth: sl.get<AuthService>(),
         settings: sl.get<SettingsService>(),
+        imagePicker: ImagePicker(),
+        database: FirebaseDatabase.instance,
       ),
       builder: (context, viewModel, child) => Scaffold(
         backgroundColor: AppColors.grey3,
@@ -57,9 +61,9 @@ class SettingsView extends StatelessWidget {
               children: [
                 const SizedBox(height: 14),
                 Avatar(
-                  imageUrl: viewModel.currentUser?.photoURL,
+                  imageUrl: viewModel.avatarUrl,
                   canBeEdited: viewModel.authProvider == AuthProvider.phone,
-                  onTap: () {},
+                  onTap: () => viewModel.setAvatar(context),
                 ),
                 const SizedBox(height: 14),
                 AutoSizeText(
@@ -69,11 +73,11 @@ class SettingsView extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline1,
                 ),
-                if (viewModel.isSignedIn)
+                if (viewModel.isSignedIn && viewModel.displayHandler != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: AutoSizeText(
-                      viewModel.displayHandler,
+                      viewModel.displayHandler!,
                       maxLines: 1,
                       style: Theme.of(context)
                           .textTheme
@@ -89,11 +93,12 @@ class SettingsView extends StatelessWidget {
                         SettingsBlocksContent.getAccountBlockContent(
                       hideEditNameTile:
                           viewModel.authProvider != AuthProvider.phone,
-                      changeNameCallback: () {},
-                      changeHandlerCallback: () {},
+                      changeNameCallback: () => viewModel.setName(context),
+                      changeHandlerCallback: () =>
+                          viewModel.setHandler(context),
                       hideAccountSwitch: CupertinoSwitch(
                         value: viewModel.settings.isHidden,
-                        onChanged: viewModel.setIsHiddenAccount ,
+                        onChanged: viewModel.setIsHiddenAccount,
                       ),
                       signOutCallback: viewModel.signOut,
                     ),
@@ -103,8 +108,7 @@ class SettingsView extends StatelessWidget {
                 else
                   SettingsBlock(
                     title: 'Авторизация',
-                    settingsContent:
-                        SettingsBlocksContent.getAuthBlockContent(
+                    settingsContent: SettingsBlocksContent.getAuthBlockContent(
                       signInCallback: viewModel.openAuthScreen,
                     ),
                     description:
@@ -129,11 +133,10 @@ class SettingsView extends StatelessWidget {
                   child: Center(
                     child: Text(
                       'Версия ${viewModel.displayVersion}',
-                      style:
-                          Theme.of(context).textTheme.bodyText2!.copyWith(
-                                color: AppColors.grey1,
-                                decoration: TextDecoration.underline,
-                              ),
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            color: AppColors.grey1,
+                            decoration: TextDecoration.underline,
+                          ),
                     ),
                   ),
                 ),

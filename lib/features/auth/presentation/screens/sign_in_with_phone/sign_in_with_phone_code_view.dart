@@ -22,7 +22,7 @@ class SignInWithPhoneCodeView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             leading: Row(
               children: [
-                const SizedBox(width: 10),
+                const SizedBox(width: 6),
                 const Icon(
                   CupertinoIcons.back,
                   size: 26,
