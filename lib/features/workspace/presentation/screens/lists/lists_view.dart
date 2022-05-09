@@ -46,24 +46,21 @@ class ListsView extends StatelessWidget {
           body: Scrollbar(
             child: ScrollConfiguration(
               behavior: CommonScrollBehavior(),
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return ShoppingListTile(
-                    shoppingList: viewModel.shoppingLists[index],
-                    setIsMarked: (value) =>
-                        viewModel.shoppingLists[index].isPinned = value,
-                  );
-                },
-                itemCount: viewModel.shoppingLists.length,
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(
-                  top: 8,
-                  bottom: 54,
-                  left: 16,
-                  right: 16,
+              child: Expanded(
+                child: ListView.separated(
+                  itemCount: viewModel.shoppingLists.length,
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 54, left: 16, right: 16),
+                  itemBuilder: (context, index) {
+                    return ShoppingListTile(
+                      shoppingList: viewModel.shoppingLists[index],
+                      setIsMarked: (value) =>
+                          viewModel.shoppingLists[index].isPinned = value,
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
                 ),
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
               ),
             ),
           ),

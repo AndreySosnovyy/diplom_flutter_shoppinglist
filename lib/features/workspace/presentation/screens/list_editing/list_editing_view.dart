@@ -118,6 +118,28 @@ class ListEditingView extends StatelessWidget {
                         ),
                       ],
                     ),
+                  if (!viewModel.displayTopInputs)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            CupertinoIcons.arrow_down,
+                            color: AppColors.grey2,
+                            size: 14,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Свернуть',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(color: AppColors.grey2),
+                          ),
+                        ],
+                      ),
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: CommonSearchLine(
