@@ -8,13 +8,11 @@ import 'package:flutter/material.dart';
 class CoAuthorsHandler extends StatelessWidget {
   const CoAuthorsHandler({
     Key? key,
-    // required this.coAuthorsNotifier,
     required this.coAuthors,
     required this.showAddingCoAuthorDialog,
     required this.deleteCoAuthor,
   }) : super(key: key);
 
-  // final ValueNotifier<List<CoAuthor>> coAuthorsNotifier;
   final List<CoAuthor> coAuthors;
   final Function() showAddingCoAuthorDialog;
   final Function(String userHandler) deleteCoAuthor;
@@ -33,13 +31,12 @@ class CoAuthorsHandler extends StatelessWidget {
               onTap: showAddingCoAuthorDialog,
               child: const SizedBox(
                 child: Icon(
-                  CupertinoIcons.plus_circled,
+                  CupertinoIcons.add,
                   size: 64,
                   color: AppColors.blue,
                 ),
               ),
             ),
-            const SizedBox(width: 12),
             coAuthors.isNotEmpty
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width - 108,
@@ -65,7 +62,7 @@ class CoAuthorsHandler extends StatelessWidget {
                       'Соавторы',
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .bodyText1!
                           .copyWith(color: AppColors.grey1),
                     ),
                   ),
