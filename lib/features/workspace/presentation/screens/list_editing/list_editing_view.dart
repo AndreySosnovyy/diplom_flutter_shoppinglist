@@ -82,7 +82,7 @@ class ListEditingView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CommonTextField(
-                          controller: viewModel.nameController,
+                          controller: viewModel.titleController,
                           hint: 'Название',
                           isBold: true,
                           fontSize: 38,

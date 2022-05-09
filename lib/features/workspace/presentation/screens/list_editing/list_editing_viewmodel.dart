@@ -13,7 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
-class ListEditingViewModel extends BaseViewModel {
+class ListEditingViewModel extends FutureViewModel {
   ListEditingViewModel({
     required this.router,
     required this.shoppingList,
@@ -28,10 +28,22 @@ class ListEditingViewModel extends BaseViewModel {
 
   final ValueNotifier<String> searchNotifier = ValueNotifier('');
 
-  final nameController = TextEditingController();
+  final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final productController = TextEditingController();
   var _screenMode = _ScreenMode.normal;
+
+  @override
+  Future futureToRun() => init();
+
+  Future init() async {
+    titleController.addListener(() {
+      shoppingList.title = titleController.text;
+    });
+    descriptionController.addListener(() {
+      shoppingList.description = descriptionController.text;
+    });
+  }
 
   void setScreenModeToSearch() {
     _screenMode = _ScreenMode.search;
@@ -142,6 +154,9 @@ class ListEditingViewModel extends BaseViewModel {
   }
 
   Future saveProductList() async {
+    if (shoppingList.isEmpty) return;
+    print('save');
+
     // todo: update database
   }
 
