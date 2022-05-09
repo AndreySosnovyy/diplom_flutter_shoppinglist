@@ -56,10 +56,13 @@ class ListsView extends StatelessWidget {
                       top: 16, bottom: 54, left: 16, right: 16),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () =>
+                      onLongPress: () =>
                           viewModel.openListEditingView(
                             shoppingList: viewModel.shoppingLists[index],
                           ),
+                      // todo: create list review screen
+                      // todo: open list review screen
+                      onTap: () {},
                       child: ShoppingListTile(
                         shoppingList: viewModel.shoppingLists[index],
                         setIsMarked: (value) =>
