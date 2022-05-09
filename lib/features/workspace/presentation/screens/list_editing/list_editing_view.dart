@@ -84,12 +84,45 @@ class ListEditingView extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CommonTextField(
-                          controller: viewModel.titleController,
-                          hint: 'Название',
-                          isBold: true,
-                          fontSize: 32,
-                          maxLength: 24,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 74,
+                              child: CommonTextField(
+                                controller: viewModel.titleController,
+                                hint: 'Название',
+                                isBold: true,
+                                fontSize: 32,
+                                maxLength: 24,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: viewModel.changeColor,
+                              child: Container(
+                                width: 42,
+                                height: 42,
+                                decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppColors.blue,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 100),
+                                    width: 32,
+                                    height: 32,
+                                    decoration: BoxDecoration(
+                                        color: viewModel.shoppingList.color,
+                                        shape: BoxShape.circle),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         CommonTextField(
                           controller: viewModel.descriptionController,

@@ -33,6 +33,20 @@ class ListEditingViewModel extends FutureViewModel {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final productController = TextEditingController();
+
+  final List<Color> availableColors = [
+    AppColors.black,
+    AppColors.grey2,
+    AppColors.red,
+    AppColors.green,
+    AppColors.blue,
+    AppColors.indigo,
+    AppColors.orange,
+    AppColors.pink,
+    AppColors.teal,
+    AppColors.jellyBean,
+  ];
+
   var _screenMode = _ScreenMode.normal;
 
   @override
@@ -45,6 +59,13 @@ class ListEditingViewModel extends FutureViewModel {
     descriptionController.addListener(() {
       shoppingList.description = descriptionController.text;
     });
+  }
+
+  void changeColor() {
+    shoppingList.color = availableColors[
+        (availableColors.indexOf(shoppingList.color) + 1) %
+            availableColors.length];
+    notifyListeners();
   }
 
   void setScreenModeToSearch() {
