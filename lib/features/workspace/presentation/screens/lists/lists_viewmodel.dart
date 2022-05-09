@@ -39,6 +39,9 @@ class ListsViewModel extends FutureViewModel {
     notifyListeners();
   }
 
-  void openListCreationView() =>
-      router.push(ListEditingViewRoute(saveCallback: saveShoppingList));
+  void openListEditingView({ShoppingList? shoppingList}) =>
+      router.push(ListEditingViewRoute(
+        saveCallback: saveShoppingList,
+        shoppingList: shoppingList,
+      ));
 }

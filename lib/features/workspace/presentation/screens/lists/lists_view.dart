@@ -25,14 +25,17 @@ class ListsView extends StatelessWidget {
     );
 
     return ViewModelBuilder<ListsViewModel>.reactive(
-      viewModelBuilder: () => ListsViewModel(
-        auth: sl.get<AuthService>(),
-        router: sl.get<AppRouter>(),
-        localDataService: sl.get<LocalDataService>(),
-        remoteDataService: sl.get<AuthService>().currentUser != null
-            ? sl.get<RemoteDataService>()
-            : null,
-      ),
+      viewModelBuilder: () =>
+          ListsViewModel(
+            auth: sl.get<AuthService>(),
+            router: sl.get<AppRouter>(),
+            localDataService: sl.get<LocalDataService>(),
+            remoteDataService: sl
+                .get<AuthService>()
+                .currentUser != null
+                ? sl.get<RemoteDataService>()
+                : null,
+          ),
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: CommonAppbar(
@@ -41,7 +44,7 @@ class ListsView extends StatelessWidget {
             trailingCallback: viewModel.openSettings,
           ),
           floatingActionButton: AddListFAB(
-            onPressed: viewModel.openListCreationView,
+            onPressed: viewModel.openListEditingView,
           ),
           body: Scrollbar(
             child: ScrollConfiguration(
@@ -52,14 +55,20 @@ class ListsView extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       top: 16, bottom: 54, left: 16, right: 16),
                   itemBuilder: (context, index) {
-                    return ShoppingListTile(
-                      shoppingList: viewModel.shoppingLists[index],
-                      setIsMarked: (value) =>
-                          viewModel.shoppingLists[index].isPinned = value,
+                    return GestureDetector(
+                      onTap: () =>
+                          viewModel.openListEditingView(
+                            shoppingList: viewModel.shoppingLists[index],
+                          ),
+                      child: ShoppingListTile(
+                        shoppingList: viewModel.shoppingLists[index],
+                        setIsMarked: (value) =>
+                        viewModel.shoppingLists[index].isPinned = value,
+                      ),
                     );
                   },
                   separatorBuilder: (context, index) =>
-                      const SizedBox(height: 16),
+                  const SizedBox(height: 16),
                 ),
               ),
             ),

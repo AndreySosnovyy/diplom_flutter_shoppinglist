@@ -41,9 +41,12 @@ class ListEditingViewModel extends FutureViewModel {
   Future futureToRun() => init();
 
   Future init() async {
+    titleController.text = shoppingList.title;
     titleController.addListener(() {
       shoppingList.title = titleController.text;
     });
+    descriptionController.text =
+        shoppingList.description == null ? '' : shoppingList.description!;
     descriptionController.addListener(() {
       shoppingList.description = descriptionController.text;
     });
@@ -179,6 +182,7 @@ class ListEditingViewModel extends FutureViewModel {
     // todo: update database
   }
 
+  // todo: check if list exists (to not create a duplicate)
   Future saveShoppingList() async {
     if (shoppingList.isEmpty) return;
     saveCallback(shoppingList);

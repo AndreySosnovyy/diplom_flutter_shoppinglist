@@ -3,6 +3,7 @@ import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:flutter/material.dart';
 
+// todo: add bought products list and so on
 /// The class represents a list of products the user has created
 class ShoppingList {
   ShoppingList({required this.id});
