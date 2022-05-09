@@ -5,6 +5,7 @@ import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShoppingListTile extends StatefulWidget {
   const ShoppingListTile({
@@ -57,7 +58,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.only(left: 14, right: 14, top: 8, bottom: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -65,27 +66,31 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                shoppingList.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline2!
-                    .copyWith(color: AppColors.white),
+              Expanded(
+                child: AutoSizeText(
+                  shoppingList.title,
+                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                  maxLines: 2,
+                ),
               ),
               IconButton(
                 onPressed: () {
-                  setState(() => shoppingList.isPinned = !shoppingList.isPinned);
+                  setState(
+                      () => shoppingList.isPinned = !shoppingList.isPinned);
                   widget.setIsMarked(shoppingList.isPinned);
                 },
                 icon: shoppingList.isPinned
                     ? const Icon(
                         CupertinoIcons.bookmark_fill,
-                        size: 36,
+                        size: 32,
                         color: AppColors.white,
                       )
                     : const Icon(
                         CupertinoIcons.bookmark,
-                        size: 36,
+                        size: 32,
                         color: AppColors.white,
                       ),
               ),
@@ -93,7 +98,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
           ),
           Container(
             width: double.infinity,
-            height: 2.4,
+            height: 1.8,
             decoration: const BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -111,6 +116,57 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
               minFontSize: 14,
               overflow: TextOverflow.ellipsis,
             ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _IconTextPair(
+                text: shoppingList.listedProducts.length.toString(),
+                iconData: FontAwesomeIcons.cartArrowDown,
+                color: AppColors.white,
+              ),
+              _IconTextPair(
+                text: shoppingList.coAuthors.length.toString(),
+                iconData: FontAwesomeIcons.users,
+                color: AppColors.white,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _IconTextPair extends StatelessWidget {
+  const _IconTextPair({
+    required this.iconData,
+    required this.text,
+    required this.color,
+    Key? key,
+  }) : super(key: key);
+
+  final IconData iconData;
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 14),
+      child: Row(
+        children: [
+          Icon(
+            iconData,
+            color: color,
+            size: 13,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(color: color),
+          ),
         ],
       ),
     );
