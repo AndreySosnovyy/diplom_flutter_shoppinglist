@@ -8,6 +8,7 @@ import 'package:diplom/features/workspace/domain/services/local_data_service.dar
 import 'package:diplom/features/workspace/domain/services/remote_data_service.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_viewmodel.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/widgets/add_list_fab.dart';
+import 'package:diplom/features/workspace/presentation/screens/lists/widgets/shopping_list_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -46,8 +47,13 @@ class ListsView extends StatelessWidget {
             child: ScrollConfiguration(
               behavior: CommonScrollBehavior(),
               child: ListView.separated(
-                itemBuilder: (context, index) =>
-                    viewModel.shoppingListTiles[index],
+                itemBuilder: (context, index) {
+                  return ShoppingListTile(
+                    shoppingList: viewModel.shoppingLists[index],
+                    setIsMarked: (value) =>
+                        viewModel.shoppingLists[index].isPinned = value,
+                  );
+                },
                 itemCount: viewModel.shoppingLists.length,
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(

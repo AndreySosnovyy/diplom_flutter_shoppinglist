@@ -8,22 +8,12 @@ import 'package:flutter/material.dart';
 
 class ShoppingListTile extends StatefulWidget {
   const ShoppingListTile({
-    required this.id,
-    required this.title,
     required this.shoppingList,
-    required this.tileColor,
     required this.setIsMarked,
-    this.isMarked = false,
-    this.description,
     Key? key,
   }) : super(key: key);
 
-  final String id;
-  final String title;
-  final String? description;
   final ShoppingList shoppingList;
-  final bool isMarked;
-  final Color tileColor;
   final Function(bool value) setIsMarked;
 
   @override
@@ -31,14 +21,10 @@ class ShoppingListTile extends StatefulWidget {
 }
 
 class _ShoppingListTileState extends State<ShoppingListTile> {
-  late bool isMarked = widget.isMarked;
-
   @override
   Widget build(BuildContext context) {
-    final String title = widget.title;
-    final String? description = widget.description;
     final ShoppingList shoppingList = widget.shoppingList;
-    final Color tileColor = widget.tileColor;
+    final Color tileColor = widget.shoppingList.color;
 
     return Container(
       width: double.infinity,
@@ -80,7 +66,7 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                title,
+                shoppingList.title,
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -88,10 +74,10 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
               ),
               IconButton(
                 onPressed: () {
-                  setState(() => isMarked = !isMarked);
-                  widget.setIsMarked(isMarked);
+                  setState(() => shoppingList.isPinned = !shoppingList.isPinned);
+                  widget.setIsMarked(shoppingList.isPinned);
                 },
-                icon: isMarked
+                icon: shoppingList.isPinned
                     ? const Icon(
                         CupertinoIcons.bookmark_fill,
                         size: 36,
@@ -114,9 +100,9 @@ class _ShoppingListTileState extends State<ShoppingListTile> {
             ),
             margin: const EdgeInsets.symmetric(vertical: 8),
           ),
-          if (description != null)
+          if (shoppingList.description != null)
             AutoSizeText(
-              description,
+              shoppingList.description!,
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
