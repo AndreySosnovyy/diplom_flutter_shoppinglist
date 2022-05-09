@@ -122,6 +122,10 @@ class SettingsView extends StatelessWidget {
                       value: viewModel.settings.showProductImages,
                       onChanged: viewModel.setShowProductImages,
                     ),
+                    defaultColorIconColor:
+                        sl.get<SettingsService>().defaultColor,
+                    setDefaultColorCallback: () =>
+                        viewModel.pickDefaultColor(context),
                   ),
                   description:
                       'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',

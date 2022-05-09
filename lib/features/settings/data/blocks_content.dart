@@ -83,6 +83,8 @@ class SettingsBlocksContent {
 
   static List<SettingsTileModel> getShoppingBlockContent({
     required CupertinoSwitch productsPicturesSwitch,
+    required Color defaultColorIconColor,
+    required VoidCallback setDefaultColorCallback,
   }) {
     return <SettingsTileModel>[
       SettingsTileModel(
@@ -90,6 +92,12 @@ class SettingsBlocksContent {
         iconColor: AppColors.blue,
         title: 'Изображения товаров',
         trailingSwitch: productsPicturesSwitch,
+      ),
+      SettingsTileModel(
+        icon: const Icon(FontAwesomeIcons.palette, color: AppColors.white),
+        iconColor: defaultColorIconColor,
+        title: 'Цвет по умолчанию',
+        callback: setDefaultColorCallback,
       ),
       SettingsTileModel(
         icon: const Icon(CupertinoIcons.delete, color: AppColors.white),
@@ -107,7 +115,7 @@ class SettingsBlocksContent {
         title: 'Снять ограничения',
       ),
       SettingsTileModel(
-        icon: const FaIcon(FontAwesomeIcons.ellipsisH, color: AppColors.white),
+        icon: const FaIcon(FontAwesomeIcons.ellipsis, color: AppColors.white),
         iconColor: AppColors.black,
         title: 'Прочее',
       ),

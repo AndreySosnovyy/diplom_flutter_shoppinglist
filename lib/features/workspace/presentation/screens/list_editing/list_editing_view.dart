@@ -116,8 +116,9 @@ class ListEditingView extends StatelessWidget {
                                     width: 32,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                        color: viewModel.shoppingList.color,
-                                        shape: BoxShape.circle),
+                                      color: viewModel.shoppingList.color,
+                                      shape: BoxShape.circle,
+                                    ),
                                   ),
                                 ),
                               ),

@@ -5,6 +5,7 @@ import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
@@ -69,6 +70,33 @@ class SettingsViewModel extends FutureViewModel {
   }
 
   String get displayVersion => settings.displayVersion;
+
+  Future pickDefaultColor(BuildContext context) async {
+    final result = await showConfirmationDialog<Color>(
+      context: context,
+      title: 'Выберите цвет по умолчанию',
+      message: 'Этот цвет будет первым предложенным для новых списков покупок',
+      contentMaxHeight: MediaQuery.of(context).size.height * 0.5,
+      okLabel: 'Ок',
+      cancelLabel: 'Отмена',
+      actions: [
+        for (var i = 0; i < settings.availableColors.length; i++)
+          AlertDialogAction(
+            key: settings.availableColors[i],
+            label: settings.colorName(settings.availableColors[i]),
+            isDefaultAction:
+                settings.defaultColor == settings.availableColors[i],
+            textStyle: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: settings.availableColors[i]),
+          )
+      ],
+    );
+    if (result == null) return;
+    settings.defaultColor = result;
+    notifyListeners();
+  }
 
   Future setAvatar(BuildContext context) async {
     final result = await showModalActionSheet(

@@ -1,4 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/utils/string_extensions.dart';
 import 'package:diplom/app/values/colors.dart';
@@ -34,19 +35,6 @@ class ListEditingViewModel extends FutureViewModel {
   final descriptionController = TextEditingController();
   final productController = TextEditingController();
 
-  final List<Color> availableColors = [
-    AppColors.black,
-    AppColors.grey2,
-    AppColors.red,
-    AppColors.green,
-    AppColors.blue,
-    AppColors.indigo,
-    AppColors.orange,
-    AppColors.pink,
-    AppColors.teal,
-    AppColors.jellyBean,
-  ];
-
   var _screenMode = _ScreenMode.normal;
 
   @override
@@ -59,9 +47,24 @@ class ListEditingViewModel extends FutureViewModel {
     descriptionController.addListener(() {
       shoppingList.description = descriptionController.text;
     });
+    final settings = sl.get<SettingsService>();
+    shoppingList.color = settings.defaultColor;
   }
 
   void changeColor() {
+    final List<Color> availableColors = [
+      AppColors.black,
+      AppColors.grey2,
+      AppColors.red,
+      AppColors.green,
+      AppColors.blue,
+      AppColors.indigo,
+      AppColors.orange,
+      AppColors.pink,
+      AppColors.teal,
+      AppColors.jellyBean,
+    ];
+
     shoppingList.color = availableColors[
         (availableColors.indexOf(shoppingList.color) + 1) %
             availableColors.length];
