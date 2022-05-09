@@ -46,7 +46,8 @@ class ListsView extends StatelessWidget {
             child: ScrollConfiguration(
               behavior: CommonScrollBehavior(),
               child: ListView.separated(
-                itemBuilder: (context, index) => viewModel.shoppingLists[index],
+                itemBuilder: (context, index) =>
+                    viewModel.shoppingListTiles[index],
                 itemCount: viewModel.shoppingLists.length,
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(
@@ -55,7 +56,8 @@ class ListsView extends StatelessWidget {
                   left: 16,
                   right: 16,
                 ),
-                separatorBuilder: (context, index) => const SizedBox(height: 16),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
               ),
             ),
           ),

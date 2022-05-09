@@ -20,11 +20,13 @@ import 'list_editing_viewmodel.dart';
 
 class ListEditingView extends StatelessWidget {
   const ListEditingView({
+    required this.saveCallback,
     this.shoppingList,
     Key? key,
   }) : super(key: key);
 
   final ShoppingList? shoppingList;
+  final Function(ShoppingList shoppingList) saveCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,11 @@ class ListEditingView extends StatelessWidget {
         shoppingList: shoppingList ?? ShoppingList(id: const Uuid().v1()),
         settings: sl.get<SettingsService>(),
         imagePicker: ImagePicker(),
+        saveCallback: saveCallback,
       ),
       builder: (context, viewModel, child) => WillPopScope(
         onWillPop: () async {
-          await viewModel.saveProductList();
+          await viewModel.saveShoppingList();
           return true;
         },
         child: Scaffold(

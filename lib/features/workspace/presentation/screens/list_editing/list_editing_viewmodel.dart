@@ -19,12 +19,14 @@ class ListEditingViewModel extends FutureViewModel {
     required this.shoppingList,
     required this.settings,
     required this.imagePicker,
+    required this.saveCallback,
   });
 
   final AppRouter router;
   final ShoppingList shoppingList;
   final SettingsService settings;
   final ImagePicker imagePicker;
+  final Function(ShoppingList shoppingList) saveCallback;
 
   final ValueNotifier<String> searchNotifier = ValueNotifier('');
 
@@ -153,11 +155,9 @@ class ListEditingViewModel extends FutureViewModel {
     // todo: update database
   }
 
-  Future saveProductList() async {
+  Future saveShoppingList() async {
     if (shoppingList.isEmpty) return;
-    print('save');
-
-    // todo: update database
+    saveCallback(shoppingList);
   }
 
   Future showAddingCoAuthorDialog(BuildContext context) async {

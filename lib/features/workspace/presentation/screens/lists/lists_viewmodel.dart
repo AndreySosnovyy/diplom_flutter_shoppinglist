@@ -1,5 +1,6 @@
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
+import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/services/local_data_service.dart';
 import 'package:diplom/features/workspace/domain/services/remote_data_service.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/widgets/shopping_list_tile.dart';
@@ -17,14 +18,18 @@ class ListsViewModel extends FutureViewModel {
   final AppRouter router;
   final LocalDataService localDataService;
   final RemoteDataService? remoteDataService;
-  final List<ShoppingListTile> shoppingLists = <ShoppingListTile>[];
+  late final List<ShoppingListTile> shoppingListTiles;
+  late final List<ShoppingList> shoppingLists;
 
   @override
-  Future futureToRun() async =>
-      shoppingLists.addAll(await fetchShoppingLists());
+  Future futureToRun() async {
+    shoppingLists.addAll(await fetchShoppingLists());
+
+    // todo: init shopping list tiles
+  }
 
   // todo: implement method
-  Future<List<ShoppingListTile>> fetchShoppingLists() async {
+  Future<List<ShoppingList>> fetchShoppingLists() async {
     return [];
   }
 
@@ -32,5 +37,11 @@ class ListsViewModel extends FutureViewModel {
 
   void openSettings() => router.push(const SettingsViewRoute());
 
-  void openListCreationView() => router.push(ListEditingViewRoute());
+  // todo: implement method
+  Future saveShoppingList(ShoppingList shoppingList) async {
+
+  }
+
+  void openListCreationView() =>
+      router.push(ListEditingViewRoute(saveCallback: saveShoppingList));
 }
