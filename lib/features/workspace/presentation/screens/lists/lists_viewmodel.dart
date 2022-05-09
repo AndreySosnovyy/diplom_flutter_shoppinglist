@@ -18,8 +18,8 @@ class ListsViewModel extends FutureViewModel {
   final AppRouter router;
   final LocalDataService localDataService;
   final RemoteDataService? remoteDataService;
-  late final List<ShoppingListTile> shoppingListTiles;
-  late final List<ShoppingList> shoppingLists;
+  final List<ShoppingListTile> shoppingListTiles = <ShoppingListTile>[];
+  final List<ShoppingList> shoppingLists = <ShoppingList>[];
 
   @override
   Future futureToRun() async {
@@ -38,9 +38,7 @@ class ListsViewModel extends FutureViewModel {
   void openSettings() => router.push(const SettingsViewRoute());
 
   // todo: implement method
-  Future saveShoppingList(ShoppingList shoppingList) async {
-
-  }
+  Future saveShoppingList(ShoppingList shoppingList) async {}
 
   void openListCreationView() =>
       router.push(ListEditingViewRoute(saveCallback: saveShoppingList));

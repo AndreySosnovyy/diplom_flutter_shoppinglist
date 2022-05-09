@@ -39,12 +39,13 @@ class AppRouter extends _i7.RootStackRouter {
           routeData: routeData, child: const _i1.ListsView());
     },
     ListEditingViewRoute.name: (routeData) {
-      final args = routeData.argsAs<ListEditingViewRouteArgs>(
-          orElse: () => const ListEditingViewRouteArgs());
+      final args = routeData.argsAs<ListEditingViewRouteArgs>();
       return _i7.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i2.ListEditingView(
-              shoppingList: args.shoppingList, key: args.key));
+              saveCallback: args.saveCallback,
+              shoppingList: args.shoppingList,
+              key: args.key));
     },
     SettingsViewRoute.name: (routeData) {
       return _i7.AdaptivePage<dynamic>(
@@ -88,17 +89,25 @@ class ListsViewRoute extends _i7.PageRouteInfo<void> {
 /// generated route for
 /// [_i2.ListEditingView]
 class ListEditingViewRoute extends _i7.PageRouteInfo<ListEditingViewRouteArgs> {
-  ListEditingViewRoute({_i9.ShoppingList? shoppingList, _i10.Key? key})
+  ListEditingViewRoute(
+      {required dynamic Function(_i9.ShoppingList) saveCallback,
+      _i9.ShoppingList? shoppingList,
+      _i10.Key? key})
       : super(ListEditingViewRoute.name,
             path: '/list-editing-view',
-            args:
-                ListEditingViewRouteArgs(shoppingList: shoppingList, key: key));
+            args: ListEditingViewRouteArgs(
+                saveCallback: saveCallback,
+                shoppingList: shoppingList,
+                key: key));
 
   static const String name = 'ListEditingViewRoute';
 }
 
 class ListEditingViewRouteArgs {
-  const ListEditingViewRouteArgs({this.shoppingList, this.key});
+  const ListEditingViewRouteArgs(
+      {required this.saveCallback, this.shoppingList, this.key});
+
+  final dynamic Function(_i9.ShoppingList) saveCallback;
 
   final _i9.ShoppingList? shoppingList;
 
@@ -106,7 +115,7 @@ class ListEditingViewRouteArgs {
 
   @override
   String toString() {
-    return 'ListEditingViewRouteArgs{shoppingList: $shoppingList, key: $key}';
+    return 'ListEditingViewRouteArgs{saveCallback: $saveCallback, shoppingList: $shoppingList, key: $key}';
   }
 }
 
