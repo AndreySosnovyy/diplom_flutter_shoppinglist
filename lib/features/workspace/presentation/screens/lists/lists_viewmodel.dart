@@ -35,7 +35,14 @@ class ListsViewModel extends FutureViewModel {
   void openSettings() => router.push(const SettingsViewRoute());
 
   Future saveShoppingList(ShoppingList shoppingList) async {
-    shoppingLists.add(shoppingList);
+    final index =
+        shoppingLists.indexWhere((list) => list.id == shoppingList.id);
+    if (index == -1) {
+      shoppingLists.add(shoppingList);
+    } else {
+      shoppingLists.removeAt(index);
+      shoppingLists.insert(index, shoppingList);
+    }
     notifyListeners();
   }
 
