@@ -41,12 +41,12 @@ class ListEditingViewModel extends FutureViewModel {
 
   Future init() async {
     titleController.text =
-        shoppingList.title == 'Список покупок' ? '' : shoppingList.title;
+    shoppingList.title == 'Список покупок' ? '' : shoppingList.title;
     titleController.addListener(() {
       shoppingList.title = titleController.text;
     });
     descriptionController.text =
-        shoppingList.description == null ? '' : shoppingList.description!;
+    shoppingList.description == null ? '' : shoppingList.description!;
     descriptionController.addListener(() {
       shoppingList.description = descriptionController.text;
     });
@@ -67,8 +67,8 @@ class ListEditingViewModel extends FutureViewModel {
     ];
 
     shoppingList.color = availableColors[
-        (availableColors.indexOf(shoppingList.color) + 1) %
-            availableColors.length];
+    (availableColors.indexOf(shoppingList.color) + 1) %
+        availableColors.length];
     notifyListeners();
   }
 
@@ -94,10 +94,10 @@ class ListEditingViewModel extends FutureViewModel {
   void addProductViaSuggestion(Suggestion suggestion) {
     if (shoppingList.listedProducts
         .where((product) =>
-            product.name.toLowerCase() == suggestion.name.toLowerCase())
+    product.name.toLowerCase() == suggestion.name.toLowerCase())
         .isNotEmpty) {
       incQuantity(shoppingList.listedProducts.indexWhere((product) =>
-          product.name.toLowerCase() == suggestion.name.toLowerCase()));
+      product.name.toLowerCase() == suggestion.name.toLowerCase()));
       return;
     }
     shoppingList.listedProducts.add(
@@ -114,10 +114,10 @@ class ListEditingViewModel extends FutureViewModel {
   void addProductByName(String productName) {
     if (shoppingList.listedProducts
         .where((product) =>
-            product.name.toLowerCase() == productName.toLowerCase())
+    product.name.toLowerCase() == productName.toLowerCase())
         .isNotEmpty) {
       incQuantity(shoppingList.listedProducts.indexWhere((product) =>
-          product.name.toLowerCase() == productName.toLowerCase()));
+      product.name.toLowerCase() == productName.toLowerCase()));
       return;
     }
     shoppingList.listedProducts.add(
@@ -128,6 +128,48 @@ class ListEditingViewModel extends FutureViewModel {
       ),
     );
     notifyListeners();
+  }
+
+  Future onUnitTap({
+    required BuildContext context,
+    required int productIndex,
+  }) async {
+    final result = await showModalActionSheet(
+      context: context,
+      title: shoppingList.listedProducts[productIndex].name,
+      message: 'Выберите единицу изменения',
+      actions: [
+        for (final unit in Unit.values)
+          SheetAction(
+            key: unit,
+            label: unitToString(unit),
+            isDefaultAction:
+            unit == shoppingList.listedProducts[productIndex].unit,
+          ),
+      ],
+    );
+    if (result == null) return;
+
+    shoppingList.listedProducts[productIndex].unit = result;
+    shoppingList.listedProducts[productIndex].amount = 1;
+    notifyListeners();
+
+    // todo: update database
+  }
+
+  String unitToString(Unit unit) {
+    switch (unit) {
+      case Unit.pcs:
+        return 'штуки';
+      case Unit.kilos:
+        return 'килограммы';
+      case Unit.grams:
+        return 'граммы';
+      case Unit.liter:
+        return 'литры';
+      case Unit.milliliter:
+        return 'миллилитры';
+    }
   }
 
   Future onProductImageTap({
@@ -149,7 +191,7 @@ class ListEditingViewModel extends FutureViewModel {
           label: 'Сделать фото',
           icon: CupertinoIcons.photo_camera,
           isDefaultAction:
-              shoppingList.listedProducts[productIndex].imageUrl == null,
+          shoppingList.listedProducts[productIndex].imageUrl == null,
         ),
         const SheetAction(
           key: _ImageAction.gallery,
@@ -160,11 +202,9 @@ class ListEditingViewModel extends FutureViewModel {
     );
     if (result == null) return;
 
-    // todo: open new screen with image
     if (result == _ImageAction.view) {
-      router.push(FullScreenImageViewRoute(
+      return router.push(FullScreenImageViewRoute(
           imageUrl: shoppingList.listedProducts[productIndex].imageUrl!));
-      return;
     }
 
     final XFile? image = await imagePicker.pickImage(

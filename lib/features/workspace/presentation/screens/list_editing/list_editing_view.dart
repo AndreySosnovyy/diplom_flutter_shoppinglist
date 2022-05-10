@@ -229,7 +229,10 @@ class ListEditingView extends StatelessWidget {
                               context: context,
                               productIndex: index,
                             ),
-                            onUnitTap: () {},
+                            onUnitTap: () => viewModel.onUnitTap(
+                              context: context,
+                              productIndex: index,
+                            ),
                             showImages: viewModel.settings.showProductImages,
                           );
                         },

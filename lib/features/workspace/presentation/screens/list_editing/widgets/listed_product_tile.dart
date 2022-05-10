@@ -6,7 +6,6 @@ import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// todo: add ability to change product's unit
 class ListedProductTile extends StatefulWidget {
   const ListedProductTile({
     required this.index,
@@ -108,16 +107,18 @@ class _ListedProductTileState extends State<ListedProductTile> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                '${widget.product.amount} '
-                '${WorkspaceUtils.unitToString(widget.product.unit)}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(color: AppColors.grey1),
-                maxLines: 2,
+            GestureDetector(
+              onTap: widget.onUnitTap,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  '${widget.product.amount} '
+                  '${WorkspaceUtils.unitToString(widget.product.unit)}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: AppColors.grey1),
+                ),
               ),
             ),
             GestureDetector(

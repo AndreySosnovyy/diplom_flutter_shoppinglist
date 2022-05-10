@@ -11,6 +11,8 @@ class WorkspaceUtils {
         return 'гр';
       case Unit.liter:
         return 'л';
+      case Unit.milliliter:
+        return 'мл';
     }
   }
 }

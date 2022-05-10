@@ -2,8 +2,8 @@
 class Product {
   final String name;
   final String? description;
-  final String? imageUrl;
-  final Unit unit;
+  String? imageUrl;
+  Unit unit;
 
   Product({
     required this.name,
@@ -13,4 +13,4 @@ class Product {
   });
 }
 
-enum Unit { pcs, kilos, grams, liter }
+enum Unit { pcs, kilos, grams, liter, milliliter }
