@@ -207,13 +207,7 @@ class ListEditingView extends StatelessWidget {
                   ),
                 ),
                 viewModel.shoppingList.listedProducts.isEmpty
-                    ? Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.18),
-                          child: const EmptyBanner(),
-                        ),
-                      )
+                    ? const Center(child: EmptyBanner())
                     : ListView.separated(
                         shrinkWrap: true,
                         padding: const EdgeInsets.only(
@@ -231,10 +225,11 @@ class ListEditingView extends StatelessWidget {
                                 viewModel.incQuantity(index),
                             decQuantityCallback: () =>
                                 viewModel.decQuantity(index),
-                            setImageCallback: () => viewModel.setImage(
+                            onImageTap: () => viewModel.onProductImageTap(
                               context: context,
                               productIndex: index,
                             ),
+                            onUnitTap: () {},
                             showImages: viewModel.settings.showProductImages,
                           );
                         },

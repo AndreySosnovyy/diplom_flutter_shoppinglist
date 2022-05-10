@@ -130,21 +130,29 @@ class ListEditingViewModel extends FutureViewModel {
     notifyListeners();
   }
 
-  Future setImage({
+  Future onProductImageTap({
     required BuildContext context,
     required int productIndex,
   }) async {
     final result = await showModalActionSheet(
       context: context,
       actions: [
-        const SheetAction(
-          key: ImageSource.camera,
+        if (shoppingList.listedProducts[productIndex].imageUrl != null)
+          const SheetAction(
+            key: _ImageAction.view,
+            label: 'Просмотреть фото',
+            icon: CupertinoIcons.zoom_in,
+            isDefaultAction: true,
+          ),
+        SheetAction(
+          key: _ImageAction.camera,
           label: 'Сделать фото',
           icon: CupertinoIcons.photo_camera,
-          isDefaultAction: true,
+          isDefaultAction:
+              shoppingList.listedProducts[productIndex].imageUrl == null,
         ),
         const SheetAction(
-          key: ImageSource.gallery,
+          key: _ImageAction.gallery,
           label: 'Выбрать из галереи',
           icon: CupertinoIcons.photo,
         )
@@ -152,8 +160,17 @@ class ListEditingViewModel extends FutureViewModel {
     );
     if (result == null) return;
 
+    // todo: open new screen with image
+    if (result == _ImageAction.view) {
+      router.push(FullScreenImageViewRoute(
+          imageUrl: shoppingList.listedProducts[productIndex].imageUrl!));
+      return;
+    }
+
     final XFile? image = await imagePicker.pickImage(
-      source: result,
+      source: result == _ImageAction.camera
+          ? ImageSource.camera
+          : ImageSource.gallery,
       imageQuality: 20,
     );
     if (image == null) return;
@@ -228,3 +245,5 @@ class ListEditingViewModel extends FutureViewModel {
 }
 
 enum _ScreenMode { normal, search }
+
+enum _ImageAction { view, camera, gallery }

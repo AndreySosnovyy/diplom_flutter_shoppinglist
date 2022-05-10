@@ -13,7 +13,8 @@ class ListedProductTile extends StatefulWidget {
     required this.product,
     required this.incQuantityCallback,
     required this.decQuantityCallback,
-    required this.setImageCallback,
+    required this.onImageTap,
+    required this.onUnitTap,
     this.showImages = true,
     Key? key,
   }) : super(key: key);
@@ -22,7 +23,8 @@ class ListedProductTile extends StatefulWidget {
   final ListedProduct product;
   final VoidCallback incQuantityCallback;
   final VoidCallback decQuantityCallback;
-  final VoidCallback setImageCallback;
+  final VoidCallback onImageTap;
+  final VoidCallback onUnitTap;
   final bool showImages;
 
   @override
@@ -41,7 +43,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
         Row(
           children: [
             GestureDetector(
-              onTap: widget.setImageCallback,
+              onTap: widget.onImageTap,
               child: SizedBox(
                 width: 46,
                 height: 46,
