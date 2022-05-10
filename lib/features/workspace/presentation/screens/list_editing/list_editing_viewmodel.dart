@@ -1,5 +1,4 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/utils/string_extensions.dart';
 import 'package:diplom/app/values/colors.dart';
@@ -51,8 +50,6 @@ class ListEditingViewModel extends FutureViewModel {
     descriptionController.addListener(() {
       shoppingList.description = descriptionController.text;
     });
-    final settings = sl.get<SettingsService>();
-    shoppingList.color = settings.defaultColor;
   }
 
   void changeColor() {

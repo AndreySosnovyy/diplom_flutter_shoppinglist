@@ -31,13 +31,18 @@ class ListEditingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ListEditingViewModel>.reactive(
-      viewModelBuilder: () => ListEditingViewModel(
-        router: sl.get<AppRouter>(),
-        shoppingList: shoppingList ?? ShoppingList(id: const Uuid().v1()),
-        settings: sl.get<SettingsService>(),
-        imagePicker: ImagePicker(),
-        saveCallback: saveCallback,
-      ),
+      viewModelBuilder: () {
+        final settings = sl.get<SettingsService>();
+        return ListEditingViewModel(
+          router: sl.get<AppRouter>(),
+          shoppingList: shoppingList ??
+              (ShoppingList(id: const Uuid().v1())
+                ..color = settings.defaultColor),
+          settings: settings,
+          imagePicker: ImagePicker(),
+          saveCallback: saveCallback,
+        );
+      },
       builder: (context, viewModel, child) => WillPopScope(
         onWillPop: () async {
           await viewModel.saveShoppingList();
@@ -215,8 +220,7 @@ class ListEditingView extends StatelessWidget {
                     : ListView.separated(
                         shrinkWrap: true,
                         padding: const EdgeInsets.symmetric(horizontal: 14),
-                        itemCount:
-                            viewModel.shoppingList.listedProducts.length,
+                        itemCount: viewModel.shoppingList.listedProducts.length,
                         itemBuilder: (context, index) {
                           return ListedProductTile(
                             index: index,

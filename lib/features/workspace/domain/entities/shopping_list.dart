@@ -1,4 +1,3 @@
-import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,8 @@ import 'package:flutter/material.dart';
 class ShoppingList {
   ShoppingList({required this.id});
 
+  final String defaultName = 'Список покупок';
+
   final String id;
   late String title = defaultName;
   String? description;
@@ -16,9 +17,7 @@ class ShoppingList {
   DateTime? deadline;
   double? budget;
   bool isPinned = false;
-  Color color = AppColors.black;
-
-  final String defaultName = 'Список покупок';
+  late Color color;
 
   /// Returns the expected total price of all products in this list
   /// according to added listed products
