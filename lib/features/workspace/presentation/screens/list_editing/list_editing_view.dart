@@ -67,115 +67,126 @@ class ListEditingView extends StatelessWidget {
             leadingCallback: viewModel.backButtonCallback,
           ),
           resizeToAvoidBottomInset: false,
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                viewModel.setScreenModeToNormal();
-                FocusManager.instance.primaryFocus?.unfocus();
-                viewModel.productController.text = '';
-                viewModel.onSearchChanged('');
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (viewModel.displayTopInputs)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          body: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              viewModel.setScreenModeToNormal();
+              FocusManager.instance.primaryFocus?.unfocus();
+              viewModel.productController.text = '';
+              viewModel.onSearchChanged('');
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (viewModel.displayTopInputs)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          top: 16,
+                        ),
+                        child: Column(
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width - 74,
-                              child: CommonTextField(
-                                controller: viewModel.titleController,
-                                hint: 'Название',
-                                isBold: true,
-                                fontSize: 32,
-                                maxLength: 24,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: viewModel.changeColor,
-                              child: Container(
-                                width: 42,
-                                height: 42,
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppColors.blue,
-                                    width: 2,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width - 74,
+                                  child: CommonTextField(
+                                    controller: viewModel.titleController,
+                                    hint: 'Название',
+                                    isBold: true,
+                                    fontSize: 32,
+                                    maxLength: 24,
                                   ),
                                 ),
-                                child: Center(
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 100),
-                                    width: 32,
-                                    height: 32,
+                                GestureDetector(
+                                  onTap: viewModel.changeColor,
+                                  child: Container(
+                                    width: 42,
+                                    height: 42,
                                     decoration: BoxDecoration(
-                                      color: viewModel.shoppingList.color,
+                                      color: AppColors.white,
                                       shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: AppColors.blue,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: AnimatedContainer(
+                                        duration:
+                                            const Duration(milliseconds: 100),
+                                        width: 32,
+                                        height: 32,
+                                        decoration: BoxDecoration(
+                                          color: viewModel.shoppingList.color,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
+                            ),
+                            CommonTextField(
+                              controller: viewModel.descriptionController,
+                              hint: 'Описание (необязательно)',
+                              fontSize: 18,
+                              maxLength: 300,
+                              maxLines: 8,
                             ),
                           ],
                         ),
-                        CommonTextField(
-                          controller: viewModel.descriptionController,
-                          hint: 'Описание (необязательно)',
-                          fontSize: 18,
-                          maxLength: 300,
-                          maxLines: 8,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        height: 1,
+                        width: double.infinity,
+                        color: AppColors.grey3,
+                      ),
+                      CoAuthorsHandler(
+                        coAuthors: viewModel.shoppingList.coAuthors,
+                        showAddingCoAuthorDialog: () =>
+                            viewModel.showAddingCoAuthorDialog(context),
+                        deleteCoAuthor: viewModel.deleteCoAuthorByUserHandler,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        height: 1,
+                        width: double.infinity,
+                        color: AppColors.grey3,
+                      ),
+                    ],
+                  ),
+                if (!viewModel.displayTopInputs)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          CupertinoIcons.arrow_down,
+                          color: AppColors.grey2,
+                          size: 14,
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 16),
-                          height: 1,
-                          width: double.infinity,
-                          color: AppColors.grey3,
-                        ),
-                        CoAuthorsHandler(
-                          coAuthors: viewModel.shoppingList.coAuthors,
-                          showAddingCoAuthorDialog: () =>
-                              viewModel.showAddingCoAuthorDialog(context),
-                          deleteCoAuthor: viewModel.deleteCoAuthorByUserHandler,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          height: 1,
-                          width: double.infinity,
-                          color: AppColors.grey3,
+                        const SizedBox(width: 4),
+                        Text(
+                          'Свернуть',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: AppColors.grey2),
                         ),
                       ],
                     ),
-                  if (!viewModel.displayTopInputs)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 6),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            CupertinoIcons.arrow_down,
-                            color: AppColors.grey2,
-                            size: 14,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Свернуть',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(color: AppColors.grey2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
                     child: CommonSearchLine(
                       controller: viewModel.productController,
                       onChanged: viewModel.onSearchChanged,
@@ -183,42 +194,49 @@ class ListEditingView extends StatelessWidget {
                       onTap: viewModel.setScreenModeToSearch,
                     ),
                   ),
-                  SuggestionsBlock(
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: SuggestionsBlock(
                     searchTextNotifier: viewModel.searchNotifier,
                     onSuggestionTap: viewModel.addProductViaSuggestion,
                     addByProductName: viewModel.addProductByName,
                     showImages: viewModel.settings.showProductImages,
                   ),
-                  viewModel.shoppingList.listedProducts.isEmpty
-                      ? const Expanded(child: EmptyBanner())
-                      : Expanded(
-                          child: ListView.separated(
-                            padding: const EdgeInsets.only(top: 16),
-                            itemCount:
-                                viewModel.shoppingList.listedProducts.length,
-                            itemBuilder: (context, index) {
-                              return ListedProductTile(
-                                index: index,
-                                product: viewModel
-                                    .shoppingList.listedProducts[index],
-                                incQuantityCallback: () =>
-                                    viewModel.incQuantity(index),
-                                decQuantityCallback: () =>
-                                    viewModel.decQuantity(index),
-                                setImageCallback: () => viewModel.setImage(
-                                  context: context,
-                                  productIndex: index,
-                                ),
-                                showImages:
-                                    viewModel.settings.showProductImages,
-                              );
-                            },
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                          ),
+                ),
+                viewModel.shoppingList.listedProducts.isEmpty
+                    ? Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.18),
+                          child: const EmptyBanner(),
                         ),
-                ],
-              ),
+                      )
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        itemCount:
+                            viewModel.shoppingList.listedProducts.length,
+                        itemBuilder: (context, index) {
+                          return ListedProductTile(
+                            index: index,
+                            product:
+                                viewModel.shoppingList.listedProducts[index],
+                            incQuantityCallback: () =>
+                                viewModel.incQuantity(index),
+                            decQuantityCallback: () =>
+                                viewModel.decQuantity(index),
+                            setImageCallback: () => viewModel.setImage(
+                              context: context,
+                              productIndex: index,
+                            ),
+                            showImages: viewModel.settings.showProductImages,
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 12),
+                      ),
+              ],
             ),
           ),
         ),

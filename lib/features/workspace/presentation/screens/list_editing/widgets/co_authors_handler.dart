@@ -27,21 +27,11 @@ class CoAuthorsHandler extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: showAddingCoAuthorDialog,
-              child: const SizedBox(
-                child: Icon(
-                  CupertinoIcons.add,
-                  size: 64,
-                  color: AppColors.blue,
-                ),
-              ),
-            ),
-            coAuthors.isNotEmpty
-                ? SizedBox(
-                    width: MediaQuery.of(context).size.width - 108,
-                    height: 70,
-                    child: ListView.separated(
+            const SizedBox(width: 12),
+            SizedBox(
+              height: 70,
+              child: coAuthors.isNotEmpty
+                  ? ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemCount: coAuthors.length,
@@ -54,18 +44,33 @@ class CoAuthorsHandler extends StatelessWidget {
                       ),
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 12),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Center(
+                        child: Text(
+                          'Соавторы',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: AppColors.grey1),
+                        ),
+                      ),
                     ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      'Соавторы',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(color: AppColors.grey1),
-                    ),
+            ),
+            GestureDetector(
+              onTap: showAddingCoAuthorDialog,
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16),
+                child: SizedBox(
+                  child: Icon(
+                    CupertinoIcons.add_circled,
+                    size: 36,
+                    color: AppColors.blue,
                   ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
