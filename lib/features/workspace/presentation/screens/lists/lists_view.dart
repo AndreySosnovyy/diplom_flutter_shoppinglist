@@ -67,8 +67,10 @@ class ListsView extends StatelessWidget {
                     return ShoppingListTile(
                       scrollNotifier: viewModel.scrollNotifier,
                       shoppingList: viewModel.shoppingLists[index],
-                      setIsMarked: (value) =>
-                          viewModel.shoppingLists[index].isPinned = value,
+                      setIsMarked: (value) => viewModel.setIsPinned(
+                        productIndex: index,
+                        value: value,
+                      ),
                       onTap: () {},
                       onLongPress: () => viewModel.openListEditingView(
                         shoppingList: viewModel.shoppingLists[index],

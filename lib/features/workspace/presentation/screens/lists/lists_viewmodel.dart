@@ -36,6 +36,12 @@ class ListsViewModel extends FutureViewModel {
 
   void openSettings() => router.push(const SettingsViewRoute());
 
+  void setIsPinned({required int productIndex, required bool value}) {
+    shoppingLists[productIndex].isPinned = value;
+    shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
+    notifyListeners();
+  }
+
   Future saveShoppingList(ShoppingList shoppingList) async {
     final index =
         shoppingLists.indexWhere((list) => list.id == shoppingList.id);
@@ -45,6 +51,7 @@ class ListsViewModel extends FutureViewModel {
       shoppingLists.removeAt(index);
       shoppingLists.insert(index, shoppingList);
     }
+    shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
     notifyListeners();
   }
 
