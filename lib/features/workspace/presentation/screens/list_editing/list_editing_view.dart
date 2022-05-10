@@ -190,14 +190,11 @@ class ListEditingView extends StatelessWidget {
                     ),
                   ),
                 Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: CommonSearchLine(
-                      controller: viewModel.productController,
-                      onChanged: viewModel.onSearchChanged,
-                      hint: 'Название товара',
-                      onTap: viewModel.setScreenModeToSearch,
-                    ),
+                  child: CommonSearchLine(
+                    controller: viewModel.productController,
+                    onChanged: viewModel.onSearchChanged,
+                    hint: 'Название товара',
+                    onTap: viewModel.setScreenModeToSearch,
                   ),
                 ),
                 Padding(
@@ -219,7 +216,11 @@ class ListEditingView extends StatelessWidget {
                       )
                     : ListView.separated(
                         shrinkWrap: true,
-                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        padding: const EdgeInsets.only(
+                          left: 14,
+                          right: 14,
+                          top: 16,
+                        ),
                         itemCount: viewModel.shoppingList.listedProducts.length,
                         itemBuilder: (context, index) {
                           return ListedProductTile(

@@ -63,6 +63,7 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
           padding: const EdgeInsets.only(left: 16),
+          margin: const EdgeInsets.only(top: 16),
           child: ScrollConfiguration(
             behavior: CommonScrollBehavior(),
             child: Column(
