@@ -208,36 +208,38 @@ class ListEditingView extends StatelessWidget {
                 ),
                 viewModel.shoppingList.listedProducts.isEmpty
                     ? const Center(child: EmptyBanner())
-                    : ListView.separated(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.only(
-                          left: 14,
-                          right: 14,
-                          top: 16,
+                    : Expanded(
+                        child: ListView.separated(
+                          padding: const EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                            top: 16,
+                          ),
+                          itemCount:
+                              viewModel.shoppingList.listedProducts.length,
+                          itemBuilder: (context, index) {
+                            return ListedProductTile(
+                              index: index,
+                              product:
+                                  viewModel.shoppingList.listedProducts[index],
+                              incQuantityCallback: () =>
+                                  viewModel.incQuantity(index),
+                              decQuantityCallback: () =>
+                                  viewModel.decQuantity(index),
+                              onImageTap: () => viewModel.onProductImageTap(
+                                context: context,
+                                productIndex: index,
+                              ),
+                              onUnitTap: () => viewModel.onUnitTap(
+                                context: context,
+                                productIndex: index,
+                              ),
+                              showImages: viewModel.settings.showProductImages,
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 12),
                         ),
-                        itemCount: viewModel.shoppingList.listedProducts.length,
-                        itemBuilder: (context, index) {
-                          return ListedProductTile(
-                            index: index,
-                            product:
-                                viewModel.shoppingList.listedProducts[index],
-                            incQuantityCallback: () =>
-                                viewModel.incQuantity(index),
-                            decQuantityCallback: () =>
-                                viewModel.decQuantity(index),
-                            onImageTap: () => viewModel.onProductImageTap(
-                              context: context,
-                              productIndex: index,
-                            ),
-                            onUnitTap: () => viewModel.onUnitTap(
-                              context: context,
-                              productIndex: index,
-                            ),
-                            showImages: viewModel.settings.showProductImages,
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
                       ),
               ],
             ),

@@ -14,7 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class ListsView extends StatelessWidget {
-  const ListsView({Key? key}) : super(key: key);
+  const ListsView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,26 +59,24 @@ class ListsView extends StatelessWidget {
                   }
                   return true;
                 },
-                child: Expanded(
-                  child: ListView.separated(
-                    itemCount: viewModel.shoppingLists.length,
-                    padding: const EdgeInsets.only(
-                        top: 16, bottom: 54, left: 16, right: 16),
-                    itemBuilder: (context, index) {
-                      return ShoppingListTile(
-                        scrollNotifier: viewModel.scrollNotifier,
+                child: ListView.separated(
+                  itemCount: viewModel.shoppingLists.length,
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 54, left: 16, right: 16),
+                  itemBuilder: (context, index) {
+                    return ShoppingListTile(
+                      scrollNotifier: viewModel.scrollNotifier,
+                      shoppingList: viewModel.shoppingLists[index],
+                      setIsMarked: (value) =>
+                          viewModel.shoppingLists[index].isPinned = value,
+                      onTap: () {},
+                      onLongPress: () => viewModel.openListEditingView(
                         shoppingList: viewModel.shoppingLists[index],
-                        setIsMarked: (value) =>
-                            viewModel.shoppingLists[index].isPinned = value,
-                        onTap: () {},
-                        onLongPress: () => viewModel.openListEditingView(
-                          shoppingList: viewModel.shoppingLists[index],
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 16),
-                  ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
                 ),
               ),
             ),
