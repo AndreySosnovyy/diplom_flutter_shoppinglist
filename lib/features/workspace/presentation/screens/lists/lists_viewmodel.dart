@@ -3,6 +3,7 @@ import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/services/local_data_service.dart';
 import 'package:diplom/features/workspace/domain/services/remote_data_service.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class ListsViewModel extends FutureViewModel {
@@ -13,6 +14,7 @@ class ListsViewModel extends FutureViewModel {
     required this.localDataService,
   });
 
+  final scrollNotifier = ValueNotifier<bool>(false);
   final AuthService auth;
   final AppRouter router;
   final LocalDataService localDataService;

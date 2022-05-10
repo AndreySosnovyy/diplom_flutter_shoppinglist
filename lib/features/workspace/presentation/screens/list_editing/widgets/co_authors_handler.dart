@@ -65,7 +65,7 @@ class CoAuthorsHandler extends StatelessWidget {
                 child: SizedBox(
                   child: Icon(
                     CupertinoIcons.add_circled,
-                    size: 36,
+                    size: 44,
                     color: AppColors.blue,
                   ),
                 ),

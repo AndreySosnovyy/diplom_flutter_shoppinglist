@@ -25,17 +25,14 @@ class ListsView extends StatelessWidget {
     );
 
     return ViewModelBuilder<ListsViewModel>.reactive(
-      viewModelBuilder: () =>
-          ListsViewModel(
-            auth: sl.get<AuthService>(),
-            router: sl.get<AppRouter>(),
-            localDataService: sl.get<LocalDataService>(),
-            remoteDataService: sl
-                .get<AuthService>()
-                .currentUser != null
-                ? sl.get<RemoteDataService>()
-                : null,
-          ),
+      viewModelBuilder: () => ListsViewModel(
+        auth: sl.get<AuthService>(),
+        router: sl.get<AppRouter>(),
+        localDataService: sl.get<LocalDataService>(),
+        remoteDataService: sl.get<AuthService>().currentUser != null
+            ? sl.get<RemoteDataService>()
+            : null,
+      ),
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: CommonAppbar(
@@ -49,29 +46,37 @@ class ListsView extends StatelessWidget {
           body: Scrollbar(
             child: ScrollConfiguration(
               behavior: CommonScrollBehavior(),
-              child: Expanded(
-                child: ListView.separated(
-                  itemCount: viewModel.shoppingLists.length,
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 54, left: 16, right: 16),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onLongPress: () =>
-                          viewModel.openListEditingView(
-                            shoppingList: viewModel.shoppingLists[index],
-                          ),
-                      // todo: create list review screen
-                      // todo: open list review screen
-                      onTap: () {},
-                      child: ShoppingListTile(
+              child: NotificationListener(
+                onNotification: (n) {
+                  if (n is ScrollStartNotification) {
+                    viewModel.scrollNotifier.value = true;
+                  } else {
+                    if (n is ScrollEndNotification) {
+                      viewModel.scrollNotifier.value = false;
+                    }
+                  }
+                  return true;
+                },
+                child: Expanded(
+                  child: ListView.separated(
+                    itemCount: viewModel.shoppingLists.length,
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 54, left: 16, right: 16),
+                    itemBuilder: (context, index) {
+                      return ShoppingListTile(
+                        scrollNotifier: viewModel.scrollNotifier,
                         shoppingList: viewModel.shoppingLists[index],
                         setIsMarked: (value) =>
-                        viewModel.shoppingLists[index].isPinned = value,
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                  const SizedBox(height: 16),
+                            viewModel.shoppingLists[index].isPinned = value,
+                        onTap: () {},
+                        onLongPress: () => viewModel.openListEditingView(
+                          shoppingList: viewModel.shoppingLists[index],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
+                  ),
                 ),
               ),
             ),
