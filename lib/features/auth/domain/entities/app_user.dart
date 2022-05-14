@@ -19,12 +19,12 @@ class AppUser {
   final bool isHidden;
   final String authProvider;
 
-  factory AppUser.fromJson(String id, Map<String, dynamic> json) {
+  factory AppUser.fromJson(String id, Map json) {
     return AppUser(
       id: id,
       name: json['name'],
       isHidden: json['isHidden'],
-      listIds: json['listIds'],
+      listIds: [...json['listIds']],
       handler: json['handler'],
       avatarUrl: json['avatarUrl'],
       authProvider: json['authProvider']

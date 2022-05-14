@@ -18,24 +18,23 @@ class UsersRemoteDataSource {
   }
 
   Future addAppUser(AppUser appUser) async {
-    await database.ref('users').child(appUser.id).set({
+    await database.ref('users').child(userId).set({
       'name': appUser.name,
       'handler': appUser.handler,
       'avatarUrl': appUser.avatarUrl,
       'isHidden': appUser.isHidden,
-      'listIds': appUser.listIds.toString(),
+      'listIds': appUser.listIds,
       'authProvider': appUser.authProvider,
     });
   }
 
-  Future<AppUser> get currentAppUser {
-    return database.ref('/users').child('/$userId').get().then(
-          (DataSnapshot snapshot) => AppUser.fromJson(
-            snapshot.key as String,
-            snapshot.value as Map<String, dynamic>,
-          ),
-        );
-  }
+  Future<AppUser> get currentAppUser async =>
+      await database.ref('users').child(userId).get().then(
+            (DataSnapshot snapshot) => AppUser.fromJson(
+              snapshot.key as String,
+              snapshot.value as Map,
+            ),
+          );
 
   Future<String?> get avatarUrl async {
     try {
