@@ -99,11 +99,11 @@ class SettingsBlocksContent {
         title: 'Цвет по умолчанию',
         callback: setDefaultColorCallback,
       ),
-      SettingsTileModel(
-        icon: const Icon(CupertinoIcons.delete, color: AppColors.white),
-        iconColor: AppColors.red,
-        title: 'Автоматическое удаление',
-      ),
+      // SettingsTileModel(
+      //   icon: const Icon(CupertinoIcons.delete, color: AppColors.white),
+      //   iconColor: AppColors.red,
+      //   title: 'Автоматическое удаление',
+      // ),
     ];
   }
 

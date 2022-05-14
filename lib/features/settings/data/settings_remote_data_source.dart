@@ -7,6 +7,8 @@ class SettingsRemoteDataSource {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseDatabase database = FirebaseDatabase.instance;
 
+  Future init() async {}
+
   // todo: implement method
   Future setAvatar(Uint8List bytes) async => throw UnimplementedError();
 

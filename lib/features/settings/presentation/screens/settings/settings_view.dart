@@ -97,7 +97,7 @@ class SettingsView extends StatelessWidget {
                       changeHandlerCallback: () =>
                           viewModel.setHandler(context),
                       hideAccountSwitch: CupertinoSwitch(
-                        value: viewModel.settings.isHidden,
+                        value: viewModel.settings.isHiddenAccount,
                         onChanged: viewModel.setIsHiddenAccount,
                       ),
                       signOutCallback: viewModel.signOut,

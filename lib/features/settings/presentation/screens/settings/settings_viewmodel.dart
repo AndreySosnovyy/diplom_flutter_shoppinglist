@@ -94,7 +94,7 @@ class SettingsViewModel extends FutureViewModel {
       ],
     );
     if (result == null) return;
-    settings.defaultColor = result;
+    await settings.setDefaultColor(result);
     notifyListeners();
   }
 

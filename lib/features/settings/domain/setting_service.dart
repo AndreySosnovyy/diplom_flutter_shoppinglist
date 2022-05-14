@@ -15,10 +15,8 @@ class SettingsService {
 
   late final PackageInfo _packageInfo;
   late final String displayVersion;
-  late bool isHidden;
+  late bool isHiddenAccount;
   late bool showProductImages;
-  late bool autoDelete;
-  late Duration? autoDeleteDelay;
   late Color defaultColor;
 
   final List<Color> availableColors = [
@@ -51,17 +49,18 @@ class SettingsService {
   Future init() async {
     _packageInfo = await PackageInfo.fromPlatform();
     displayVersion = _packageInfo.version;
+    
+    await localDataSource.init();
+    await remoteDataSource.init();
 
     // todo: init with values from database
-    isHidden = false;
-    showProductImages = true;
-    autoDelete = false;
-    autoDeleteDelay = null;
-    defaultColor = AppColors.blue;
+    isHiddenAccount = false;
+    showProductImages = localDataSource.showProductImages;
+    defaultColor = localDataSource.defaultColor;
   }
 
-  void setDefaultColor(Color color) {
-    // todo: save default color locally
+  Future setDefaultColor(Color color) async {
+    await localDataSource.setDefaultColor(color);
     defaultColor = color;
   }
 
@@ -72,13 +71,13 @@ class SettingsService {
   Future updateHandler(String newHandler) async => throw UnimplementedError();
 
   Future setIsHiddenAccount(bool value) async {
-    isHidden = value;
+    isHiddenAccount = value;
     // todo: update database
   }
 
   Future setShowProductImages(bool value) async {
+    await localDataSource.setShowProductImages(value);
     showProductImages = value;
-    // todo: update database
   }
 
   // todo: implement method

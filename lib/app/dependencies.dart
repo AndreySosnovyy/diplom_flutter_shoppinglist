@@ -40,7 +40,7 @@ Future setupSentry() async {
   );
 }
 
-Future setupRemoteWorkspaceDataSource() async {
+Future setupRemoteDataSources() async {
   sl.registerSingleton<RemoteWorkspaceDataSource>(RemoteWorkspaceDataSource());
   await sl.get<RemoteWorkspaceDataSource>().init();
 }
