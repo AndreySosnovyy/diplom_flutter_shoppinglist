@@ -19,7 +19,7 @@ class SettingsService {
   late final String displayVersion;
   late bool showProductImages;
   late Color defaultColor;
-  late String avatarUrl;
+  late String? avatarUrl;
   late String userName;
   late String? userHandler;
   late bool isHiddenAccount;
@@ -58,8 +58,15 @@ class SettingsService {
     await localDataSource.init();
     await remoteDataSource.init();
 
+    // local value
     showProductImages = localDataSource.showProductImages;
     defaultColor = localDataSource.defaultColor;
+
+    // remote values
+    avatarUrl = null;
+    userName = 'Имя пользователя';
+    userHandler = '@user_handler';
+    isHiddenAccount = true;
   }
 
   Future setDefaultColor(Color color) async {

@@ -38,11 +38,10 @@ class SettingsViewModel extends FutureViewModel {
   Future futureToRun() async => await fetchUserData();
 
   Future fetchUserData() async {
-    // todo: fetch data from database
-    _avatarUrl = null;
-    _userName = 'Имя пользователя';
-    _userHandler = '@user_handler';
-    _isHiddenAccount = true;
+    _avatarUrl = settings.avatarUrl;
+    _userName = settings.userName;
+    _userHandler = settings.userHandler;
+    _isHiddenAccount = settings.isHiddenAccount;
   }
 
   void backButtonCallback() => router.pop();
