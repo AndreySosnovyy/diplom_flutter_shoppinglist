@@ -1,8 +1,7 @@
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
-import 'package:diplom/features/workspace/domain/services/local_data_service.dart';
-import 'package:diplom/features/workspace/domain/services/remote_data_service.dart';
+import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -10,16 +9,16 @@ class ListsViewModel extends FutureViewModel {
   ListsViewModel({
     required this.auth,
     required this.router,
-    required this.remoteDataService,
-    required this.localDataService,
+    required this.workspaceService,
   });
 
-  final scrollNotifier = ValueNotifier<bool>(false);
   final AuthService auth;
   final AppRouter router;
-  final LocalDataService localDataService;
-  final RemoteDataService? remoteDataService;
+  final WorkspaceService workspaceService;
+
   final List<ShoppingList> shoppingLists = <ShoppingList>[];
+
+  final scrollNotifier = ValueNotifier<bool>(false);
 
   @override
   Future futureToRun() async {

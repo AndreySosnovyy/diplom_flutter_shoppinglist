@@ -1,14 +1,18 @@
 import 'package:diplom/app/values/colors.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:diplom/features/settings/data/settings_local_data_source.dart';
+import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsService {
   SettingsService({
-    required this.database,
+    required this.remoteDataSource,
+    required this.localDataSource,
   });
 
-  final FirebaseDatabase database;
+  final SettingsRemoteDataSource remoteDataSource;
+  final SettingsLocalDataSource localDataSource;
+
   late final PackageInfo _packageInfo;
   late final String displayVersion;
   late bool isHidden;

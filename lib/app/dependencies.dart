@@ -1,12 +1,11 @@
 import 'package:diplom/app/values/strings.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
-import 'package:diplom/features/workspace/domain/services/local_data_service.dart';
-import 'package:diplom/features/workspace/domain/services/remote_data_service.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:diplom/features/settings/data/settings_local_data_source.dart';
+import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
+import 'package:diplom/features/workspace/data/local_workspace_data_source.dart';
+import 'package:diplom/features/workspace/data/remote_workspace_data_source.dart';
+import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../features/settings/domain/setting_service.dart';
@@ -17,19 +16,15 @@ final sl = GetIt.instance;
 Future setupDependencies() async {
   sl.registerSingleton<AuthService>(AuthService());
 
-  if (sl.get<AuthService>().currentUser != null) {
-    sl.registerSingleton<RemoteDataService>(RemoteDataService(
-      database: FirebaseDatabase.instanceFor(app: Firebase.app()),
-      user: sl.get<AuthService>().currentUser!,
-    ));
-  }
-
-  sl.registerSingleton<LocalDataService>(LocalDataService(
-    shoppingListsHiveBox: Hive.box(Strings.shoppingListsBox),
+  sl.registerSingleton<WorkspaceService>(WorkspaceService(
+    remoteDataSource: RemoteWorkspaceDataSource(),
+    localDataSource: LocalWorkspaceDataSource(),
   ));
+  await sl.get<WorkspaceService>().init();
 
   sl.registerSingleton<SettingsService>(SettingsService(
-    database: FirebaseDatabase.instance,
+    remoteDataSource: SettingsRemoteDataSource(),
+    localDataSource: SettingsLocalDataSource(),
   ));
   await sl.get<SettingsService>().init();
 
@@ -45,7 +40,7 @@ Future setupSentry() async {
   );
 }
 
-Future setupHive() async {
-  Hive.init((await getApplicationDocumentsDirectory()).path);
-  await Hive.openBox(Strings.shoppingListsBox);
+Future setupRemoteWorkspaceDataSource() async {
+  sl.registerSingleton<RemoteWorkspaceDataSource>(RemoteWorkspaceDataSource());
+  await sl.get<RemoteWorkspaceDataSource>().init();
 }

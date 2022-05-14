@@ -4,8 +4,7 @@ import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/presentation/widgets/common_scroll_behavior.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
-import 'package:diplom/features/workspace/domain/services/local_data_service.dart';
-import 'package:diplom/features/workspace/domain/services/remote_data_service.dart';
+import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_viewmodel.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/widgets/add_list_fab.dart';
 import 'package:diplom/features/workspace/presentation/screens/lists/widgets/shopping_list_tile.dart';
@@ -30,10 +29,7 @@ class ListsView extends StatelessWidget {
       viewModelBuilder: () => ListsViewModel(
         auth: sl.get<AuthService>(),
         router: sl.get<AppRouter>(),
-        localDataService: sl.get<LocalDataService>(),
-        remoteDataService: sl.get<AuthService>().currentUser != null
-            ? sl.get<RemoteDataService>()
-            : null,
+        workspaceService: sl.get<WorkspaceService>(),
       ),
       builder: (context, viewModel, child) {
         return Scaffold(

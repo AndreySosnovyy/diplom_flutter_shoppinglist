@@ -14,7 +14,6 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await setupSentry();
     await Firebase.initializeApp();
-    await setupHive();
     await setupDependencies();
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
