@@ -8,11 +8,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsService {
   SettingsService({
-    required this.remoteDataSource,
+    required this.usersRemoteDataSource,
     required this.localDataSource,
   });
 
-  final SettingsRemoteDataSource remoteDataSource;
+  final UsersRemoteDataSource usersRemoteDataSource;
   final SettingsLocalDataSource localDataSource;
 
   late final PackageInfo _packageInfo;
@@ -56,7 +56,7 @@ class SettingsService {
     displayVersion = _packageInfo.version;
     
     await localDataSource.init();
-    await remoteDataSource.init();
+    await usersRemoteDataSource.init();
 
     // local value
     showProductImages = localDataSource.showProductImages;
@@ -79,15 +79,23 @@ class SettingsService {
     showProductImages = value;
   }
 
-  // todo: implement method
-  Future setAvatar(Uint8List bytes) async => throw UnimplementedError();
+  Future setAvatar(Uint8List bytes) async {
+    await usersRemoteDataSource.setCurrentAppUserAvatar(bytes);
+    avatarUrl = await usersRemoteDataSource.avatarUrl;
+  }
 
-  // todo: implement method
-  Future setUserName(String newName) async => throw UnimplementedError();
+  Future setUserName(String newName) async {
+    await usersRemoteDataSource.setCurrentAppUserName(newName);
+    userName = newName;
+  }
 
-  // todo: implement method
-  Future setHandler(String newHandler) async => throw UnimplementedError();
+  Future setHandler(String newHandler) async {
+    await usersRemoteDataSource.setCurrentAppUserHandler(newHandler);
+    userHandler = newHandler;
+  }
 
-  // todo: implement method
-  Future setIsHiddenAccount(bool value) async => throw UnimplementedError();
+  Future setIsHiddenAccount(bool value) async {
+    await usersRemoteDataSource.setCurrentAppUserIsHiddenAccount(value);
+    isHiddenAccount = value;
+  }
 }

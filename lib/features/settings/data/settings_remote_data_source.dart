@@ -1,35 +1,74 @@
 import 'dart:typed_data';
 
+import 'package:diplom/features/auth/domain/entities/app_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class SettingsRemoteDataSource {
+class UsersRemoteDataSource {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseDatabase database = FirebaseDatabase.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
 
-  Future init() async {}
+  late final String userId;
 
-  // todo: implement method
-  Future setAvatar(Uint8List bytes) async => throw UnimplementedError();
+  Future init() async {
+    assert(auth.currentUser != null);
+    userId = auth.currentUser!.uid;
+  }
 
-  // todo: implement method
-  Future setIsHiddenAccount(bool value) async => throw UnimplementedError();
+  Future<AppUser> get currentAppUser {
+    return database.ref('/users').child('/$userId').get().then(
+          (DataSnapshot snapshot) => AppUser.fromJson(
+            snapshot.key as String,
+            snapshot.value as Map<String, dynamic>,
+          ),
+        );
+  }
 
-  // todo: implement method
-  Future setUserHandler(String handler) async => throw UnimplementedError();
+  Future addAppUser(AppUser appUser) async {
+    await database.ref('/users').child('/${appUser.id}').set({
+      'name': appUser.name,
+      'handler': appUser.handler,
+      'avatarUrl': appUser.avatarUrl,
+      'isHidden': appUser.isHidden,
+      'listIds': appUser.listIds,
+    });
+  }
 
-  // todo: implement method
-  Future setUserName(bool userName) async => throw UnimplementedError();
+  Future<String?> get avatarUrl async {
+    try {
+      return await storage.ref('avatars/$userId').getDownloadURL();
+    } catch (_) {
+      return null;
+    }
+  }
 
-  // todo: implement method
-  Future<String> get avatarUrl async => throw UnimplementedError();
+  Future<String?> uploadAvatarOrNull(Uint8List? bytes) async {
+    final ref = storage.ref('avatars/$userId');
+    if (bytes != null) {
+      await ref.putData(bytes);
+    } else {
+      await ref.delete();
+    }
+    return bytes != null ? await ref.getDownloadURL() : null;
+  }
 
-  // todo: implement method
-  Future<String> get userName async => throw UnimplementedError();
+  Future setCurrentAppUserAvatar(Uint8List? bytes) async => await database
+      .ref('/users')
+      .child('/$userId')
+      .update({'avatarUrl': await uploadAvatarOrNull(bytes)});
 
-  // todo: implement method
-  Future<String> get userHandler async => throw UnimplementedError();
+  Future setCurrentAppUserName(String newName) async =>
+      await database.ref('/users').child('/$userId').update({'name': newName});
 
-  // todo: implement method
-  Future<bool> get isHiddenAccount async => throw UnimplementedError();
+  Future setCurrentAppUserHandler(String handler) async => await database
+      .ref('/users')
+      .child('/$userId')
+      .update({'handler': handler});
+
+  Future setCurrentAppUserIsHiddenAccount(bool value) async => await database
+      .ref('/users')
+      .child('/$userId')
+      .update({'isHidden': value});
 }

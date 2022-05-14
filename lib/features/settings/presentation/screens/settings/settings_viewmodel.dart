@@ -109,22 +109,35 @@ class SettingsViewModel extends FutureViewModel {
       context: context,
       actions: [
         const SheetAction(
-          key: ImageSource.camera,
+          key: _AvatarAction.camera,
           label: 'Сделать фото',
           icon: CupertinoIcons.photo_camera,
           isDefaultAction: true,
         ),
         const SheetAction(
-          key: ImageSource.gallery,
+          key: _AvatarAction.gallery,
           label: 'Выбрать из галереи',
           icon: CupertinoIcons.photo,
+        ),
+        const SheetAction(
+          key: _AvatarAction.delete,
+          label: 'Удалить фото',
+          icon: CupertinoIcons.photo,
+          isDestructiveAction: true,
         )
       ],
     );
     if (result == null) return;
 
+    // todo: delete user avatar
+    if (result == _AvatarAction.delete) {
+      return;
+    }
+
     final XFile? image = await imagePicker.pickImage(
-      source: result,
+      source: result == _AvatarAction.camera
+          ? ImageSource.camera
+          : ImageSource.gallery,
       imageQuality: 20,
     );
     if (image == null) return;
@@ -217,3 +230,5 @@ class SettingsViewModel extends FutureViewModel {
     throw Exception('Unknown authentication provider');
   }
 }
+
+enum _AvatarAction { camera, gallery, delete }

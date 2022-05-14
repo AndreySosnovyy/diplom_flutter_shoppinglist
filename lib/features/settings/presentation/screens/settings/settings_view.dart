@@ -127,8 +127,9 @@ class SettingsView extends StatelessWidget {
                     setDefaultColorCallback: () =>
                         viewModel.pickDefaultColor(context),
                   ),
+                  // description: 'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',
                   description:
-                      'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',
+                      'Изображения товаров всегда можно установить вручную, даже если они установлены по умолчанию',
                 ),
                 const SizedBox(height: 60),
                 SizedBox(

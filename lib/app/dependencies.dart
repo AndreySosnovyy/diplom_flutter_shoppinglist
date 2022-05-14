@@ -23,7 +23,7 @@ Future setupDependencies() async {
   await sl.get<WorkspaceService>().init();
 
   sl.registerSingleton<SettingsService>(SettingsService(
-    remoteDataSource: SettingsRemoteDataSource(),
+    usersRemoteDataSource: UsersRemoteDataSource(),
     localDataSource: SettingsLocalDataSource(),
   ));
   await sl.get<SettingsService>().init();
