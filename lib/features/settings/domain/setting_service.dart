@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/settings/data/settings_local_data_source.dart';
 import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
@@ -15,9 +17,12 @@ class SettingsService {
 
   late final PackageInfo _packageInfo;
   late final String displayVersion;
-  late bool isHiddenAccount;
   late bool showProductImages;
   late Color defaultColor;
+  late String avatarUrl;
+  late String userName;
+  late String? userHandler;
+  late bool isHiddenAccount;
 
   final List<Color> availableColors = [
     AppColors.black,
@@ -53,8 +58,6 @@ class SettingsService {
     await localDataSource.init();
     await remoteDataSource.init();
 
-    // todo: init with values from database
-    isHiddenAccount = false;
     showProductImages = localDataSource.showProductImages;
     defaultColor = localDataSource.defaultColor;
   }
@@ -64,22 +67,20 @@ class SettingsService {
     defaultColor = color;
   }
 
-  // todo: implement method
-  Future updateName(String newName) async => throw UnimplementedError();
-
-  // todo: implement method
-  Future updateHandler(String newHandler) async => throw UnimplementedError();
-
-  Future setIsHiddenAccount(bool value) async {
-    isHiddenAccount = value;
-    // todo: update database
-  }
-
   Future setShowProductImages(bool value) async {
     await localDataSource.setShowProductImages(value);
     showProductImages = value;
   }
 
   // todo: implement method
-  Future showAutoDeletePickerDialog() async => throw UnimplementedError();
+  Future setAvatar(Uint8List bytes) async => throw UnimplementedError();
+
+  // todo: implement method
+  Future setUserName(String newName) async => throw UnimplementedError();
+
+  // todo: implement method
+  Future setHandler(String newHandler) async => throw UnimplementedError();
+
+  // todo: implement method
+  Future setIsHiddenAccount(bool value) async => throw UnimplementedError();
 }

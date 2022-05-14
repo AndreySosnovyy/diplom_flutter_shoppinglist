@@ -32,6 +32,7 @@ class SettingsViewModel extends FutureViewModel {
   late String? _avatarUrl;
   late String _userName;
   late String? _userHandler;
+  late bool _isHiddenAccount;
 
   @override
   Future futureToRun() async => await fetchUserData();
@@ -41,6 +42,7 @@ class SettingsViewModel extends FutureViewModel {
     _avatarUrl = null;
     _userName = 'Имя пользователя';
     _userHandler = '@user_handler';
+    _isHiddenAccount = true;
   }
 
   void backButtonCallback() => router.pop();
@@ -67,6 +69,11 @@ class SettingsViewModel extends FutureViewModel {
   String? get displayHandler {
     if (!auth.isSignedIn) return null;
     return _userHandler;
+  }
+
+  bool get isHiddenAccount {
+    if (!auth.isSignedIn) return false;
+    return _isHiddenAccount;
   }
 
   String get displayVersion => settings.displayVersion;

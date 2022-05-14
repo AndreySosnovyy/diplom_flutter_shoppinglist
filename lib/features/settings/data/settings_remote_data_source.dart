@@ -13,7 +13,7 @@ class SettingsRemoteDataSource {
   Future setAvatar(Uint8List bytes) async => throw UnimplementedError();
 
   // todo: implement method
-  Future setIsHidden(bool value) async => throw UnimplementedError();
+  Future setIsHiddenAccount(bool value) async => throw UnimplementedError();
 
   // todo: implement method
   Future setUserHandler(String handler) async => throw UnimplementedError();
@@ -31,5 +31,5 @@ class SettingsRemoteDataSource {
   Future<String> get userHandler async => throw UnimplementedError();
 
   // todo: implement method
-  Future<bool> get isHidden async => throw UnimplementedError();
+  Future<bool> get isHiddenAccount async => throw UnimplementedError();
 }
