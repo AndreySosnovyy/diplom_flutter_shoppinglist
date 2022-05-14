@@ -6,6 +6,7 @@ class AppUser {
     required this.name,
     required this.listIds,
     required this.isHidden,
+    required this.authProvider,
     this.handler,
     this.avatarUrl,
   });
@@ -16,6 +17,7 @@ class AppUser {
   final String? avatarUrl;
   final List<String> listIds;
   final bool isHidden;
+  final String authProvider;
 
   factory AppUser.fromJson(String id, Map<String, dynamic> json) {
     return AppUser(
@@ -25,6 +27,7 @@ class AppUser {
       listIds: json['listIds'],
       handler: json['handler'],
       avatarUrl: json['avatarUrl'],
+      authProvider: json['authProvider']
     );
   }
 }

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "406626587302",
+    "firebase_url": "https://diplom-f06ae-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "diplom-f06ae",
     "storage_bucket": "diplom-f06ae.appspot.com"
   },
@@ -34,7 +35,7 @@
               "client_id": "406626587302-2nqep1v4sdgfrp9bt8qiqt225i8t7fut.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.diplom"
+                "bundle_id": "ru.andreysosnovyy.diplom"
               }
             }
           ]
