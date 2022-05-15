@@ -68,14 +68,20 @@ class SettingsService {
     if (auth.currentUser != null) await fetchAppUser();
   }
 
+  Future addAppUser({required AppUser appUser, required String userId}) async =>
+      usersDataSource.addAppUser(appUser: appUser, userId: userId);
+
   Future fetchAppUser() async {
-    final currentAppUser =
+    final appUser =
         await usersDataSource.getAppUser(userId: auth.currentUser!.uid);
-    avatarUrl = currentAppUser.avatarUrl;
-    userName = currentAppUser.name;
-    userHandler = currentAppUser.handler;
-    isHiddenAccount = currentAppUser.isHidden;
+    avatarUrl = appUser!.avatarUrl;
+    userName = appUser.name;
+    userHandler = appUser.handler;
+    isHiddenAccount = appUser.isHidden;
   }
+
+  Future<bool> isUserExists(String userId) async =>
+      (await usersDataSource.getAppUser(userId: userId)) != null;
 
   Future setDefaultColor(Color color) async {
     await localDataSource.setDefaultColor(color);

@@ -21,15 +21,23 @@ class UsersDataSource {
         'authProvider': appUser.authProvider,
       });
 
-  Future<AppUser> getAppUser({
+  Future<AppUser?> getAppUser({
     required String userId,
   }) async =>
       await _database.ref('users').child(userId).get().then(
-            (DataSnapshot snapshot) => AppUser.fromJson(
+        (DataSnapshot snapshot) {
+          try {
+            return AppUser.fromJson(
               snapshot.key as String,
               snapshot.value as Map,
-            ),
-          );
+            );
+          } catch (e, s) {
+            print(e);
+            print(s);
+            return null;
+          }
+        },
+      );
 
   Future<String?> getUserAvatarUrl({
     required String userId,

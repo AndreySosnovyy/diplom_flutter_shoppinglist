@@ -2,6 +2,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
+import 'package:diplom/features/auth/domain/entities/app_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,24 @@ class SettingsViewModel extends FutureViewModel {
         _avatarUrl = null;
         _isHiddenAccount = null;
       } else {
+        if (!await settings.isUserExists(user.uid)) {
+          await settings.addAppUser(
+            userId: user.uid,
+            appUser: AppUser(
+              id: user.uid,
+              name: authProvider! == AuthProvider.google
+                  ? user.displayName!
+                  : 'User name',
+              avatarUrl: authProvider! == AuthProvider.google
+                  ? user.photoURL
+                  : null,
+              handler: user.uid,
+              listIds: [],
+              isHidden: true,
+              authProvider: authProvider!.name,
+            ),
+          );
+        }
         await setUserData();
       }
       notifyListeners();
@@ -51,9 +70,9 @@ class SettingsViewModel extends FutureViewModel {
   Future futureToRun() async => await setUserData();
 
   Future setUserData() async {
-    setBusy(true);
-    notifyListeners();
     if (auth.isSignedIn) {
+      setBusy(true);
+      notifyListeners();
       await settings.fetchAppUser();
       _avatarUrl = settings.avatarUrl;
       _userName = settings.userName;

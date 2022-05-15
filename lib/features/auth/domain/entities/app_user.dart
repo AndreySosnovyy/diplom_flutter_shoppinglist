@@ -24,7 +24,7 @@ class AppUser {
       id: id,
       name: json['name'],
       isHidden: json['isHidden'],
-      listIds: [...json['listIds']],
+      listIds: json['listIds'] != null ? [...json['listIds']] : [],
       handler: json['handler'],
       avatarUrl: json['avatarUrl'],
       authProvider: json['authProvider']

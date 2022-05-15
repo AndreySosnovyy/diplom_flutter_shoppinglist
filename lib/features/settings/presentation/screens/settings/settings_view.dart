@@ -54,7 +54,9 @@ class SettingsView extends StatelessWidget {
           leadingCallback: viewModel.backButtonCallback,
         ),
         body: viewModel.isBusy
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(
+                child: CircularProgressIndicator(color: AppColors.blue),
+              )
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -81,7 +83,7 @@ class SettingsView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: AutoSizeText(
-                          viewModel.isSignedIn
+                          viewModel.isSignedIn && viewModel.displayHandler != null
                               ? '@${viewModel.displayHandler!}'
                               : '',
                           maxLines: 1,
