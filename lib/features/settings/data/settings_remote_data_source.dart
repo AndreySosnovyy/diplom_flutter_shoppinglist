@@ -44,7 +44,7 @@ class UsersRemoteDataSource {
     }
   }
 
-  // todo: delete image from storage
+  // todo: delete image from storage if null
   Future<String?> uploadAvatarOrNull(Uint8List? bytes) async {
     final ref = _storage.ref('avatars').child(userId);
     if (bytes != null) {
@@ -70,20 +70,13 @@ class UsersRemoteDataSource {
       await _database.ref('users').child(userId).update({'isHidden': value});
 
   Future<AppUser?> fetchAppUserByHandler(String handler) async {
-    return await _database
-        .ref('users')
-        .orderByChild('handler')
-        .equalTo(handler)
-        .get()
-        .then((DataSnapshot snapshot) {
-      if ((snapshot.value as Map).isEmpty) {
-        return null;
-      } else {
-        return AppUser.fromJson(
-          snapshot.key as String,
-          snapshot.value as Map,
-        );
+    return await _database.ref('users').get().then((DataSnapshot snapshot) {
+      final appUsersMap = snapshot.value as Map;
+      for (final appUserId in appUsersMap.keys) {
+        final appUser = AppUser.fromJson(appUserId, appUsersMap[appUserId]);
+        if (appUser.handler == handler) return appUser;
       }
+      return null;
     });
   }
 }

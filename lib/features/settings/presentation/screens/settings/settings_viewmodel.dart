@@ -38,11 +38,7 @@ class SettingsViewModel extends FutureViewModel {
   bool get rethrowException => true;
 
   @override
-  Future futureToRun() async {
-    await setUserData();
-
-    // print(await settings.checkIfHandlerUnique('andreysosnovyy'));
-  }
+  Future futureToRun() async => await setUserData();
 
   Future setUserData() async {
     _avatarUrl = settings.avatarUrl;
@@ -131,23 +127,21 @@ class SettingsViewModel extends FutureViewModel {
         )
       ],
     );
-    if (result == null) return;
 
+    if (result == null) return;
     if (result == _AvatarAction.delete) {
       await settings.setAvatar(null);
-      _avatarUrl = settings.avatarUrl;
-      return notifyListeners();
+    } else {
+      final XFile? image = await imagePicker.pickImage(
+        source: result == _AvatarAction.camera
+            ? ImageSource.camera
+            : ImageSource.gallery,
+        imageQuality: 20,
+      );
+      if (image == null) return;
+      await settings.setAvatar(await image.readAsBytes());
     }
 
-    final XFile? image = await imagePicker.pickImage(
-      source: result == _AvatarAction.camera
-          ? ImageSource.camera
-          : ImageSource.gallery,
-      imageQuality: 20,
-    );
-    if (image == null) return;
-
-    await settings.setAvatar(await image.readAsBytes());
     _avatarUrl = settings.avatarUrl;
     notifyListeners();
   }

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:diplom/app/values/colors.dart';
+import 'package:diplom/features/auth/domain/entities/app_user.dart';
 import 'package:diplom/features/settings/data/settings_local_data_source.dart';
 import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
 import 'package:flutter/material.dart';
@@ -102,6 +103,9 @@ class SettingsService {
 
   Future<bool> checkIfHandlerUnique(String handler) async =>
       (await usersRemoteDataSource.fetchAppUserByHandler(handler)) == null
-          ? false
-          : true;
+          ? true
+          : false;
+
+  Future<AppUser?> fetchAppUserByHandler(String handler) async =>
+      await usersRemoteDataSource.fetchAppUserByHandler(handler);
 }
