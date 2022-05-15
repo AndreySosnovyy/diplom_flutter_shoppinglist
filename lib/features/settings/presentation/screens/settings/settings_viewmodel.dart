@@ -153,7 +153,12 @@ class SettingsViewModel extends FutureViewModel {
     final result = await showTextInputDialog(
       context: context,
       title: 'Сменить имя пользователя',
-      textFields: [const DialogTextField(hintText: 'Новое имя')],
+      textFields: [
+        const DialogTextField(
+          hintText: 'Новое имя',
+          autocorrect: false,
+        )
+      ],
     );
     if (result == null || result.isEmpty) return;
 
@@ -175,11 +180,17 @@ class SettingsViewModel extends FutureViewModel {
     final result = await showTextInputDialog(
       context: context,
       title: 'Сменить хэндлер пользователя',
-      textFields: [const DialogTextField(hintText: 'Новый хэндлер')],
+      textFields: [
+        const DialogTextField(
+          hintText: 'Новый хэндлер',
+          autocorrect: false,
+        )
+      ],
     );
     if (result == null || result.isEmpty) return;
 
-    final newHandler = result[0];
+    var newHandler = result[0];
+    if (newHandler.startsWith('@')) newHandler = newHandler.substring(1);
     if (!_validateHandler(newHandler)) {
       return Fluttertoast.showToast(
         msg: 'Новый хэндлер невалидный',
@@ -226,15 +237,13 @@ class SettingsViewModel extends FutureViewModel {
     throw Exception('Unknown authentication provider');
   }
 
-  // todo: implement method
-  bool _validateName(String name) {
-    return true;
-  }
+  bool _validateName(String name) =>
+      RegExp(r'^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9 ]+(?<![_.])$')
+          .hasMatch(name);
 
-  // todo: implement method
-  bool _validateHandler(String handler) {
-    return true;
-  }
+  bool _validateHandler(String handler) =>
+      RegExp(r'^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$')
+          .hasMatch(handler);
 }
 
 enum _AvatarAction { camera, gallery, delete }
