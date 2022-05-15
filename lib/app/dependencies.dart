@@ -5,6 +5,7 @@ import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
 import 'package:diplom/features/workspace/data/local_workspace_data_source.dart';
 import 'package:diplom/features/workspace/data/remote_workspace_data_source.dart';
 import 'package:diplom/features/workspace/domain/workspace_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -23,8 +24,9 @@ Future setupDependencies() async {
   await sl.get<WorkspaceService>().init();
 
   sl.registerSingleton<SettingsService>(SettingsService(
-    usersRemoteDataSource: UsersRemoteDataSource(),
-    localDataSource: SettingsLocalDataSource(),
+    usersDataSource: UsersDataSource(),
+    localDataSource: SettingsDataSource(),
+    auth: FirebaseAuth.instance,
   ));
   await sl.get<SettingsService>().init();
 

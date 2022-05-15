@@ -1,34 +1,29 @@
 import 'dart:typed_data';
 
 import 'package:diplom/features/auth/domain/entities/app_user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class UsersRemoteDataSource {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+class UsersDataSource {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  late final String userId;
+  Future addAppUser({
+    required AppUser appUser,
+    required String userId,
+  }) async =>
+      await _database.ref('users').child(userId).set({
+        'name': appUser.name,
+        'handler': appUser.handler,
+        'avatarUrl': appUser.avatarUrl,
+        'isHidden': appUser.isHidden,
+        'listIds': appUser.listIds,
+        'authProvider': appUser.authProvider,
+      });
 
-  Future init() async {
-    if (auth.currentUser == null) await auth.signInAnonymously();
-    userId = auth.currentUser!.uid;
-  }
-
-  Future addAppUser(AppUser appUser) async {
-    await _database.ref('users').child(userId).set({
-      'name': appUser.name,
-      'handler': appUser.handler,
-      'avatarUrl': appUser.avatarUrl,
-      'isHidden': appUser.isHidden,
-      'listIds': appUser.listIds,
-      'authProvider': appUser.authProvider,
-    });
-  }
-
-  Future<AppUser> get currentAppUser async =>
+  Future<AppUser> getAppUser({
+    required String userId,
+  }) async =>
       await _database.ref('users').child(userId).get().then(
             (DataSnapshot snapshot) => AppUser.fromJson(
               snapshot.key as String,
@@ -36,7 +31,9 @@ class UsersRemoteDataSource {
             ),
           );
 
-  Future<String?> get avatarUrl async {
+  Future<String?> getUserAvatarUrl({
+    required String userId,
+  }) async {
     try {
       return await _storage.ref('avatars').child(userId).getDownloadURL();
     } catch (_) {
@@ -44,7 +41,10 @@ class UsersRemoteDataSource {
     }
   }
 
-  Future<String?> uploadAvatarOrNull(Uint8List? bytes) async {
+  Future<String?> uploadAvatarOrNull({
+    required Uint8List? bytes,
+    required String userId,
+  }) async {
     final ref = _storage.ref('avatars').child(userId);
     if (bytes != null) {
       await ref.putData(bytes);
@@ -54,28 +54,42 @@ class UsersRemoteDataSource {
     return bytes != null ? await ref.getDownloadURL() : null;
   }
 
-  Future setCurrentAppUserAvatar(Uint8List? bytes) async => await _database
-      .ref('users')
-      .child(userId)
-      .update({'avatarUrl': await uploadAvatarOrNull(bytes)});
+  Future setUserAvatar({
+    required Uint8List? bytes,
+    required String userId,
+  }) async =>
+      await _database.ref('users').child(userId).update({
+        'avatarUrl': await uploadAvatarOrNull(
+          bytes: bytes,
+          userId: userId,
+        )
+      });
 
-  Future setCurrentAppUserName(String newName) async =>
+  Future setUserName({
+    required String newName,
+    required String userId,
+  }) async =>
       await _database.ref('users').child(userId).update({'name': newName});
 
-  Future setCurrentAppUserHandler(String handler) async =>
+  Future setCurrentAppUserHandler({
+    required String handler,
+    required String userId,
+  }) async =>
       await _database.ref('users').child(userId).update({'handler': handler});
 
-  Future setCurrentAppUserIsHiddenAccount(bool value) async =>
+  Future setCurrentAppUserIsHiddenAccount({
+    required bool value,
+    required String userId,
+  }) async =>
       await _database.ref('users').child(userId).update({'isHidden': value});
 
-  Future<AppUser?> fetchAppUserByHandler(String handler) async {
-    return await _database.ref('users').get().then((DataSnapshot snapshot) {
-      final appUsersMap = snapshot.value as Map;
-      for (final appUserId in appUsersMap.keys) {
-        final appUser = AppUser.fromJson(appUserId, appUsersMap[appUserId]);
-        if (appUser.handler == handler) return appUser;
-      }
-      return null;
-    });
-  }
+  Future<AppUser?> fetchAppUserByHandler(String handler) async =>
+      await _database.ref('users').get().then((DataSnapshot snapshot) {
+        final appUsersMap = snapshot.value as Map;
+        for (final appUserId in appUsersMap.keys) {
+          final appUser = AppUser.fromJson(appUserId, appUsersMap[appUserId]);
+          if (appUser.handler == handler) return appUser;
+        }
+        return null;
+      });
 }

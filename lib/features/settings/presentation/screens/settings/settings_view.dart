@@ -53,103 +53,112 @@ class SettingsView extends StatelessWidget {
           ),
           leadingCallback: viewModel.backButtonCallback,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 14),
-                Avatar(
-                  imageUrl: viewModel.avatarUrl,
-                  canBeEdited: viewModel.authProvider == AuthProvider.phone,
-                  onTap: () => viewModel.setAvatar(context),
-                ),
-                const SizedBox(height: 14),
-                AutoSizeText(
-                  viewModel.displayName,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                if (viewModel.isSignedIn && viewModel.displayHandler != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: AutoSizeText(
-                      '@${viewModel.displayHandler!}',
-                      maxLines: 1,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(color: AppColors.grey1),
-                    ),
-                  ),
-                const SizedBox(height: 20),
-                if (viewModel.isSignedIn)
-                  SettingsBlock(
-                    title: 'Мой аккаунт',
-                    settingsContent:
-                        SettingsBlocksContent.getAccountBlockContent(
-                      hideEditNameTile:
-                          viewModel.authProvider != AuthProvider.phone,
-                      changeNameCallback: () => viewModel.setName(context),
-                      changeHandlerCallback: () =>
-                          viewModel.setHandler(context),
-                      hideAccountSwitch: CupertinoSwitch(
-                        value: viewModel.isHiddenAccount,
-                        onChanged: viewModel.setIsHiddenAccount,
+        body: viewModel.isBusy
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 14),
+                      Avatar(
+                        imageUrl: viewModel.avatarUrl,
+                        canBeEdited:
+                            viewModel.authProvider == AuthProvider.phone,
+                        onTap: () => viewModel.setAvatar(context),
                       ),
-                      signOutCallback: viewModel.signOut,
-                    ),
-                    description:
-                        'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',
-                  )
-                else
-                  SettingsBlock(
-                    title: 'Авторизация',
-                    settingsContent: SettingsBlocksContent.getAuthBlockContent(
-                      signInCallback: viewModel.openAuthScreen,
-                    ),
-                    description:
-                        'Авторизированный пользователь может добавлять или быть добавленным соавтором в списки покупок других пользователей, а также пользоваться своими списками на других устройствах',
-                  ),
-                SettingsBlock(
-                  title: 'Списки покупок',
-                  settingsContent:
-                      SettingsBlocksContent.getShoppingBlockContent(
-                    productsPicturesSwitch: CupertinoSwitch(
-                      value: viewModel.settings.showProductImages,
-                      onChanged: viewModel.setShowProductImages,
-                    ),
-                    defaultColorIconColor:
-                        sl.get<SettingsService>().defaultColor,
-                    setDefaultColorCallback: () =>
-                        viewModel.pickDefaultColor(context),
-                  ),
-                  // description: 'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',
-                  description:
-                      'Изображения товаров всегда можно установить вручную, даже если они установлены по умолчанию',
-                ),
-                const SizedBox(height: 60),
-                SizedBox(
-                  height: 40,
-                  width: 120,
-                  child: Center(
-                    child: Text(
-                      'Версия ${viewModel.displayVersion}',
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: AppColors.grey1,
-                            decoration: TextDecoration.underline,
+                      const SizedBox(height: 14),
+                      AutoSizeText(
+                        viewModel.isSignedIn
+                            ? viewModel.displayName!
+                            : 'Анонимный пользователь',
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: AutoSizeText(
+                          viewModel.isSignedIn
+                              ? '@${viewModel.displayHandler!}'
+                              : '',
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: AppColors.grey1),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      if (viewModel.isSignedIn)
+                        SettingsBlock(
+                          title: 'Мой аккаунт',
+                          settingsContent:
+                              SettingsBlocksContent.getAccountBlockContent(
+                            hideEditNameTile:
+                                viewModel.authProvider != AuthProvider.phone,
+                            changeNameCallback: () =>
+                                viewModel.setName(context),
+                            changeHandlerCallback: () =>
+                                viewModel.setHandler(context),
+                            hideAccountSwitch: CupertinoSwitch(
+                              value: viewModel.isHiddenAccount!,
+                              onChanged: viewModel.setIsHiddenAccount,
+                            ),
+                            signOutCallback: viewModel.signOut,
                           ),
-                    ),
+                          description:
+                              'Если Ваш аккаунт скрыт другие пользователи не смогут добавить Вас соавтором или читателем в свой список покупок',
+                        )
+                      else
+                        SettingsBlock(
+                          title: 'Авторизация',
+                          settingsContent:
+                              SettingsBlocksContent.getAuthBlockContent(
+                            signInCallback: viewModel.openAuthScreen,
+                          ),
+                          description:
+                              'Авторизированный пользователь может добавлять или быть добавленным соавтором в списки покупок других пользователей, а также пользоваться своими списками на других устройствах',
+                        ),
+                      SettingsBlock(
+                        title: 'Списки покупок',
+                        settingsContent:
+                            SettingsBlocksContent.getShoppingBlockContent(
+                          productsPicturesSwitch: CupertinoSwitch(
+                            value: viewModel.settings.showProductImages,
+                            onChanged: viewModel.setShowProductImages,
+                          ),
+                          defaultColorIconColor:
+                              sl.get<SettingsService>().defaultColor,
+                          setDefaultColorCallback: () =>
+                              viewModel.pickDefaultColor(context),
+                        ),
+                        // description: 'Автоматическое удаление нужно только для Вашего удобства, чтобы не копить слишком много старых списков',
+                        description:
+                            'Изображения товаров всегда можно установить вручную, даже если они установлены по умолчанию',
+                      ),
+                      const SizedBox(height: 60),
+                      SizedBox(
+                        height: 40,
+                        width: 120,
+                        child: Center(
+                          child: Text(
+                            'Версия ${viewModel.displayVersion}',
+                            style:
+                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                      color: AppColors.grey1,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 30),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

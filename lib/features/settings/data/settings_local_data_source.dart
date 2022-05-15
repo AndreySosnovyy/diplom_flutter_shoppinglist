@@ -2,7 +2,7 @@ import 'package:diplom/app/values/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsLocalDataSource {
+class SettingsDataSource {
   late final SharedPreferences prefs;
 
   Future init() async => prefs = await SharedPreferences.getInstance();

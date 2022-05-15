@@ -20,7 +20,17 @@ class SettingsViewModel extends FutureViewModel {
     required this.imagePicker,
     required this.database,
   }) {
-    auth.userStream.listen((user) => notifyListeners());
+    auth.userStream.listen((user) async {
+      if (user == null) {
+        _avatarUrl = null;
+        _userHandler = null;
+        _avatarUrl = null;
+        _isHiddenAccount = null;
+      } else {
+        await setUserData();
+      }
+      notifyListeners();
+    });
   }
 
   final AppRouter router;
@@ -29,10 +39,10 @@ class SettingsViewModel extends FutureViewModel {
   final ImagePicker imagePicker;
   final FirebaseDatabase database;
 
-  late String? _avatarUrl;
-  late String _userName;
-  late String? _userHandler;
-  late bool _isHiddenAccount;
+  String? _avatarUrl;
+  String? _userName;
+  String? _userHandler;
+  bool? _isHiddenAccount;
 
   @override
   bool get rethrowException => true;
@@ -41,10 +51,17 @@ class SettingsViewModel extends FutureViewModel {
   Future futureToRun() async => await setUserData();
 
   Future setUserData() async {
-    _avatarUrl = settings.avatarUrl;
-    _userName = settings.userName;
-    _userHandler = settings.userHandler;
-    _isHiddenAccount = settings.isHiddenAccount;
+    setBusy(true);
+    notifyListeners();
+    if (auth.isSignedIn) {
+      await settings.fetchAppUser();
+      _avatarUrl = settings.avatarUrl;
+      _userName = settings.userName;
+      _userHandler = settings.userHandler;
+      _isHiddenAccount = settings.isHiddenAccount;
+    }
+    setBusy(false);
+    notifyListeners();
   }
 
   void backButtonCallback() => router.pop();
@@ -60,7 +77,7 @@ class SettingsViewModel extends FutureViewModel {
   String? get avatarUrl =>
       authProvider == AuthProvider.google ? currentUser?.photoURL : _avatarUrl;
 
-  String get displayName {
+  String? get displayName {
     if (!auth.isSignedIn) return 'Анонимный пользователь';
     return _userName;
   }
@@ -70,7 +87,7 @@ class SettingsViewModel extends FutureViewModel {
     return _userHandler;
   }
 
-  bool get isHiddenAccount {
+  bool? get isHiddenAccount {
     if (!auth.isSignedIn) return false;
     return _isHiddenAccount;
   }

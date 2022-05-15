@@ -4,26 +4,29 @@ import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/domain/entities/app_user.dart';
 import 'package:diplom/features/settings/data/settings_local_data_source.dart';
 import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsService {
   SettingsService({
-    required this.usersRemoteDataSource,
+    required this.auth,
+    required this.usersDataSource,
     required this.localDataSource,
   });
 
-  final UsersRemoteDataSource usersRemoteDataSource;
-  final SettingsLocalDataSource localDataSource;
+  final FirebaseAuth auth;
+  final UsersDataSource usersDataSource;
+  final SettingsDataSource localDataSource;
 
   late final PackageInfo _packageInfo;
   late final String displayVersion;
   late bool showProductImages;
   late Color defaultColor;
-  late String? avatarUrl;
-  late String userName;
-  late String? userHandler;
-  late bool isHiddenAccount;
+  String? avatarUrl;
+  String? userName;
+  String? userHandler;
+  bool? isHiddenAccount;
 
   final List<Color> availableColors = [
     AppColors.black,
@@ -56,15 +59,18 @@ class SettingsService {
     _packageInfo = await PackageInfo.fromPlatform();
     displayVersion = _packageInfo.version;
 
+    // local stored data (application settings data)
     await localDataSource.init();
-    await usersRemoteDataSource.init();
-
-    // local value
     showProductImages = localDataSource.showProductImages;
     defaultColor = localDataSource.defaultColor;
 
-    // remote values
-    final currentAppUser = await usersRemoteDataSource.currentAppUser;
+    // remote stored data (user account data)
+    if (auth.currentUser != null) await fetchAppUser();
+  }
+
+  Future fetchAppUser() async {
+    final currentAppUser =
+        await usersDataSource.getAppUser(userId: auth.currentUser!.uid);
     avatarUrl = currentAppUser.avatarUrl;
     userName = currentAppUser.name;
     userHandler = currentAppUser.handler;
@@ -82,30 +88,44 @@ class SettingsService {
   }
 
   Future setAvatar(Uint8List? bytes) async {
-    await usersRemoteDataSource.setCurrentAppUserAvatar(bytes);
-    avatarUrl = await usersRemoteDataSource.avatarUrl;
+    await usersDataSource.setUserAvatar(
+      bytes: bytes,
+      userId: auth.currentUser!.uid,
+    );
+    avatarUrl = await usersDataSource.getUserAvatarUrl(
+      userId: auth.currentUser!.uid,
+    );
   }
 
   Future setUserName(String newName) async {
-    await usersRemoteDataSource.setCurrentAppUserName(newName);
+    await usersDataSource.setUserName(
+      newName: newName,
+      userId: auth.currentUser!.uid,
+    );
     userName = newName;
   }
 
   Future setHandler(String newHandler) async {
-    await usersRemoteDataSource.setCurrentAppUserHandler(newHandler);
+    await usersDataSource.setCurrentAppUserHandler(
+      handler: newHandler,
+      userId: auth.currentUser!.uid,
+    );
     userHandler = newHandler;
   }
 
   Future setIsHiddenAccount(bool value) async {
-    await usersRemoteDataSource.setCurrentAppUserIsHiddenAccount(value);
+    await usersDataSource.setCurrentAppUserIsHiddenAccount(
+      value: value,
+      userId: auth.currentUser!.uid,
+    );
     isHiddenAccount = value;
   }
 
   Future<bool> checkIfHandlerUnique(String handler) async =>
-      (await usersRemoteDataSource.fetchAppUserByHandler(handler)) == null
+      (await usersDataSource.fetchAppUserByHandler(handler)) == null
           ? true
           : false;
 
   Future<AppUser?> fetchAppUserByHandler(String handler) async =>
-      await usersRemoteDataSource.fetchAppUserByHandler(handler);
+      await usersDataSource.fetchAppUserByHandler(handler);
 }
