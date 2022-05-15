@@ -38,9 +38,13 @@ class SettingsViewModel extends FutureViewModel {
   bool get rethrowException => true;
 
   @override
-  Future futureToRun() async => await fetchUserData();
+  Future futureToRun() async {
+    await setUserData();
 
-  Future fetchUserData() async {
+    // print(await settings.checkIfHandlerUnique('andreysosnovyy'));
+  }
+
+  Future setUserData() async {
     _avatarUrl = settings.avatarUrl;
     _userName = settings.userName;
     _userHandler = settings.userHandler;
@@ -131,7 +135,8 @@ class SettingsViewModel extends FutureViewModel {
 
     if (result == _AvatarAction.delete) {
       await settings.setAvatar(null);
-      return;
+      _avatarUrl = settings.avatarUrl;
+      return notifyListeners();
     }
 
     final XFile? image = await imagePicker.pickImage(

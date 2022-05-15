@@ -101,5 +101,7 @@ class SettingsService {
   }
 
   Future<bool> checkIfHandlerUnique(String handler) async =>
-      await usersRemoteDataSource.checkIfHandlerUnique(handler);
+      (await usersRemoteDataSource.fetchAppUserByHandler(handler)) == null
+          ? false
+          : true;
 }
