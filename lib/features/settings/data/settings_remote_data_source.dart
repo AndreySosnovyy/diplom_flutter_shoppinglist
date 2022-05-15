@@ -44,7 +44,6 @@ class UsersRemoteDataSource {
     }
   }
 
-  // todo: delete image from storage if null
   Future<String?> uploadAvatarOrNull(Uint8List? bytes) async {
     final ref = _storage.ref('avatars').child(userId);
     if (bytes != null) {
