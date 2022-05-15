@@ -63,10 +63,11 @@ class SettingsService {
     defaultColor = localDataSource.defaultColor;
 
     // remote values
-    avatarUrl = null;
-    userName = 'Имя пользователя';
-    userHandler = 'user_handler';
-    isHiddenAccount = true;
+    final currentAppUser = await usersRemoteDataSource.currentAppUser;
+    avatarUrl = currentAppUser.avatarUrl;
+    userName = currentAppUser.name;
+    userHandler = currentAppUser.handler;
+    isHiddenAccount = currentAppUser.isHidden;
   }
 
   Future setDefaultColor(Color color) async {
