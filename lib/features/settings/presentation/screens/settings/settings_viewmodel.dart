@@ -57,11 +57,8 @@ class SettingsViewModel extends FutureViewModel {
 
   User? get currentUser => auth.currentUser;
 
-  String? get avatarUrl {
-    return authProvider == AuthProvider.phone
-        ? currentUser?.photoURL
-        : _avatarUrl;
-  }
+  String? get avatarUrl =>
+      authProvider == AuthProvider.google ? currentUser?.photoURL : _avatarUrl;
 
   String get displayName {
     if (!auth.isSignedIn) return 'Анонимный пользователь';
@@ -146,6 +143,7 @@ class SettingsViewModel extends FutureViewModel {
     if (image == null) return;
 
     await settings.setAvatar(await image.readAsBytes());
+    _avatarUrl = settings.avatarUrl;
     notifyListeners();
   }
 
@@ -237,6 +235,7 @@ class SettingsViewModel extends FutureViewModel {
     throw Exception('Unknown authentication provider');
   }
 
+  // RegExp source : https://stackoverflow.com/questions/12018245/regular-expression-to-validate-username#:~:text=%5E(%3F%3D.%7B8%2C20%7D%24)(%3F!%5B_.%5D)(%3F!.*%5B_.%5D%7B2%7D)%5Ba%2DzA%2DZ0%2D9._%5D%2B(%3F%3C!%5B_.%5D)%24
   bool _validateName(String name) =>
       RegExp(r'^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9 ]+(?<![_.])$')
           .hasMatch(name);

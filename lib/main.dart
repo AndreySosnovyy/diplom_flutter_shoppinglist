@@ -14,6 +14,7 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await setupSentry();
     // todo: set firebase rules (storage & database)
+    // todo: fix firebase on Android
     await Firebase.initializeApp();
     await setupDependencies();
     SystemChrome.setSystemUIOverlayStyle(
