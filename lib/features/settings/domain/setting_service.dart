@@ -54,7 +54,7 @@ class SettingsService {
   Future init() async {
     _packageInfo = await PackageInfo.fromPlatform();
     displayVersion = _packageInfo.version;
-    
+
     await localDataSource.init();
     await usersRemoteDataSource.init();
 
@@ -65,7 +65,7 @@ class SettingsService {
     // remote values
     avatarUrl = null;
     userName = 'Имя пользователя';
-    userHandler = '@user_handler';
+    userHandler = 'user_handler';
     isHiddenAccount = true;
   }
 
@@ -98,4 +98,7 @@ class SettingsService {
     await usersRemoteDataSource.setCurrentAppUserIsHiddenAccount(value);
     isHiddenAccount = value;
   }
+
+  Future<bool> checkIfHandlerUnique(String handler) async =>
+      await usersRemoteDataSource.checkIfHandlerUnique(handler);
 }

@@ -157,20 +157,18 @@ class SettingsViewModel extends FutureViewModel {
     );
     if (result == null || result.isEmpty) return;
 
-    // todo: validate user name
-    final isNewUserNameValid = true;
-    if (!isNewUserNameValid) {
-      Fluttertoast.showToast(
-        msg: 'Новое имя пользователя невалидно',
+    final newName = result[0];
+    if (!_validateName(newName)) {
+      return Fluttertoast.showToast(
+        msg: 'Новое имя пользователя некорректно, попробуйте другое',
         backgroundColor: AppColors.red,
         toastLength: Toast.LENGTH_LONG,
       );
-      return;
     }
 
-    _userName = result[0];
+    _userName = newName;
     notifyListeners();
-    await settings.setUserName(_userName);
+    await settings.setUserName(newName);
   }
 
   Future setHandler(BuildContext context) async {
@@ -181,31 +179,26 @@ class SettingsViewModel extends FutureViewModel {
     );
     if (result == null || result.isEmpty) return;
 
-    // todo: validate handler
-    final isNewHandlerValid = true;
-    if (!isNewHandlerValid) {
-      Fluttertoast.showToast(
+    final newHandler = result[0];
+    if (!_validateHandler(newHandler)) {
+      return Fluttertoast.showToast(
         msg: 'Новый хэндлер невалидный',
         backgroundColor: AppColors.red,
         toastLength: Toast.LENGTH_LONG,
       );
-      return;
     }
 
-    // todo: check if new handler is unique
-    final isNewHandlerUnique = true;
-    if (!isNewHandlerUnique) {
-      Fluttertoast.showToast(
+    if (!await settings.checkIfHandlerUnique(newHandler)) {
+      return Fluttertoast.showToast(
         msg: 'Данный хэндлер уже занят',
         backgroundColor: AppColors.red,
         toastLength: Toast.LENGTH_LONG,
       );
-      return;
     }
 
-    _userHandler = result[0];
+    _userHandler = newHandler;
     notifyListeners();
-    await settings.setHandler(_userHandler!);
+    await settings.setHandler(newHandler);
   }
 
   Future setIsHiddenAccount(bool value) async {
@@ -231,6 +224,16 @@ class SettingsViewModel extends FutureViewModel {
         return AuthProvider.phone;
     }
     throw Exception('Unknown authentication provider');
+  }
+
+  // todo: implement method
+  bool _validateName(String name) {
+    return true;
+  }
+
+  // todo: implement method
+  bool _validateHandler(String handler) {
+    return true;
   }
 }
 

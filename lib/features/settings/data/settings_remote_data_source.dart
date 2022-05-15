@@ -67,4 +67,9 @@ class UsersRemoteDataSource {
 
   Future setCurrentAppUserIsHiddenAccount(bool value) async =>
       await _database.ref('users').child(userId).update({'isHidden': value});
+
+  // todo: implement method
+  Future<bool> checkIfHandlerUnique(String handler) {
+    return Future.value(true);
+  }
 }
