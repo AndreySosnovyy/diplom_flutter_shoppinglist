@@ -79,7 +79,7 @@ class SettingsService {
     showProductImages = value;
   }
 
-  Future setAvatar(Uint8List bytes) async {
+  Future setAvatar(Uint8List? bytes) async {
     await usersRemoteDataSource.setCurrentAppUserAvatar(bytes);
     avatarUrl = await usersRemoteDataSource.avatarUrl;
   }

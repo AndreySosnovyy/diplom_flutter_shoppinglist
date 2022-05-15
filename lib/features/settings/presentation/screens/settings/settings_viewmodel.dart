@@ -35,6 +35,9 @@ class SettingsViewModel extends FutureViewModel {
   late bool _isHiddenAccount;
 
   @override
+  bool get rethrowException => true;
+
+  @override
   Future futureToRun() async => await fetchUserData();
 
   Future fetchUserData() async {
@@ -129,8 +132,8 @@ class SettingsViewModel extends FutureViewModel {
     );
     if (result == null) return;
 
-    // todo: delete user avatar
     if (result == _AvatarAction.delete) {
+      await settings.setAvatar(null);
       return;
     }
 
@@ -142,10 +145,8 @@ class SettingsViewModel extends FutureViewModel {
     );
     if (image == null) return;
 
-    // todo: upload image to storage and set imageUrl variable
+    await settings.setAvatar(await image.readAsBytes());
     notifyListeners();
-
-    // todo: update database;
   }
 
   Future setName(BuildContext context) async {
@@ -169,7 +170,7 @@ class SettingsViewModel extends FutureViewModel {
 
     _userName = result[0];
     notifyListeners();
-    // todo: update database
+    await settings.setUserName(_userName);
   }
 
   Future setHandler(BuildContext context) async {
@@ -204,12 +205,13 @@ class SettingsViewModel extends FutureViewModel {
 
     _userHandler = result[0];
     notifyListeners();
-    // todo: update database
+    await settings.setHandler(_userHandler!);
   }
 
   Future setIsHiddenAccount(bool value) async {
-    await settings.setIsHiddenAccount(value);
+    _isHiddenAccount = value;
     notifyListeners();
+    await settings.setIsHiddenAccount(value);
   }
 
   Future setShowProductImages(bool value) async {
@@ -219,6 +221,7 @@ class SettingsViewModel extends FutureViewModel {
 
   AuthProvider? get authProvider {
     if (currentUser == null) return null;
+    if (auth.currentUser!.isAnonymous) return AuthProvider.anon;
     switch (currentUser!.providerData.first.providerId) {
       case 'google.com':
         return AuthProvider.google;

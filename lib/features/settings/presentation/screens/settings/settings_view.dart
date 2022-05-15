@@ -77,7 +77,7 @@ class SettingsView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: AutoSizeText(
-                      viewModel.displayHandler!,
+                      '@${viewModel.displayHandler!}',
                       maxLines: 1,
                       style: Theme.of(context)
                           .textTheme

@@ -7,18 +7,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class UsersRemoteDataSource {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final FirebaseDatabase database = FirebaseDatabase.instance;
-  final FirebaseStorage storage = FirebaseStorage.instance;
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   late final String userId;
 
   Future init() async {
-    assert(auth.currentUser != null);
+    if (auth.currentUser == null) await auth.signInAnonymously();
     userId = auth.currentUser!.uid;
   }
 
   Future addAppUser(AppUser appUser) async {
-    await database.ref('users').child(userId).set({
+    await _database.ref('users').child(userId).set({
       'name': appUser.name,
       'handler': appUser.handler,
       'avatarUrl': appUser.avatarUrl,
@@ -29,7 +29,7 @@ class UsersRemoteDataSource {
   }
 
   Future<AppUser> get currentAppUser async =>
-      await database.ref('users').child(userId).get().then(
+      await _database.ref('users').child(userId).get().then(
             (DataSnapshot snapshot) => AppUser.fromJson(
               snapshot.key as String,
               snapshot.value as Map,
@@ -38,14 +38,14 @@ class UsersRemoteDataSource {
 
   Future<String?> get avatarUrl async {
     try {
-      return await storage.ref('avatars/$userId').getDownloadURL();
+      return await _storage.ref('avatars').child(userId).getDownloadURL();
     } catch (_) {
       return null;
     }
   }
 
   Future<String?> uploadAvatarOrNull(Uint8List? bytes) async {
-    final ref = storage.ref('avatars/$userId');
+    final ref = _storage.ref('avatars').child(userId);
     if (bytes != null) {
       await ref.putData(bytes);
     } else {
@@ -54,21 +54,17 @@ class UsersRemoteDataSource {
     return bytes != null ? await ref.getDownloadURL() : null;
   }
 
-  Future setCurrentAppUserAvatar(Uint8List? bytes) async => await database
-      .ref('/users')
-      .child('/$userId')
+  Future setCurrentAppUserAvatar(Uint8List? bytes) async => await _database
+      .ref('users')
+      .child(userId)
       .update({'avatarUrl': await uploadAvatarOrNull(bytes)});
 
   Future setCurrentAppUserName(String newName) async =>
-      await database.ref('/users').child('/$userId').update({'name': newName});
+      await _database.ref('users').child(userId).update({'name': newName});
 
-  Future setCurrentAppUserHandler(String handler) async => await database
-      .ref('/users')
-      .child('/$userId')
-      .update({'handler': handler});
+  Future setCurrentAppUserHandler(String handler) async =>
+      await _database.ref('users').child(userId).update({'handler': handler});
 
-  Future setCurrentAppUserIsHiddenAccount(bool value) async => await database
-      .ref('/users')
-      .child('/$userId')
-      .update({'isHidden': value});
+  Future setCurrentAppUserIsHiddenAccount(bool value) async =>
+      await _database.ref('users').child(userId).update({'isHidden': value});
 }

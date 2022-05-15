@@ -13,6 +13,7 @@ void main() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await setupSentry();
+    // todo: set firebase rules (storage & database)
     await Firebase.initializeApp();
     await setupDependencies();
     SystemChrome.setSystemUIOverlayStyle(
