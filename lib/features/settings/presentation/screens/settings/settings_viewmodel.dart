@@ -71,16 +71,12 @@ class SettingsViewModel extends FutureViewModel {
 
   Future setUserData() async {
     if (auth.isSignedIn) {
-      setBusy(true);
-      notifyListeners();
       await settings.fetchAppUser();
       _avatarUrl = settings.avatarUrl;
       _userName = settings.userName;
       _userHandler = settings.userHandler;
       _isHiddenAccount = settings.isHiddenAccount;
     }
-    setBusy(false);
-    notifyListeners();
   }
 
   void backButtonCallback() => router.pop();
