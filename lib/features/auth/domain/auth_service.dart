@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
 class AuthService {
-  final _firebaseAuth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   /// Returns firebase user
@@ -20,7 +21,8 @@ class AuthService {
         accessToken: signInAuthentication.accessToken,
         idToken: signInAuthentication.idToken,
       );
-      final firebaseAuth = await _firebaseAuth.signInWithCredential(credential);
+      final firebaseAuth = await _auth.signInWithCredential(credential);
+      await AppMetrica.setUserProfileID(firebaseAuth.user!.email);
       return firebaseAuth.user;
     } catch (error) {
       return null;
@@ -38,11 +40,11 @@ class AuthService {
     required String phone,
     required VoidCallback onErrorCallback,
   }) async {
-    if (_firebaseAuth.currentUser == null) {
-      await _firebaseAuth.verifyPhoneNumber(
+    if (_auth.currentUser == null) {
+      await _auth.verifyPhoneNumber(
         phoneNumber: phone,
         verificationCompleted: (PhoneAuthCredential credential) async =>
-            await _firebaseAuth.signInWithCredential(credential),
+            await _auth.signInWithCredential(credential),
         verificationFailed: (FirebaseAuthException e) {
           Logger().e('Phone verification error: ${e.toString()}');
         },
@@ -52,7 +54,7 @@ class AuthService {
             final credential = PhoneAuthProvider.credential(
                 verificationId: verificationId, smsCode: smsCode);
             try {
-              await _firebaseAuth.signInWithCredential(credential);
+              await _auth.signInWithCredential(credential);
             } catch (e) {
               onErrorCallback();
             }
@@ -60,19 +62,21 @@ class AuthService {
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
-      return await userStream.firstWhere((user) => user != null);
+      final user = await userStream.firstWhere((user) => user != null);
+      await AppMetrica.setUserProfileID(user!.email);
+      return user;
     } else {
-      return _firebaseAuth.currentUser;
+      return _auth.currentUser;
     }
   }
 
-  bool get isSignedIn => _firebaseAuth.currentUser != null;
+  bool get isSignedIn => _auth.currentUser != null;
 
-  User? get currentUser => _firebaseAuth.currentUser;
+  User? get currentUser => _auth.currentUser;
 
-  Stream<User?> get userStream => _firebaseAuth.userChanges();
+  Stream<User?> get userStream => _auth.userChanges();
 
-  Future signOut() async => await _firebaseAuth.signOut();
+  Future signOut() async => await _auth.signOut();
 }
 
 enum AuthProvider { anon, google, apple, phone }

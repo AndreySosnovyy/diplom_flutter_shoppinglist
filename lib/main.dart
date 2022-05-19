@@ -12,11 +12,11 @@ import 'app/dependencies.dart';
 void main() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await setupSentry();
     // todo: set firebase rules (storage & database)
-    // todo: fix firebase on Android
     await Firebase.initializeApp();
     await setupDependencies();
+    await setupSentry();
+    await setupAppMetrica();
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     SystemChannels.textInput.invokeMethod('TextInput.hide');
