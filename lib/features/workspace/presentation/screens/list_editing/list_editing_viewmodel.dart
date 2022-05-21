@@ -20,6 +20,7 @@ class ListEditingViewModel extends FutureViewModel {
     required this.settings,
     required this.imagePicker,
     required this.saveCallback,
+    required this.deleteCallback,
   });
 
   final AppRouter router;
@@ -27,6 +28,7 @@ class ListEditingViewModel extends FutureViewModel {
   final SettingsService settings;
   final ImagePicker imagePicker;
   final Function(ShoppingList shoppingList) saveCallback;
+  final Function(ShoppingList shoppingList) deleteCallback;
 
   final ValueNotifier<String> searchNotifier = ValueNotifier('');
 
@@ -253,6 +255,23 @@ class ListEditingViewModel extends FutureViewModel {
   Future saveShoppingList() async {
     if (shoppingList.title == '') shoppingList.title = 'Список покупок';
     saveCallback(shoppingList);
+  }
+
+  void deleteShoppingList() {
+    router.pop();
+    deleteCallback(shoppingList);
+  }
+
+  Future showDeleteDialog(BuildContext context) async {
+    final result = await showOkCancelAlertDialog(
+      context: context,
+      title: 'Удаление списка покупок',
+      message: 'Вы уверены, что хотите удалить этот список покупок?',
+      okLabel: 'Удалить',
+      isDestructiveAction: true,
+      cancelLabel: 'Отмена',
+    );
+    if (result == OkCancelResult.ok) deleteShoppingList();
   }
 
   Future showAddingCoAuthorDialog(BuildContext context) async {

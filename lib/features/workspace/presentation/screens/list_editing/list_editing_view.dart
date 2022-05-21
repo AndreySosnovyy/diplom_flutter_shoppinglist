@@ -21,12 +21,14 @@ import 'list_editing_viewmodel.dart';
 class ListEditingView extends StatelessWidget {
   const ListEditingView({
     required this.saveCallback,
+    required this.deleteCallback,
     this.shoppingList,
     Key? key,
   }) : super(key: key);
 
   final ShoppingList? shoppingList;
   final Function(ShoppingList shoppingList) saveCallback;
+  final Function(ShoppingList shoppingList) deleteCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class ListEditingView extends StatelessWidget {
           settings: settings,
           imagePicker: ImagePicker(),
           saveCallback: saveCallback,
+          deleteCallback: deleteCallback,
         );
       },
       builder: (context, viewModel, child) => WillPopScope(
@@ -51,6 +54,13 @@ class ListEditingView extends StatelessWidget {
         child: Scaffold(
           appBar: CommonAppbar(
             title: shoppingList != null ? 'Редактирование' : 'Новый список',
+            trailing: IconButton(
+              onPressed: () async => viewModel.showDeleteDialog(context),
+              icon: const Icon(
+                CupertinoIcons.delete,
+                color: AppColors.blue,
+              ),
+            ),
             leading: Row(
               children: [
                 const SizedBox(width: 10),

@@ -57,6 +57,13 @@ class ListsViewModel extends FutureViewModel {
     notifyListeners();
   }
 
+  void deleteShoppingList(ShoppingList shoppingList) {
+    final index =
+        shoppingLists.indexWhere((list) => list.id == shoppingList.id);
+    shoppingLists.removeAt(index);
+    notifyListeners();
+  }
+
   Future saveShoppingList(ShoppingList shoppingList) async {
     final index =
         shoppingLists.indexWhere((list) => list.id == shoppingList.id);
@@ -72,7 +79,8 @@ class ListsViewModel extends FutureViewModel {
 
   void openListEditingView({ShoppingList? shoppingList}) =>
       router.push(ListEditingViewRoute(
-        saveCallback: saveShoppingList,
         shoppingList: shoppingList,
+        saveCallback: saveShoppingList,
+        deleteCallback: deleteShoppingList,
       ));
 }

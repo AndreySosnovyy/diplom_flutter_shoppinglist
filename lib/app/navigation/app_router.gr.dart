@@ -45,6 +45,7 @@ class AppRouter extends _i8.RootStackRouter {
           routeData: routeData,
           child: _i2.ListEditingView(
               saveCallback: args.saveCallback,
+              deleteCallback: args.deleteCallback,
               shoppingList: args.shoppingList,
               key: args.key));
     },
@@ -101,12 +102,14 @@ class ListsViewRoute extends _i8.PageRouteInfo<void> {
 class ListEditingViewRoute extends _i8.PageRouteInfo<ListEditingViewRouteArgs> {
   ListEditingViewRoute(
       {required dynamic Function(_i10.ShoppingList) saveCallback,
+      required dynamic Function(_i10.ShoppingList) deleteCallback,
       _i10.ShoppingList? shoppingList,
       _i9.Key? key})
       : super(ListEditingViewRoute.name,
             path: '/list-editing-view',
             args: ListEditingViewRouteArgs(
                 saveCallback: saveCallback,
+                deleteCallback: deleteCallback,
                 shoppingList: shoppingList,
                 key: key));
 
@@ -115,9 +118,14 @@ class ListEditingViewRoute extends _i8.PageRouteInfo<ListEditingViewRouteArgs> {
 
 class ListEditingViewRouteArgs {
   const ListEditingViewRouteArgs(
-      {required this.saveCallback, this.shoppingList, this.key});
+      {required this.saveCallback,
+      required this.deleteCallback,
+      this.shoppingList,
+      this.key});
 
   final dynamic Function(_i10.ShoppingList) saveCallback;
+
+  final dynamic Function(_i10.ShoppingList) deleteCallback;
 
   final _i10.ShoppingList? shoppingList;
 
@@ -125,7 +133,7 @@ class ListEditingViewRouteArgs {
 
   @override
   String toString() {
-    return 'ListEditingViewRouteArgs{saveCallback: $saveCallback, shoppingList: $shoppingList, key: $key}';
+    return 'ListEditingViewRouteArgs{saveCallback: $saveCallback, deleteCallback: $deleteCallback, shoppingList: $shoppingList, key: $key}';
   }
 }
 
