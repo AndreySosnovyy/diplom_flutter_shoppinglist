@@ -49,7 +49,7 @@ Future setupAppMetrica() async {
     AppMetricaConfig(
       Strings.appMetricaKey,
       appVersion: (await PackageInfo.fromPlatform()).version,
-      userProfileID: sl.get<AuthService>().currentUser?.email
+      userProfileID: sl.get<AuthService>().currentUser?.email,
     ),
   );
 }
