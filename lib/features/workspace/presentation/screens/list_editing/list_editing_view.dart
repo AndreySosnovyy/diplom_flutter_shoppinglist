@@ -4,12 +4,12 @@ import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/settings/domain/setting_service.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
+import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/adding_products_block.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/co_authors_handler.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/common_search_line.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/common_textfield.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/empty_banner.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/listed_product_tile.dart';
-import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/suggestions_block.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -200,11 +200,12 @@ class ListEditingView extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: SuggestionsBlock(
+                  child: AddingProductsBlock(
                     searchTextNotifier: viewModel.searchNotifier,
                     onSuggestionTap: viewModel.addProductViaSuggestion,
                     addByProductName: viewModel.addProductByName,
                     showImages: viewModel.settings.showProductImages,
+                    showSuggestions: viewModel.settings.showSuggestions,
                   ),
                 ),
                 viewModel.shoppingList.listedProducts.isEmpty

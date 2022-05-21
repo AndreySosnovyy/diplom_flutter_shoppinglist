@@ -13,28 +13,28 @@ class ListsViewModel extends FutureViewModel {
     required this.router,
     required this.workspaceService,
   }) {
-    subscription = auth.userStream.listen((_) => notifyListeners());
+    authSubscription = auth.userStream.listen((_) => notifyListeners());
   }
 
   final AuthService auth;
   final AppRouter router;
   final WorkspaceService workspaceService;
-  late final StreamSubscription subscription;
+  late final StreamSubscription authSubscription;
 
   final List<ShoppingList> shoppingLists = <ShoppingList>[];
 
   final scrollNotifier = ValueNotifier<bool>(false);
 
   @override
-  void dispose() {
-    super.dispose();
-    subscription.cancel();
-  }
-
-  @override
   Future futureToRun() async {
     shoppingLists.addAll(await fetchShoppingLists());
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    authSubscription.cancel();
   }
 
   // todo: implement method

@@ -10,31 +10,34 @@ import 'package:diplom/features/workspace/presentation/screens/list_editing/widg
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SuggestionsBlock extends StatefulWidget {
-  const SuggestionsBlock({
+class AddingProductsBlock extends StatefulWidget {
+  const AddingProductsBlock({
     required this.searchTextNotifier,
     required this.onSuggestionTap,
     required this.addByProductName,
     this.showImages = true,
+    this.showSuggestions = true,
     Key? key,
   }) : super(key: key);
 
   final ValueNotifier<String> searchTextNotifier;
   final bool showImages;
+  final bool showSuggestions;
   final Function(Suggestion suggestion) onSuggestionTap;
   final Function(String productName) addByProductName;
 
   @override
-  State<StatefulWidget> createState() => _SuggestionsBlockState();
+  State<StatefulWidget> createState() => _AddingProductsBlockState();
 }
 
-class _SuggestionsBlockState extends State<SuggestionsBlock> {
+class _AddingProductsBlockState extends State<AddingProductsBlock> {
   final suggestionsSource = SuggestionsSource();
   final List<Suggestion> currentSuggestions = <Suggestion>[];
 
   double get blockHeight {
     const double defaultHeight = 54;
     if (widget.searchTextNotifier.value.isEmpty) return 0;
+    if (!widget.showSuggestions) return defaultHeight;
     if (currentSuggestions.isEmpty) return defaultHeight;
     return min(currentSuggestions.length, 3) * 45 + defaultHeight + 24;
   }
@@ -92,15 +95,18 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      AutoSizeText(
-                        'Добавить «${value.capitalize()}»',
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText1,
+                      Expanded(
+                        child: AutoSizeText(
+                          'Добавить «${value.capitalize()}»',
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.bodyText1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                if (currentSuggestions.isNotEmpty)
+                if (currentSuggestions.isNotEmpty && widget.showSuggestions)
                   Column(
                     children: [
                       Container(
@@ -119,33 +125,34 @@ class _SuggestionsBlockState extends State<SuggestionsBlock> {
                       ),
                     ],
                   ),
-                Expanded(
-                  child: Scrollbar(
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 4, bottom: 6),
-                      itemCount: currentSuggestions.length,
-                      itemBuilder: (context, index) => SuggestionTile(
-                        suggestion: currentSuggestions[index],
-                        onTap: () =>
-                            widget.onSuggestionTap(currentSuggestions[index]),
-                        showImages: widget.showImages,
-                      ),
-                      separatorBuilder: (_, __) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(),
-                          Container(
-                            height: 0.6,
-                            width: MediaQuery.of(context).size.width * 0.76,
-                            margin: const EdgeInsets.symmetric(vertical: 2.6),
-                            color: AppColors.grey2,
-                          ),
-                        ],
+                if (widget.showSuggestions)
+                  Expanded(
+                    child: Scrollbar(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(top: 4, bottom: 6),
+                        itemCount: currentSuggestions.length,
+                        itemBuilder: (context, index) => SuggestionTile(
+                          suggestion: currentSuggestions[index],
+                          onTap: () =>
+                              widget.onSuggestionTap(currentSuggestions[index]),
+                          showImages: widget.showImages,
+                        ),
+                        separatorBuilder: (_, __) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(),
+                            Container(
+                              height: 0.6,
+                              width: MediaQuery.of(context).size.width * 0.76,
+                              margin: const EdgeInsets.symmetric(vertical: 2.6),
+                              color: AppColors.grey2,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
