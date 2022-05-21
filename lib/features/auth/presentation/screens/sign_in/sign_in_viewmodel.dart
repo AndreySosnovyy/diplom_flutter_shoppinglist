@@ -6,7 +6,6 @@ import 'package:diplom/app/presentation/dialogs/common_cupertino_dialog.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
 class SignInViewModel extends BaseViewModel {
@@ -15,7 +14,6 @@ class SignInViewModel extends BaseViewModel {
 
   final _router = sl.get<AppRouter>();
   final _auth = sl.get<AuthService>();
-  final logger = Logger();
 
   final phoneController = TextEditingController();
   final codeController = TextEditingController();
@@ -48,7 +46,6 @@ class SignInViewModel extends BaseViewModel {
     if (user != null) {
       _router.popUntilRouteWithName('SettingsViewRoute');
     }
-    logger.i('Signed in with google: ${user?.email}');
   }
 
   Future signInWithApple() async {}
@@ -69,7 +66,6 @@ class SignInViewModel extends BaseViewModel {
         ),
       )
           .then((user) {
-        logger.i('Signed in with phone: ${user?.phoneNumber}');
         if (user != null) _router.popUntilRouteWithName('SettingsViewRoute');
       });
     } else {
