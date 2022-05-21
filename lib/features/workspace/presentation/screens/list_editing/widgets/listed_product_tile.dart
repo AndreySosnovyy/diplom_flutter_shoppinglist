@@ -153,6 +153,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
               Row(
                 children: [
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       widget.decQuantityCallback();
                       setState(() {});
@@ -167,6 +168,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
                     onLongPressEnd: (_) => isDecPressed = false,
                     child: Container(
                       padding: const EdgeInsets.all(4),
+                      margin: const EdgeInsets.symmetric(vertical: 6),
                       decoration: const BoxDecoration(
                         color: AppColors.red,
                         borderRadius: BorderRadius.only(
@@ -182,8 +184,12 @@ class _ListedProductTileState extends State<ListedProductTile> {
                   ),
                   GestureDetector(
                     onTap: widget.onUnitTap,
+                    behavior: HitTestBehavior.opaque,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 15,
+                      ),
                       child: Text(
                         '${widget.product.amount} '
                         '${WorkspaceUtils.unitToString(widget.product.unit)}',
@@ -195,6 +201,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
                     ),
                   ),
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       widget.incQuantityCallback();
                       setState(() {});
@@ -209,6 +216,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
                     onLongPressEnd: (_) => isIncPressed = false,
                     child: Container(
                       padding: const EdgeInsets.all(4),
+                      margin: const EdgeInsets.symmetric(vertical: 6),
                       decoration: const BoxDecoration(
                         color: AppColors.green,
                         borderRadius: BorderRadius.only(

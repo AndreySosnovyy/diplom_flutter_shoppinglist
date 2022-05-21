@@ -106,6 +106,7 @@ class ListEditingView extends StatelessWidget {
                                     isBold: true,
                                     fontSize: 32,
                                     maxLength: 24,
+                                    maxLines: 2,
                                   ),
                                 ),
                                 GestureDetector(

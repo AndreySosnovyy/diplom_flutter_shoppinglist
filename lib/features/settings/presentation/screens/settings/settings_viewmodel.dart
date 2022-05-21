@@ -28,6 +28,7 @@ class SettingsViewModel extends FutureViewModel {
         _avatarUrl = null;
         _isHiddenAccount = null;
       } else {
+        print(123);
         if (!await settings.isUserExists(user.uid)) {
           await settings.addAppUser(
             userId: user.uid,

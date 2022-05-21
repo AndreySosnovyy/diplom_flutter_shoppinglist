@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:diplom/app/values/colors.dart';
+import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,11 @@ class _ShoppingListTileState extends State<ShoppingListTile>
   Widget build(BuildContext context) {
     final ShoppingList shoppingList = widget.shoppingList;
     final Color tileColor = widget.shoppingList.color;
+
+    var checkedProductAmount = 0;
+    for (final product in shoppingList.listedProducts) {
+      if (product.status == Status.checked) checkedProductAmount++;
+    }
 
     _scale = 1 - _controller.value;
     void _tapDown() => _controller.forward();
@@ -128,6 +134,7 @@ class _ShoppingListTileState extends State<ShoppingListTile>
                       ),
                       IconButton(
                         onPressed: () {
+                          _tapUp();
                           setState(() =>
                               shoppingList.isPinned = !shoppingList.isPinned);
                           widget.setIsMarked(shoppingList.isPinned);
@@ -172,7 +179,9 @@ class _ShoppingListTileState extends State<ShoppingListTile>
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       _IconTextPair(
-                        text: shoppingList.listedProducts.length.toString(),
+                        text:
+                            '$checkedProductAmount/'
+                                '${shoppingList.listedProducts.length}',
                         iconData: FontAwesomeIcons.cartArrowDown,
                         color: AppColors.white,
                       ),

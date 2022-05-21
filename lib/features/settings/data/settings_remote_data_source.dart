@@ -1,14 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:diplom/features/auth/domain/entities/app_user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class UsersDataSource {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future addAppUser({
     required AppUser appUser,
@@ -33,10 +31,7 @@ class UsersDataSource {
               snapshot.key as String,
               snapshot.value as Map,
             );
-           } catch (e, s) {
-            print(e);
-            print(s);
-            await _auth.signOut();
+           } catch (e) {
             return null;
           }
         },

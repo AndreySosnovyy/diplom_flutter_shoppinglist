@@ -23,7 +23,8 @@ class CommonTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      maxLines: null,
+      minLines: 1,
+      maxLines: maxLines,
       maxLength: maxLength,
       cursorColor: AppColors.blue,
       style: TextStyle(
