@@ -41,12 +41,12 @@ class ListEditingViewModel extends FutureViewModel {
 
   Future init() async {
     titleController.text =
-    shoppingList.title == 'Список покупок' ? '' : shoppingList.title;
+        shoppingList.title == 'Список покупок' ? '' : shoppingList.title;
     titleController.addListener(() {
       shoppingList.title = titleController.text;
     });
     descriptionController.text =
-    shoppingList.description == null ? '' : shoppingList.description!;
+        shoppingList.description == null ? '' : shoppingList.description!;
     descriptionController.addListener(() {
       shoppingList.description = descriptionController.text;
     });
@@ -67,8 +67,8 @@ class ListEditingViewModel extends FutureViewModel {
     ];
 
     shoppingList.color = availableColors[
-    (availableColors.indexOf(shoppingList.color) + 1) %
-        availableColors.length];
+        (availableColors.indexOf(shoppingList.color) + 1) %
+            availableColors.length];
     notifyListeners();
   }
 
@@ -94,10 +94,10 @@ class ListEditingViewModel extends FutureViewModel {
   void addProductViaSuggestion(Suggestion suggestion) {
     if (shoppingList.listedProducts
         .where((product) =>
-    product.name.toLowerCase() == suggestion.name.toLowerCase())
+            product.name.toLowerCase() == suggestion.name.toLowerCase())
         .isNotEmpty) {
       incQuantity(shoppingList.listedProducts.indexWhere((product) =>
-      product.name.toLowerCase() == suggestion.name.toLowerCase()));
+          product.name.toLowerCase() == suggestion.name.toLowerCase()));
       return;
     }
     shoppingList.listedProducts.add(
@@ -114,10 +114,10 @@ class ListEditingViewModel extends FutureViewModel {
   void addProductByName(String productName) {
     if (shoppingList.listedProducts
         .where((product) =>
-    product.name.toLowerCase() == productName.toLowerCase())
+            product.name.toLowerCase() == productName.toLowerCase())
         .isNotEmpty) {
       incQuantity(shoppingList.listedProducts.indexWhere((product) =>
-      product.name.toLowerCase() == productName.toLowerCase()));
+          product.name.toLowerCase() == productName.toLowerCase()));
       return;
     }
     shoppingList.listedProducts.add(
@@ -132,13 +132,11 @@ class ListEditingViewModel extends FutureViewModel {
 
   // todo: implement method
   Future onProductTap(int index) async {
-    print(shoppingList.listedProducts[index].name);
     notifyListeners();
   }
 
   // todo: implement method
   Future onProductLongPress(int index) async {
-    print(shoppingList.listedProducts[index].name);
     notifyListeners();
   }
 
@@ -156,7 +154,7 @@ class ListEditingViewModel extends FutureViewModel {
             key: unit,
             label: unitToString(unit),
             isDefaultAction:
-            unit == shoppingList.listedProducts[productIndex].unit,
+                unit == shoppingList.listedProducts[productIndex].unit,
           ),
       ],
     );
@@ -203,7 +201,7 @@ class ListEditingViewModel extends FutureViewModel {
           label: 'Сделать фото',
           icon: CupertinoIcons.photo_camera,
           isDefaultAction:
-          shoppingList.listedProducts[productIndex].imageUrl == null,
+              shoppingList.listedProducts[productIndex].imageUrl == null,
         ),
         const SheetAction(
           key: _ImageAction.gallery,
@@ -240,10 +238,14 @@ class ListEditingViewModel extends FutureViewModel {
   }
 
   void decQuantity(int productIndex) {
+    if (shoppingList.listedProducts[productIndex].amount == 1) return;
     shoppingList.listedProducts[productIndex].amount -= 1;
-    if (shoppingList.listedProducts[productIndex].amount == 0) {
-      shoppingList.listedProducts.removeAt(productIndex);
-    }
+    notifyListeners();
+    // todo: update database
+  }
+
+  Future deleteProduct(int productIndex) async {
+    shoppingList.listedProducts.removeAt(productIndex);
     notifyListeners();
     // todo: update database
   }

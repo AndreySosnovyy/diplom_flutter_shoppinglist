@@ -223,6 +223,8 @@ class ListEditingView extends StatelessWidget {
                               decQuantityCallback: () =>
                                   viewModel.decQuantity(index),
                               onTap: () => viewModel.onProductTap(index),
+                              deleteCallback: () =>
+                                  viewModel.deleteProduct(index),
                               onLongPress: () =>
                                   viewModel.onProductLongPress(index),
                               onImageTap: () => viewModel.onProductImageTap(
