@@ -10,7 +10,9 @@ class ListsViewModel extends FutureViewModel {
     required this.auth,
     required this.router,
     required this.workspaceService,
-  });
+  }) {
+    auth.userStream.listen((_) => notifyListeners());
+  }
 
   final AuthService auth;
   final AppRouter router;
