@@ -22,6 +22,7 @@ class SettingsService {
   late final PackageInfo _packageInfo;
   late final String displayVersion;
   late bool showProductImages;
+  late bool showSuggestions;
   late Color defaultColor;
   String? avatarUrl;
   String? userName;
@@ -62,6 +63,7 @@ class SettingsService {
     // local stored data (application settings data)
     await localDataSource.init();
     showProductImages = localDataSource.showProductImages;
+    showSuggestions = localDataSource.showSuggestions;
     defaultColor = localDataSource.defaultColor;
 
     // remote stored data (user account data)
@@ -91,6 +93,11 @@ class SettingsService {
   Future setShowProductImages(bool value) async {
     await localDataSource.setShowProductImages(value);
     showProductImages = value;
+  }
+
+  Future setShowSuggestions(bool value) async {
+    await localDataSource.setShowSuggestions(value);
+    showSuggestions = value;
   }
 
   Future setAvatar(Uint8List? bytes) async {

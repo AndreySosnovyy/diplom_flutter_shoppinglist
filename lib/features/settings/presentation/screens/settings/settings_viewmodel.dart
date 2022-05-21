@@ -208,10 +208,10 @@ class SettingsViewModel extends FutureViewModel {
   Future setHandler(BuildContext context) async {
     final result = await showTextInputDialog(
       context: context,
-      title: 'Сменить хэндлер пользователя',
+      title: 'Сменить мой идентификатор пользователя',
       textFields: [
         const DialogTextField(
-          hintText: 'Новый хэндлер',
+          hintText: 'Новый идентификатор',
           autocorrect: false,
         )
       ],
@@ -222,7 +222,7 @@ class SettingsViewModel extends FutureViewModel {
     if (newHandler.startsWith('@')) newHandler = newHandler.substring(1);
     if (!_validateHandler(newHandler)) {
       return Fluttertoast.showToast(
-        msg: 'Новый хэндлер невалидный',
+        msg: 'Новый идентификатор некорректный',
         backgroundColor: AppColors.red,
         toastLength: Toast.LENGTH_LONG,
       );
@@ -230,7 +230,7 @@ class SettingsViewModel extends FutureViewModel {
 
     if (!await settings.checkIfHandlerUnique(newHandler)) {
       return Fluttertoast.showToast(
-        msg: 'Данный хэндлер уже занят',
+        msg: 'Такой идентификатор уже занят',
         backgroundColor: AppColors.red,
         toastLength: Toast.LENGTH_LONG,
       );
@@ -249,6 +249,11 @@ class SettingsViewModel extends FutureViewModel {
 
   Future setShowProductImages(bool value) async {
     await settings.setShowProductImages(value);
+    notifyListeners();
+  }
+
+  Future setShowSuggestions(bool value) async {
+    await settings.setShowSuggestions(value);
     notifyListeners();
   }
 

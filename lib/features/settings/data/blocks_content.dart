@@ -20,19 +20,19 @@ class SettingsBlocksContent {
           callback: changeNameCallback,
         ),
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.pen, color: AppColors.white),
-        iconColor: AppColors.yellow,
-        title: 'Сменить хэндлер пользователя',
+        icon: const Icon(CupertinoIcons.at, color: AppColors.white),
+        iconColor: AppColors.indigo,
+        title: 'Сменить мой идентификатор',
         callback: changeHandlerCallback,
       ),
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.at, color: AppColors.white),
-        iconColor: AppColors.teal,
+        icon: const Icon(CupertinoIcons.xmark_circle, color: AppColors.white),
+        iconColor: AppColors.orange,
         title: 'Скрыть аккаунт',
         trailingSwitch: hideAccountSwitch,
       ),
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.arrow_left_square,
+        icon: const Icon(CupertinoIcons.square_arrow_left,
             color: AppColors.white),
         iconColor: AppColors.red,
         title: 'Выйти',
@@ -83,15 +83,22 @@ class SettingsBlocksContent {
 
   static List<SettingsTileModel> getShoppingBlockContent({
     required CupertinoSwitch productsPicturesSwitch,
+    required CupertinoSwitch suggestionsSwitch,
     required Color defaultColorIconColor,
     required VoidCallback setDefaultColorCallback,
   }) {
     return <SettingsTileModel>[
       SettingsTileModel(
-        icon: const Icon(CupertinoIcons.cart, color: AppColors.white),
+        icon: const Icon(CupertinoIcons.cart_fill, color: AppColors.white),
         iconColor: AppColors.blue,
         title: 'Изображения товаров',
         trailingSwitch: productsPicturesSwitch,
+      ),
+      SettingsTileModel(
+        icon: const Icon(FontAwesomeIcons.solidLightbulb, color: AppColors.white),
+        iconColor: AppColors.yellow,
+        title: 'Показывать подсказки',
+        trailingSwitch: suggestionsSwitch,
       ),
       SettingsTileModel(
         icon: const Icon(FontAwesomeIcons.palette, color: AppColors.white),
@@ -99,11 +106,6 @@ class SettingsBlocksContent {
         title: 'Цвет по умолчанию',
         callback: setDefaultColorCallback,
       ),
-      // SettingsTileModel(
-      //   icon: const Icon(CupertinoIcons.delete, color: AppColors.white),
-      //   iconColor: AppColors.red,
-      //   title: 'Автоматическое удаление',
-      // ),
     ];
   }
 

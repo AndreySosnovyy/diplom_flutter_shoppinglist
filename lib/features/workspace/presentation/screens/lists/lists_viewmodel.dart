@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
@@ -11,16 +13,23 @@ class ListsViewModel extends FutureViewModel {
     required this.router,
     required this.workspaceService,
   }) {
-    auth.userStream.listen((_) => notifyListeners());
+    subscription = auth.userStream.listen((_) => notifyListeners());
   }
 
   final AuthService auth;
   final AppRouter router;
   final WorkspaceService workspaceService;
+  late final StreamSubscription subscription;
 
   final List<ShoppingList> shoppingLists = <ShoppingList>[];
 
   final scrollNotifier = ValueNotifier<bool>(false);
+
+  @override
+  void dispose() {
+    super.dispose();
+    subscription.cancel();
+  }
 
   @override
   Future futureToRun() async {
@@ -36,6 +45,11 @@ class ListsViewModel extends FutureViewModel {
   String? get userName => auth.currentUser?.displayName;
 
   void openSettings() => router.push(const SettingsViewRoute());
+
+  void openAuthScreen() => router.pushAll([
+        const SettingsViewRoute(),
+        const SignInViewRoute(),
+      ]);
 
   void setIsPinned({required int productIndex, required bool value}) {
     shoppingLists[productIndex].isPinned = value;

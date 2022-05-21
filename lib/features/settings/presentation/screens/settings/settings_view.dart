@@ -83,7 +83,8 @@ class SettingsView extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: AutoSizeText(
-                          viewModel.isSignedIn && viewModel.displayHandler != null
+                          viewModel.isSignedIn &&
+                                  viewModel.displayHandler != null
                               ? '@${viewModel.displayHandler!}'
                               : '',
                           maxLines: 1,
@@ -131,6 +132,10 @@ class SettingsView extends StatelessWidget {
                           productsPicturesSwitch: CupertinoSwitch(
                             value: viewModel.settings.showProductImages,
                             onChanged: viewModel.setShowProductImages,
+                          ),
+                          suggestionsSwitch: CupertinoSwitch(
+                            value: viewModel.settings.showSuggestions,
+                            onChanged: viewModel.setShowSuggestions,
                           ),
                           defaultColorIconColor:
                               sl.get<SettingsService>().defaultColor,

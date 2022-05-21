@@ -61,7 +61,7 @@ class ListsView extends StatelessWidget {
                           'Пока здесь пусто',
                           style:
                               Theme.of(context).textTheme.subtitle1!.copyWith(
-                                    color: AppColors.green,
+                                    color: AppColors.blue,
                                     fontWeight: FontWeight.bold,
                                   ),
                         ),
@@ -75,27 +75,27 @@ class ListsView extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         if (viewModel.auth.currentUser == null)
-                        Column(
-                          children: [
-                            const SizedBox(height: 54),
-                            Text(
-                              'Но сперва необходимо авторизоваться,\nчтобы не потерять свои списки:',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .copyWith(color: AppColors.blue),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 8),
-                            SizedBox(
-                              height: 60,
-                              child: CommonCupertinoButton(
-                                text: 'В настройки   ❯',
-                                onTap: viewModel.openSettings,
+                          Column(
+                            children: [
+                              const SizedBox(height: 54),
+                              Text(
+                                'Но сперва необходимо авторизоваться,\nчтобы не потерять свои списки:',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(color: AppColors.blue),
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ],
-                        ),
+                              const SizedBox(height: 8),
+                              SizedBox(
+                                height: 60,
+                                child: CommonCupertinoButton(
+                                  text: 'Войти   ❯',
+                                  onTap: viewModel.openAuthScreen,
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ),

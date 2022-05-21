@@ -259,7 +259,7 @@ class ListEditingViewModel extends FutureViewModel {
     final List<String>? result = await showTextInputDialog(
       context: context,
       title: 'Добавить соавтора',
-      message: 'Введите хэндлер пользователя',
+      message: 'Введите идентификатор пользователя',
       okLabel: 'Добавить',
       cancelLabel: 'Назад',
       textFields: [
