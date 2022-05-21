@@ -3,6 +3,7 @@ import 'package:diplom/features/settings/domain/entities/settings_tile_model.dar
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// todo: add inclusive suggestions block (sugar, milk, alcohol)
 class SettingsBlocksContent {
   static List<SettingsTileModel> getAccountBlockContent({
     required bool hideEditNameTile,

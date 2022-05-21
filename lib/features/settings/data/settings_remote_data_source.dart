@@ -1,12 +1,22 @@
 import 'dart:typed_data';
 
+import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/domain/entities/app_user.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UsersDataSource {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  void _onError() {
+    Fluttertoast.showToast(
+      msg: 'Ошибка при попытке получить данные',
+      backgroundColor: AppColors.red,
+      toastLength: Toast.LENGTH_LONG,
+    );
+  }
 
   Future addAppUser({
     required AppUser appUser,
@@ -19,7 +29,7 @@ class UsersDataSource {
         'isHidden': appUser.isHidden,
         'listIds': appUser.listIds,
         'authProvider': appUser.authProvider,
-      });
+      }).onError((error, stackTrace) => _onError());
 
   Future<AppUser?> getAppUser({
     required String userId,
@@ -31,17 +41,27 @@ class UsersDataSource {
               snapshot.key as String,
               snapshot.value as Map,
             );
-           } catch (e) {
+          } catch (e) {
             return null;
           }
         },
-      );
+      ).onError((error, stackTrace) {
+        _onError();
+        return Future.value(null);
+      });
 
   Future<String?> getUserAvatarUrl({
     required String userId,
   }) async {
     try {
-      return await _storage.ref('avatars').child(userId).getDownloadURL();
+      return await _storage
+          .ref('avatars')
+          .child(userId)
+          .getDownloadURL()
+          .onError((error, stackTrace) {
+        _onError();
+        return Future.value(null);
+      });
     } catch (_) {
       return null;
     }
@@ -53,9 +73,15 @@ class UsersDataSource {
   }) async {
     final ref = _storage.ref('avatars').child(userId);
     if (bytes != null) {
-      await ref.putData(bytes);
+      await ref.putData(bytes).onError((error, stackTrace) {
+        _onError();
+        return Future.value(null);
+      });
     } else {
-      await ref.delete();
+      await ref.delete().onError((error, stackTrace) {
+        _onError();
+        return Future.value(null);
+      });
     }
     return bytes != null ? await ref.getDownloadURL() : null;
   }
@@ -69,25 +95,30 @@ class UsersDataSource {
           bytes: bytes,
           userId: userId,
         )
-      });
+      }).onError((error, stackTrace) => _onError());
 
   Future setUserName({
     required String newName,
     required String userId,
   }) async =>
-      await _database.ref('users').child(userId).update({'name': newName});
+      await _database
+          .ref('users')
+          .child(userId)
+          .update({'name': newName}).onError((error, stackTrace) => _onError());
 
   Future setCurrentAppUserHandler({
     required String handler,
     required String userId,
   }) async =>
-      await _database.ref('users').child(userId).update({'handler': handler});
+      await _database.ref('users').child(userId).update(
+          {'handler': handler}).onError((error, stackTrace) => _onError());
 
   Future setCurrentAppUserIsHiddenAccount({
     required bool value,
     required String userId,
   }) async =>
-      await _database.ref('users').child(userId).update({'isHidden': value});
+      await _database.ref('users').child(userId).update(
+          {'isHidden': value}).onError((error, stackTrace) => _onError());
 
   Future<AppUser?> fetchAppUserByHandler(String handler) async =>
       await _database.ref('users').get().then((DataSnapshot snapshot) {
@@ -96,6 +127,9 @@ class UsersDataSource {
           final appUser = AppUser.fromJson(appUserId, appUsersMap[appUserId]);
           if (appUser.handler == handler) return appUser;
         }
+        return null;
+      }).onError((error, stackTrace) {
+        _onError();
         return null;
       });
 }
