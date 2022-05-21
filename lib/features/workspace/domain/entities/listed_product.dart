@@ -4,14 +4,16 @@ import 'package:diplom/features/workspace/domain/entities/product.dart';
 class ListedProduct extends Product {
   double? expectedPrice;
   num amount;
+  Status status;
 
   ListedProduct({
     required String name,
+    required Unit unit,
+    required this.amount,
+    this.status = Status.unchecked,
+    this.expectedPrice,
     String? description,
     String? imageUrl,
-    required Unit unit,
-    this.expectedPrice,
-    required this.amount,
   }) : super(
           name: name,
           description: description,
@@ -19,3 +21,5 @@ class ListedProduct extends Product {
           unit: unit,
         );
 }
+
+enum Status { unchecked, checked, unavailable }

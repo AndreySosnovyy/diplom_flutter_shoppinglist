@@ -210,11 +210,7 @@ class ListEditingView extends StatelessWidget {
                     ? const Center(child: EmptyBanner())
                     : Expanded(
                         child: ListView.separated(
-                          padding: const EdgeInsets.only(
-                            left: 14,
-                            right: 14,
-                            top: 16,
-                          ),
+                          padding: const EdgeInsets.only(top: 16),
                           itemCount:
                               viewModel.shoppingList.listedProducts.length,
                           itemBuilder: (context, index) {
@@ -226,6 +222,9 @@ class ListEditingView extends StatelessWidget {
                                   viewModel.incQuantity(index),
                               decQuantityCallback: () =>
                                   viewModel.decQuantity(index),
+                              onTap: () => viewModel.onProductTap(index),
+                              onLongPress: () =>
+                                  viewModel.onProductLongPress(index),
                               onImageTap: () => viewModel.onProductImageTap(
                                 context: context,
                                 productIndex: index,
@@ -238,7 +237,7 @@ class ListEditingView extends StatelessWidget {
                             );
                           },
                           separatorBuilder: (context, index) =>
-                              const SizedBox(height: 12),
+                              const SizedBox(),
                         ),
                       ),
               ],

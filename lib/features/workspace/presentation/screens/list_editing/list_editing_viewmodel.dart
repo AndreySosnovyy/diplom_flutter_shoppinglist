@@ -130,6 +130,18 @@ class ListEditingViewModel extends FutureViewModel {
     notifyListeners();
   }
 
+  // todo: implement method
+  Future onProductTap(int index) async {
+    print(shoppingList.listedProducts[index].name);
+    notifyListeners();
+  }
+
+  // todo: implement method
+  Future onProductLongPress(int index) async {
+    print(shoppingList.listedProducts[index].name);
+    notifyListeners();
+  }
+
   Future onUnitTap({
     required BuildContext context,
     required int productIndex,
@@ -216,10 +228,9 @@ class ListEditingViewModel extends FutureViewModel {
     if (image == null) return;
 
     // todo: upload image to storage
+    // todo: update database;
     // shoppingList.listedProducts[productIndex].imageUrl = ;
     notifyListeners();
-
-    // todo: update database;
   }
 
   void incQuantity(int productIndex) {
