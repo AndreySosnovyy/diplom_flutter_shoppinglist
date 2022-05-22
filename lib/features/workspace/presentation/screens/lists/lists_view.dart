@@ -126,7 +126,10 @@ class ListsView extends StatelessWidget {
                               listIndex: index,
                               value: value,
                             ),
-                            onTap: () {},
+                            onTap: () => viewModel.openListEditingView(
+                              shoppingListToOpen:
+                              viewModel.shoppingLists[index],
+                            ),
                             onLongPress: () => viewModel.openListEditingView(
                               shoppingListToOpen:
                                   viewModel.shoppingLists[index],
