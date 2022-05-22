@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
+import 'package:diplom/features/settings/domain/setting_service.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:uuid/uuid.dart';
 
 class ListsViewModel extends FutureViewModel {
   ListsViewModel({
@@ -13,7 +16,14 @@ class ListsViewModel extends FutureViewModel {
     required this.router,
     required this.workspaceService,
   }) {
-    authSubscription = auth.userStream.listen((_) => notifyListeners());
+    authSubscription = auth.userStream.listen((user) async {
+      if (user == null) {
+        shoppingLists.clear();
+      } else {
+        shoppingLists.addAll(await workspaceService.fetchShoppingLists());
+      }
+      notifyListeners();
+    });
   }
 
   final AuthService auth;
@@ -84,10 +94,15 @@ class ListsViewModel extends FutureViewModel {
     }
   }
 
-  void openListEditingView({ShoppingList? shoppingList}) =>
-      router.push(ListEditingViewRoute(
-        shoppingList: shoppingList,
-        saveCallback: saveShoppingList,
-        deleteCallback: deleteShoppingList,
-      ));
+  void openListEditingView({ShoppingList? shoppingListToOpen}) {
+    shoppingListToOpen ??= ShoppingList(id: const Uuid().v1())
+      ..color = sl.get<SettingsService>().defaultColor;
+
+    router.push(ListEditingViewRoute(
+      shoppingList: shoppingListToOpen,
+      saveCallback: saveShoppingList,
+      deleteCallback: deleteShoppingList,
+    ));
+    workspaceService.addShoppingList(shoppingListToOpen);
+  }
 }

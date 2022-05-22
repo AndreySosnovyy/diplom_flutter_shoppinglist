@@ -286,6 +286,7 @@ class ListEditingViewModel extends FutureViewModel {
     if (result == OkCancelResult.ok) deleteShoppingList();
   }
 
+  // todo: add list for co-author
   Future showAddingCoAuthorDialog(BuildContext context) async {
     final List<String>? result = await showTextInputDialog(
       context: context,

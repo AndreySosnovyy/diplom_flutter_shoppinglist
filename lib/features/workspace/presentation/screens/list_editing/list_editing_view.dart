@@ -15,7 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
-import 'package:uuid/uuid.dart';
 
 import 'list_editing_viewmodel.dart';
 
@@ -23,11 +22,11 @@ class ListEditingView extends StatelessWidget {
   const ListEditingView({
     required this.saveCallback,
     required this.deleteCallback,
-    this.shoppingList,
+    required this.shoppingList,
     Key? key,
   }) : super(key: key);
 
-  final ShoppingList? shoppingList;
+  final ShoppingList shoppingList;
   final Function(ShoppingList shoppingList) saveCallback;
   final Function(ShoppingList shoppingList) deleteCallback;
 
@@ -38,9 +37,7 @@ class ListEditingView extends StatelessWidget {
         final settings = sl.get<SettingsService>();
         return ListEditingViewModel(
           router: sl.get<AppRouter>(),
-          shoppingList: shoppingList ??
-              (ShoppingList(id: const Uuid().v1())
-                ..color = settings.defaultColor),
+          shoppingList: shoppingList,
           settings: settings,
           imagePicker: ImagePicker(),
           saveCallback: saveCallback,

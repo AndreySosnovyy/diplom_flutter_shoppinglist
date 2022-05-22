@@ -27,6 +27,7 @@ import 'package:diplom/features/workspace/presentation/screens/list_editing/list
     as _i2;
 import 'package:diplom/features/workspace/presentation/screens/lists/lists_view.dart'
     as _i1;
+import 'package:flutter/cupertino.dart' as _i11;
 import 'package:flutter/material.dart' as _i9;
 
 class AppRouter extends _i8.RootStackRouter {
@@ -103,8 +104,8 @@ class ListEditingViewRoute extends _i8.PageRouteInfo<ListEditingViewRouteArgs> {
   ListEditingViewRoute(
       {required dynamic Function(_i10.ShoppingList) saveCallback,
       required dynamic Function(_i10.ShoppingList) deleteCallback,
-      _i10.ShoppingList? shoppingList,
-      _i9.Key? key})
+      required _i10.ShoppingList shoppingList,
+      _i11.Key? key})
       : super(ListEditingViewRoute.name,
             path: '/list-editing-view',
             args: ListEditingViewRouteArgs(
@@ -120,16 +121,16 @@ class ListEditingViewRouteArgs {
   const ListEditingViewRouteArgs(
       {required this.saveCallback,
       required this.deleteCallback,
-      this.shoppingList,
+      required this.shoppingList,
       this.key});
 
   final dynamic Function(_i10.ShoppingList) saveCallback;
 
   final dynamic Function(_i10.ShoppingList) deleteCallback;
 
-  final _i10.ShoppingList? shoppingList;
+  final _i10.ShoppingList shoppingList;
 
-  final _i9.Key? key;
+  final _i11.Key? key;
 
   @override
   String toString() {
@@ -141,7 +142,7 @@ class ListEditingViewRouteArgs {
 /// [_i3.FullScreenImageView]
 class FullScreenImageViewRoute
     extends _i8.PageRouteInfo<FullScreenImageViewRouteArgs> {
-  FullScreenImageViewRoute({required String imageUrl, _i9.Key? key})
+  FullScreenImageViewRoute({required String imageUrl, _i11.Key? key})
       : super(FullScreenImageViewRoute.name,
             path: '/full-screen-image-view',
             args: FullScreenImageViewRouteArgs(imageUrl: imageUrl, key: key));
@@ -154,7 +155,7 @@ class FullScreenImageViewRouteArgs {
 
   final String imageUrl;
 
-  final _i9.Key? key;
+  final _i11.Key? key;
 
   @override
   String toString() {
