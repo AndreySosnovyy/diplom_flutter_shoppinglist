@@ -59,6 +59,7 @@ class RemoteWorkspaceDataSource {
   }) async {
     final List<ShoppingList> lists = <ShoppingList>[];
     await _database.ref('lists').child(userId).get().then((snapshot) {
+      if (snapshot.value == null) return lists;
       final listsMap = snapshot.value as Map;
       for (final listId in listsMap.keys) {
         lists.add(ShoppingList.fromJson(listId, listsMap[listId]));

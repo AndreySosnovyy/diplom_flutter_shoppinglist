@@ -151,6 +151,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
                   ),
                 ],
               ),
+              // todo: not update while pressing
               Row(
                 children: [
                   GestureDetector(

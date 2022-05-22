@@ -23,6 +23,7 @@ class ListsViewModel extends FutureViewModel {
         await workspaceService.fetchShoppingLists();
         shoppingLists.clear();
         shoppingLists.addAll(workspaceService.shoppingLists);
+        shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
       }
       notifyListeners();
     });
@@ -53,6 +54,7 @@ class ListsViewModel extends FutureViewModel {
     await workspaceService.fetchShoppingLists();
     shoppingLists.clear();
     shoppingLists.addAll(workspaceService.shoppingLists);
+    shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
   }
 
   String? get userName => auth.currentUser?.displayName;
