@@ -122,6 +122,7 @@ class _ListedProductTileState extends State<ListedProductTile> {
                               ? ClipOval(
                                   child: CachedNetworkImage(
                                     imageUrl: widget.product.imageUrl!,
+                                    fit: BoxFit.cover,
                                   ),
                                 )
                               : Container(

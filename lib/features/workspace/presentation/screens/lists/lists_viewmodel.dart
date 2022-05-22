@@ -64,13 +64,12 @@ class ListsViewModel extends FutureViewModel {
         const SignInViewRoute(),
       ]);
 
-  // todo: errors
   Future setIsPinned({required int listIndex, required bool value}) async {
     shoppingLists[listIndex].isPinned = value;
-    shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
-    notifyListeners();
     await workspaceService
         .updateShoppingList(shoppingLists[listIndex]..isPinned = value);
+    shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
+    notifyListeners();
   }
 
   Future deleteShoppingList(ShoppingList shoppingList) async {

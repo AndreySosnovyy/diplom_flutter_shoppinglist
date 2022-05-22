@@ -287,6 +287,7 @@ class ListEditingViewModel extends FutureViewModel {
   }
 
   // todo: add list for co-author
+  // todo: check if account is hidden
   Future showAddingCoAuthorDialog(BuildContext context) async {
     final List<String>? result = await showTextInputDialog(
       context: context,
@@ -329,7 +330,7 @@ class ListEditingViewModel extends FutureViewModel {
         notifyListeners();
       } else {
         Fluttertoast.showToast(
-          msg: 'Пользователь не был найден',
+          msg: 'Пользователь не был найден или его аккаунт скрыт',
           backgroundColor: AppColors.red,
           toastLength: Toast.LENGTH_LONG,
         );
