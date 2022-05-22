@@ -2,7 +2,6 @@ import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:flutter/material.dart';
 
-// todo: add bought products list and so on
 /// The class represents a list of products the user has created
 class ShoppingList {
   ShoppingList({required this.id});
@@ -32,4 +31,34 @@ class ShoppingList {
   }
 
   bool get isNotEmpty => !isEmpty;
+
+  Map<String, dynamic> toJson() =>
+      {
+        'title': title,
+        'description': description,
+        'listedProducts': [
+          for (final product in listedProducts) product.toJson()
+        ],
+        'coAuthors': [for (final coAuthor in coAuthors) coAuthor.toJson()],
+        'isPinned': isPinned,
+        'color': color.value,
+      };
+
+  factory ShoppingList.fromJson(String id, Map json) {
+    final List<ListedProduct> products = <ListedProduct>[];
+    for (final productJson in json['listedProducts']) {
+      products.add(ListedProduct.fromJson(productJson));
+    }
+    final List<CoAuthor> coAuthors = <CoAuthor>[];
+    for (final coAuthorJson in json['coAuthors']) {
+      coAuthors.add(CoAuthor.fromJson(coAuthorJson));
+    }
+    return ShoppingList(id: id)
+      ..title = json['title']
+      ..description = json['description']
+      ..listedProducts.addAll(products)
+      ..coAuthors.addAll(coAuthors)
+      ..color = Color(json['color'] as int)
+      ..isPinned = json['isPinned'] as bool;
+  }
 }

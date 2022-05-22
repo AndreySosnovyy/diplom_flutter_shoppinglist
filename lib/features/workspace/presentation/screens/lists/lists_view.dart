@@ -67,7 +67,7 @@ class ListsView extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Вы можете создавать удобные списки покупок и делиться ими.\nВсе изменения мгновенно сохраняются в облаке',
+                          'Вы можете создавать удобные списки покупок и делиться ими.\nВсе изменения сохраняются в облаке',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!

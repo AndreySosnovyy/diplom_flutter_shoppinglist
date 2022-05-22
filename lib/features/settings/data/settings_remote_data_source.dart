@@ -6,13 +6,27 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+enum ErrorType { unknown, input, output }
+
 class UsersDataSource {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  void _onError() {
+  void _onError([ErrorType errorType = ErrorType.unknown]) {
+    final String errorMessage;
+    switch (errorType) {
+      case ErrorType.unknown:
+        errorMessage = 'Произошла неизвестная ошибка';
+        break;
+      case ErrorType.input:
+        errorMessage = 'Произошла ошибка при получении данных';
+        break;
+      case ErrorType.output:
+        errorMessage = 'Произошла ошибка при отправке данных';
+        break;
+    }
     Fluttertoast.showToast(
-      msg: 'Ошибка при попытке получить данные',
+      msg: errorMessage,
       backgroundColor: AppColors.red,
       toastLength: Toast.LENGTH_LONG,
     );
@@ -29,7 +43,7 @@ class UsersDataSource {
         'isHidden': appUser.isHidden,
         'listIds': appUser.listIds,
         'authProvider': appUser.authProvider,
-      }).onError((error, stackTrace) => _onError());
+      }).onError((error, stackTrace) => _onError(ErrorType.output));
 
   Future<AppUser?> getAppUser({
     required String userId,
@@ -46,7 +60,7 @@ class UsersDataSource {
           }
         },
       ).onError((error, stackTrace) {
-        _onError();
+        _onError(ErrorType.input);
         return Future.value(null);
       });
 
@@ -59,7 +73,7 @@ class UsersDataSource {
           .child(userId)
           .getDownloadURL()
           .onError((error, stackTrace) {
-        _onError();
+        _onError(ErrorType.input);
         return Future.value(null);
       });
     } catch (_) {
@@ -74,12 +88,12 @@ class UsersDataSource {
     final ref = _storage.ref('avatars').child(userId);
     if (bytes != null) {
       await ref.putData(bytes).onError((error, stackTrace) {
-        _onError();
+        _onError(ErrorType.output);
         return Future.value(null);
       });
     } else {
       await ref.delete().onError((error, stackTrace) {
-        _onError();
+        _onError(ErrorType.output);
         return Future.value(null);
       });
     }
@@ -95,7 +109,7 @@ class UsersDataSource {
           bytes: bytes,
           userId: userId,
         )
-      }).onError((error, stackTrace) => _onError());
+      }).onError((error, stackTrace) => _onError(ErrorType.output));
 
   Future setUserName({
     required String newName,
@@ -104,21 +118,28 @@ class UsersDataSource {
       await _database
           .ref('users')
           .child(userId)
-          .update({'name': newName}).onError((error, stackTrace) => _onError());
+          .update({'name': newName}).onError(
+              (error, stackTrace) => _onError(ErrorType.output));
 
   Future setCurrentAppUserHandler({
     required String handler,
     required String userId,
   }) async =>
-      await _database.ref('users').child(userId).update(
-          {'handler': handler}).onError((error, stackTrace) => _onError());
+      await _database
+          .ref('users')
+          .child(userId)
+          .update({'handler': handler}).onError(
+              (error, stackTrace) => _onError(ErrorType.output));
 
   Future setCurrentAppUserIsHiddenAccount({
     required bool value,
     required String userId,
   }) async =>
-      await _database.ref('users').child(userId).update(
-          {'isHidden': value}).onError((error, stackTrace) => _onError());
+      await _database
+          .ref('users')
+          .child(userId)
+          .update({'isHidden': value}).onError(
+              (error, stackTrace) => _onError(ErrorType.output));
 
   Future<AppUser?> fetchAppUserByHandler(String handler) async =>
       await _database.ref('users').get().then((DataSnapshot snapshot) {
@@ -129,7 +150,7 @@ class UsersDataSource {
         }
         return null;
       }).onError((error, stackTrace) {
-        _onError();
+        _onError(ErrorType.input);
         return null;
       });
 }

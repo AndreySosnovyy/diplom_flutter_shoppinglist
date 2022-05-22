@@ -2,9 +2,7 @@ import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:diplom/app/values/strings.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/settings/data/settings_local_data_source.dart';
-import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
-import 'package:diplom/features/workspace/data/local_workspace_data_source.dart';
-import 'package:diplom/features/workspace/data/remote_workspace_data_source.dart';
+import 'package:diplom/features/settings/data/settings_remotce_data_source.dart';
 import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -21,7 +19,7 @@ Future setupDependencies() async {
 
   sl.registerSingleton<WorkspaceService>(WorkspaceService(
     remoteDataSource: RemoteWorkspaceDataSource(),
-    localDataSource: LocalWorkspaceDataSource(),
+    auth: FirebaseAuth.instance,
   ));
   await sl.get<WorkspaceService>().init();
 
@@ -52,9 +50,4 @@ Future setupAppMetrica() async {
       userProfileID: sl.get<AuthService>().currentUser?.email,
     ),
   );
-}
-
-Future setupRemoteDataSources() async {
-  sl.registerSingleton<RemoteWorkspaceDataSource>(RemoteWorkspaceDataSource());
-  await sl.get<RemoteWorkspaceDataSource>().init();
 }
