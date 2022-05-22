@@ -37,9 +37,8 @@ class ListsViewModel extends FutureViewModel {
     authSubscription.cancel();
   }
 
-  // todo: implement method
   Future<List<ShoppingList>> fetchShoppingLists() async {
-    return [];
+    return await workspaceService.fetchShoppingLists();
   }
 
   String? get userName => auth.currentUser?.displayName;
@@ -51,17 +50,20 @@ class ListsViewModel extends FutureViewModel {
         const SignInViewRoute(),
       ]);
 
-  void setIsPinned({required int productIndex, required bool value}) {
-    shoppingLists[productIndex].isPinned = value;
+  Future setIsPinned({required int listIndex, required bool value}) async {
+    shoppingLists[listIndex].isPinned = value;
     shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
     notifyListeners();
+    await workspaceService
+        .updateShoppingList(shoppingLists[listIndex]..isPinned = value);
   }
 
-  void deleteShoppingList(ShoppingList shoppingList) {
+  Future deleteShoppingList(ShoppingList shoppingList) async {
     final index =
         shoppingLists.indexWhere((list) => list.id == shoppingList.id);
     shoppingLists.removeAt(index);
     notifyListeners();
+    await workspaceService.deleteShoppingList(shoppingList.id);
   }
 
   Future saveShoppingList(ShoppingList shoppingList) async {
@@ -75,6 +77,11 @@ class ListsViewModel extends FutureViewModel {
     }
     shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
     notifyListeners();
+    if (index == -1) {
+      workspaceService.addShoppingList(shoppingList);
+    } else {
+      workspaceService.updateShoppingList(shoppingList);
+    }
   }
 
   void openListEditingView({ShoppingList? shoppingList}) =>

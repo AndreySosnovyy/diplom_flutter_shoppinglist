@@ -2,7 +2,7 @@ import 'package:appmetrica_plugin/appmetrica_plugin.dart';
 import 'package:diplom/app/values/strings.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/settings/data/settings_local_data_source.dart';
-import 'package:diplom/features/settings/data/settings_remotce_data_source.dart';
+import 'package:diplom/features/settings/data/settings_remote_data_source.dart';
 import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -10,6 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../features/settings/domain/setting_service.dart';
+import '../features/workspace/data/remote_workspace_data_source.dart';
 import 'navigation/app_router.gr.dart';
 
 final sl = GetIt.instance;

@@ -123,7 +123,7 @@ class ListsView extends StatelessWidget {
                             scrollNotifier: viewModel.scrollNotifier,
                             shoppingList: viewModel.shoppingLists[index],
                             setIsMarked: (value) => viewModel.setIsPinned(
-                              productIndex: index,
+                              listIndex: index,
                               value: value,
                             ),
                             onTap: () {},

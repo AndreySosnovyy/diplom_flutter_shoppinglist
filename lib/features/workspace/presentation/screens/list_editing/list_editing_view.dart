@@ -4,6 +4,7 @@ import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/settings/domain/setting_service.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
+import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/adding_products_block.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/co_authors_handler.dart';
 import 'package:diplom/features/workspace/presentation/screens/list_editing/widgets/common_search_line.dart';
@@ -44,6 +45,8 @@ class ListEditingView extends StatelessWidget {
           imagePicker: ImagePicker(),
           saveCallback: saveCallback,
           deleteCallback: deleteCallback,
+          workspaceService: sl.get<WorkspaceService>(),
+          settingsService: sl.get<SettingsService>(),
         );
       },
       builder: (context, viewModel, child) => WillPopScope(

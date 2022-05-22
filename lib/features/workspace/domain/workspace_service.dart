@@ -17,18 +17,30 @@ class WorkspaceService {
 
   Future init() async {
     if (auth.currentUser == null) return;
-    shoppingLists.addAll(await remoteDataSource.fetchShoppingLists(
-        userId: auth.currentUser!.uid));
+    final result = await remoteDataSource.fetchShoppingLists(
+        userId: auth.currentUser!.uid);
+    if (result == null) return;
+    shoppingLists.addAll(result);
   }
 
-  Future<List<ShoppingList>> fetchShoppingLists() async =>
-      remoteDataSource.fetchShoppingLists(userId: auth.currentUser!.uid);
+  Future<List<ShoppingList>> fetchShoppingLists() async {
+    final result = await remoteDataSource.fetchShoppingLists(
+        userId: auth.currentUser!.uid);
+    if (result == null) return [];
+    shoppingLists.addAll(result);
+    return result;
+  }
 
-  Future addShoppingList(ShoppingList shoppingList) async =>
-      remoteDataSource.addShoppingList(
-        userId: auth.currentUser!.uid,
-        shoppingList: shoppingList,
-      );
+  Future addShoppingList(
+    ShoppingList shoppingList, {
+    bool forCoAuthor = false,
+  }) async {
+    // todo: if for co-author
+    return remoteDataSource.addShoppingList(
+      userId: auth.currentUser!.uid,
+      shoppingList: shoppingList,
+    );
+  }
 
   Future updateShoppingList(ShoppingList shoppingList) async =>
       remoteDataSource.updateShoppingList(
@@ -56,13 +68,13 @@ class WorkspaceService {
 
   Future deleteProductImageFromStorage({
     required String shoppingListId,
-    required String productNameId,
+    required String productName,
   }) async {
     await remoteDataSource.uploadImageOrNull(
       bytes: null,
       userId: auth.currentUser!.uid,
       shoppingListId: shoppingListId,
-      productName: productNameId,
+      productName: productName,
     );
   }
 }

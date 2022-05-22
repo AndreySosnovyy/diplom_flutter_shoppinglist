@@ -90,18 +90,18 @@ class _ListedProductTileState extends State<ListedProductTile> {
       ),
       child: GestureDetector(
         onTap: () {
-          widget.onTap();
           setState(() => widget.product.status =
               widget.product.status != Status.checked
                   ? Status.checked
                   : Status.unchecked);
+          widget.onTap();
         },
         onLongPress: () {
-          widget.onLongPress();
           setState(() => widget.product.status =
               widget.product.status != Status.unavailable
                   ? Status.unavailable
                   : Status.unchecked);
+          widget.onLongPress();
         },
         behavior: HitTestBehavior.opaque,
         child: Container(

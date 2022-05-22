@@ -54,7 +54,7 @@ class RemoteWorkspaceDataSource {
     return bytes != null ? await ref.getDownloadURL() : null;
   }
 
-  Future<List<ShoppingList>> fetchShoppingLists({
+  Future<List<ShoppingList>?> fetchShoppingLists({
     required String userId,
   }) async {
     final List<ShoppingList> lists = <ShoppingList>[];

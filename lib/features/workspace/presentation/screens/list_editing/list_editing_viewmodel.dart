@@ -8,6 +8,7 @@ import 'package:diplom/features/workspace/domain/entities/listed_product.dart';
 import 'package:diplom/features/workspace/domain/entities/product.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/entities/suggestion.dart';
+import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,12 +22,16 @@ class ListEditingViewModel extends FutureViewModel {
     required this.imagePicker,
     required this.saveCallback,
     required this.deleteCallback,
+    required this.workspaceService,
+    required this.settingsService,
   });
 
   final AppRouter router;
   final ShoppingList shoppingList;
   final SettingsService settings;
   final ImagePicker imagePicker;
+  final WorkspaceService workspaceService;
+  final SettingsService settingsService;
   final Function(ShoppingList shoppingList) saveCallback;
   final Function(ShoppingList shoppingList) deleteCallback;
 
@@ -132,14 +137,14 @@ class ListEditingViewModel extends FutureViewModel {
     notifyListeners();
   }
 
-  // todo: implement method
   Future onProductTap(int index) async {
     notifyListeners();
+    await workspaceService.updateShoppingList(shoppingList);
   }
 
-  // todo: implement method
   Future onProductLongPress(int index) async {
     notifyListeners();
+    await workspaceService.updateShoppingList(shoppingList);
   }
 
   Future onUnitTap({
@@ -165,8 +170,7 @@ class ListEditingViewModel extends FutureViewModel {
     shoppingList.listedProducts[productIndex].unit = result;
     shoppingList.listedProducts[productIndex].amount = 1;
     notifyListeners();
-
-    // todo: update database
+    await workspaceService.updateShoppingList(shoppingList);
   }
 
   String unitToString(Unit unit) {
@@ -227,29 +231,37 @@ class ListEditingViewModel extends FutureViewModel {
     );
     if (image == null) return;
 
-    // todo: upload image to storage
-    // todo: update database;
-    // shoppingList.listedProducts[productIndex].imageUrl = ;
+    final imageUrl = await workspaceService.uploadImageAndGetUrl(
+      bytes: (await image.readAsBytes()),
+      shoppingListId: shoppingList.id,
+      productName: shoppingList.listedProducts[productIndex].name,
+    );
+    shoppingList.listedProducts[productIndex].imageUrl = imageUrl;
     notifyListeners();
+    workspaceService.updateShoppingList(shoppingList);
   }
 
-  void incQuantity(int productIndex) {
+  Future incQuantity(int productIndex) async {
     shoppingList.listedProducts[productIndex].amount += 1;
     notifyListeners();
-    // todo: update database
+    await workspaceService.updateShoppingList(shoppingList);
   }
 
-  void decQuantity(int productIndex) {
+  Future decQuantity(int productIndex) async {
     if (shoppingList.listedProducts[productIndex].amount == 1) return;
     shoppingList.listedProducts[productIndex].amount -= 1;
     notifyListeners();
-    // todo: update database
+    await workspaceService.updateShoppingList(shoppingList);
   }
 
   Future deleteProduct(int productIndex) async {
     shoppingList.listedProducts.removeAt(productIndex);
     notifyListeners();
-    // todo: update database
+    await workspaceService.updateShoppingList(shoppingList);
+    await workspaceService.deleteProductImageFromStorage(
+      shoppingListId: shoppingList.id,
+      productName: shoppingList.listedProducts[productIndex].name,
+    );
   }
 
   Future saveShoppingList() async {
@@ -290,12 +302,13 @@ class ListEditingViewModel extends FutureViewModel {
     );
     if (result != null && result[0].isNotEmpty) {
       final String userHandler = result[0];
-      // todo: check if user exists and his profile is open (+ get his username)
-      if (true) {
+      final coAuthor = await settingsService.fetchAppUserByHandler(userHandler);
+      if (coAuthor != null) {
         shoppingList.coAuthors.add(
           CoAuthor(
-            name: 'User name',
+            name: coAuthor.name,
             handler: userHandler,
+            avatarUrl: coAuthor.avatarUrl,
           ),
         );
         notifyListeners();
