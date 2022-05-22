@@ -46,13 +46,17 @@ class ShoppingList {
 
   factory ShoppingList.fromJson(String id, Map json) {
     final List<ListedProduct> products = <ListedProduct>[];
-    // for (final productJson in json['listedProducts']) {
-    //   products.add(ListedProduct.fromJson(productJson));
-    // }
+    if (json['listedProducts'] != null) {
+      for (final productJson in json['listedProducts']) {
+        products.add(ListedProduct.fromJson(productJson));
+      }
+    }
     final List<CoAuthor> coAuthors = <CoAuthor>[];
-    // for (final coAuthorJson in json['coAuthors']) {
-    //   coAuthors.add(CoAuthor.fromJson(coAuthorJson));
-    // }
+    if (json['coAuthors'] != null) {
+      for (final coAuthorJson in json['coAuthors']) {
+        coAuthors.add(CoAuthor.fromJson(coAuthorJson));
+      }
+    }
     return ShoppingList(id: id)
       ..title = json['title']
       ..description = json['description']
