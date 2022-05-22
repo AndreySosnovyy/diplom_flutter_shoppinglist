@@ -51,6 +51,11 @@ class ListsViewModel extends FutureViewModel {
     authSubscription.cancel();
   }
 
+  Future onRefresh() async {
+    await fetchShoppingLists();
+    notifyListeners();
+  }
+
   Future fetchShoppingLists() async {
     await workspaceService.fetchShoppingLists();
     shoppingLists.clear();

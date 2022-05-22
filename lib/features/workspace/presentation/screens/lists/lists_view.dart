@@ -2,7 +2,6 @@ import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/app/presentation/widgets/common_appbar.dart';
 import 'package:diplom/app/presentation/widgets/common_cupertino_button.dart';
-import 'package:diplom/app/presentation/widgets/common_scroll_behavior.dart';
 import 'package:diplom/app/values/colors.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/workspace/domain/workspace_service.dart';
@@ -44,66 +43,68 @@ class ListsView extends StatelessWidget {
             onPressed: viewModel.openListEditingView,
             isClickable: viewModel.auth.currentUser != null,
           ),
-          body: viewModel.shoppingLists.isEmpty
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.12),
-                        Image.asset(
-                          Assets.illustrationsCloud,
-                          width: MediaQuery.of(context).size.width * 0.66,
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Пока здесь пусто',
-                          style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
+          body: viewModel.isBusy
+              ? const Center(child: CircularProgressIndicator())
+              : viewModel.shoppingLists.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.12),
+                            Image.asset(
+                              Assets.illustrationsCloud,
+                              width: MediaQuery.of(context).size.width * 0.66,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Пока здесь пусто',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1!
+                                  .copyWith(
                                     color: AppColors.blue,
                                     fontWeight: FontWeight.bold,
                                   ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Вы можете создавать удобные списки покупок и делиться ими.\nВсе изменения сохраняются в облаке',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: AppColors.grey2),
-                          textAlign: TextAlign.center,
-                        ),
-                        if (viewModel.auth.currentUser == null)
-                          Column(
-                            children: [
-                              const SizedBox(height: 54),
-                              Text(
-                                'Но сперва необходимо авторизоваться,\nчтобы не потерять свои списки:',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(color: AppColors.blue),
-                                textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Вы можете создавать удобные списки покупок и делиться ими.\nВсе изменения сохраняются в облаке',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(color: AppColors.grey2),
+                              textAlign: TextAlign.center,
+                            ),
+                            if (viewModel.auth.currentUser == null)
+                              Column(
+                                children: [
+                                  const SizedBox(height: 54),
+                                  Text(
+                                    'Но сперва необходимо авторизоваться,\nчтобы не потерять свои списки:',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(color: AppColors.blue),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  SizedBox(
+                                    height: 60,
+                                    child: CommonCupertinoButton(
+                                      text: 'Войти   ❯',
+                                      onTap: viewModel.openAuthScreen,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 8),
-                              SizedBox(
-                                height: 60,
-                                child: CommonCupertinoButton(
-                                  text: 'Войти   ❯',
-                                  onTap: viewModel.openAuthScreen,
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
-                )
-              : Scrollbar(
-                  child: ScrollConfiguration(
-                    behavior: CommonScrollBehavior(),
-                    child: NotificationListener(
+                          ],
+                        ),
+                      ),
+                    )
+                  : NotificationListener(
                       onNotification: (n) {
                         if (n is ScrollStartNotification) {
                           viewModel.scrollNotifier.value = true;
@@ -114,34 +115,39 @@ class ListsView extends StatelessWidget {
                         }
                         return true;
                       },
-                      child: ListView.separated(
-                        itemCount: viewModel.shoppingLists.length,
-                        padding: const EdgeInsets.only(
-                            top: 16, bottom: 54, left: 16, right: 16),
-                        itemBuilder: (context, index) {
-                          return ShoppingListTile(
-                            scrollNotifier: viewModel.scrollNotifier,
-                            shoppingList: viewModel.shoppingLists[index],
-                            setIsMarked: (value) => viewModel.setIsPinned(
-                              listIndex: index,
-                              value: value,
-                            ),
-                            onTap: () => viewModel.openListEditingView(
-                              shoppingListToOpen:
-                              viewModel.shoppingLists[index],
-                            ),
-                            onLongPress: () => viewModel.openListEditingView(
-                              shoppingListToOpen:
-                                  viewModel.shoppingLists[index],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 16),
+                      child: RefreshIndicator(
+                        onRefresh: viewModel.onRefresh,
+                        color: AppColors.white,
+                        backgroundColor: AppColors.blue,
+                        edgeOffset: -10,
+                        displacement: 60,
+                        child: ListView.separated(
+                          itemCount: viewModel.shoppingLists.length,
+                          padding: const EdgeInsets.only(
+                              top: 16, bottom: 54, left: 16, right: 16),
+                          itemBuilder: (context, index) {
+                            return ShoppingListTile(
+                              scrollNotifier: viewModel.scrollNotifier,
+                              shoppingList: viewModel.shoppingLists[index],
+                              setIsMarked: (value) => viewModel.setIsPinned(
+                                listIndex: index,
+                                value: value,
+                              ),
+                              onTap: () => viewModel.openListEditingView(
+                                shoppingListToOpen:
+                                    viewModel.shoppingLists[index],
+                              ),
+                              onLongPress: () => viewModel.openListEditingView(
+                                shoppingListToOpen:
+                                    viewModel.shoppingLists[index],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 16),
+                        ),
                       ),
                     ),
-                  ),
-                ),
         );
       },
     );
