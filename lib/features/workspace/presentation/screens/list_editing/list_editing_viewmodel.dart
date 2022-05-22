@@ -59,7 +59,7 @@ class ListEditingViewModel extends FutureViewModel {
     });
   }
 
-  void changeColor() {
+  Future changeColor() async {
     final List<Color> availableColors = [
       AppColors.black,
       AppColors.grey2,
@@ -77,6 +77,7 @@ class ListEditingViewModel extends FutureViewModel {
         (availableColors.indexOf(shoppingList.color) + 1) %
             availableColors.length];
     notifyListeners();
+    await workspaceService.updateShoppingList(shoppingList);
   }
 
   void setScreenModeToSearch() {
@@ -286,7 +287,6 @@ class ListEditingViewModel extends FutureViewModel {
     if (result == OkCancelResult.ok) deleteShoppingList();
   }
 
-  // todo: add list for co-author
   Future showAddingCoAuthorDialog(BuildContext context) async {
     final List<String>? result = await showTextInputDialog(
       context: context,
@@ -326,6 +326,7 @@ class ListEditingViewModel extends FutureViewModel {
           toastLength: Toast.LENGTH_LONG,
         );
       }
+
       shoppingList.coAuthors.add(
         CoAuthor(
           name: coAuthor.name,
@@ -334,6 +335,10 @@ class ListEditingViewModel extends FutureViewModel {
         ),
       );
       notifyListeners();
+      await workspaceService.attachListIdToUser(
+        userId: coAuthor.id,
+        listId: shoppingList.id,
+      );
     }
   }
 

@@ -169,6 +169,7 @@ class ListEditingView extends StatelessWidget {
                         showAddingCoAuthorDialog: () =>
                             viewModel.showAddingCoAuthorDialog(context),
                         deleteCoAuthor: viewModel.deleteCoAuthorByUserHandler,
+                        currentUserHandler: viewModel.settings.userHandler!,
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),

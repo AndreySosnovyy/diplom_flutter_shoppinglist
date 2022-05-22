@@ -4,6 +4,7 @@ import 'package:diplom/app/dependencies.dart';
 import 'package:diplom/app/navigation/app_router.gr.dart';
 import 'package:diplom/features/auth/domain/auth_service.dart';
 import 'package:diplom/features/settings/domain/setting_service.dart';
+import 'package:diplom/features/workspace/domain/entities/co_author.dart';
 import 'package:diplom/features/workspace/domain/entities/shopping_list.dart';
 import 'package:diplom/features/workspace/domain/workspace_service.dart';
 import 'package:flutter/material.dart';
@@ -93,22 +94,27 @@ class ListsViewModel extends FutureViewModel {
     }
     shoppingLists.sort((a, b) => b.isPinned ? 1 : -1);
     notifyListeners();
-    if (index == -1) {
-      workspaceService.addShoppingList(shoppingList);
-    } else {
-      workspaceService.updateShoppingList(shoppingList);
-    }
+    workspaceService.updateShoppingList(shoppingList);
   }
 
   void openListEditingView({ShoppingList? shoppingListToOpen}) {
+    final settings = sl.get<SettingsService>();
+
+    bool isNew = shoppingListToOpen == null;
     shoppingListToOpen ??= ShoppingList(id: const Uuid().v1())
-      ..color = sl.get<SettingsService>().defaultColor;
+      ..color = settings.defaultColor
+      ..coAuthors.add(CoAuthor(
+        name: settings.userName!,
+        handler: settings.userHandler!,
+        avatarUrl: settings.avatarUrl,
+      ));
 
     router.push(ListEditingViewRoute(
       shoppingList: shoppingListToOpen,
       saveCallback: saveShoppingList,
       deleteCallback: deleteShoppingList,
     ));
-    workspaceService.addShoppingList(shoppingListToOpen);
+
+    if (isNew) workspaceService.addShoppingList(shoppingListToOpen);
   }
 }

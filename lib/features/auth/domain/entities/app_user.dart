@@ -20,14 +20,20 @@ class AppUser {
   final String authProvider;
 
   factory AppUser.fromJson(String id, Map json) {
+    final listIds = <String>[];
+    if (json['listIds'] != null) {
+      for (final listId in (json['listIds'] as Map).values) {
+        listIds.add(listId);
+      }
+    }
+
     return AppUser(
-      id: id,
-      name: json['name'],
-      isHidden: json['isHidden'],
-      listIds: json['listIds'] != null ? [...json['listIds']] : [],
-      handler: json['handler'],
-      avatarUrl: json['avatarUrl'],
-      authProvider: json['authProvider']
-    );
+        id: id,
+        name: json['name'],
+        isHidden: json['isHidden'],
+        listIds: listIds,
+        handler: json['handler'],
+        avatarUrl: json['avatarUrl'],
+        authProvider: json['authProvider']);
   }
 }

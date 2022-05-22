@@ -11,14 +11,19 @@ class CoAuthorsHandler extends StatelessWidget {
     required this.coAuthors,
     required this.showAddingCoAuthorDialog,
     required this.deleteCoAuthor,
+    required this.currentUserHandler,
   }) : super(key: key);
 
   final List<CoAuthor> coAuthors;
   final Function() showAddingCoAuthorDialog;
   final Function(String userHandler) deleteCoAuthor;
+  final String currentUserHandler;
 
   @override
   Widget build(BuildContext context) {
+    final tempCoAuthors = [...coAuthors];
+    tempCoAuthors
+        .removeWhere((coAuthor) => coAuthor.handler == currentUserHandler);
     return ScrollConfiguration(
       behavior: CommonScrollBehavior(),
       child: SingleChildScrollView(
@@ -30,18 +35,20 @@ class CoAuthorsHandler extends StatelessWidget {
             const SizedBox(width: 12),
             SizedBox(
               height: 70,
-              child: coAuthors.isNotEmpty
+              child: coAuthors.length > 1
                   ? ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemCount: coAuthors.length,
-                      itemBuilder: (context, index) => CoAuthorTile(
-                        avatarUrl: coAuthors[index].avatarUrl,
-                        name: coAuthors[index].name,
-                        handler: coAuthors[index].handler,
-                        deleteCallback: () =>
-                            deleteCoAuthor(coAuthors[index].handler),
-                      ),
+                      itemBuilder: (context, index) {
+                        return CoAuthorTile(
+                          avatarUrl: coAuthors[index].avatarUrl,
+                          name: coAuthors[index].name,
+                          handler: coAuthors[index].handler,
+                          deleteCallback: () =>
+                              deleteCoAuthor(coAuthors[index].handler),
+                        );
+                      },
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 12),
                     )

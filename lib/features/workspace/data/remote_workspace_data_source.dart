@@ -33,12 +33,11 @@ class RemoteWorkspaceDataSource {
 
   Future<String?> uploadImageOrNull({
     required Uint8List? bytes,
-    required String userId,
     required String shoppingListId,
     required String productName,
   }) async {
     final ref = _storage
-        .ref('product_images/$userId/$shoppingListId')
+        .ref('product_images/$shoppingListId/$productName')
         .child(productName);
     if (bytes != null) {
       await ref.putData(bytes).onError((error, stackTrace) {
@@ -54,51 +53,99 @@ class RemoteWorkspaceDataSource {
     return bytes != null ? await ref.getDownloadURL() : null;
   }
 
-  Future<List<ShoppingList>?> fetchShoppingLists({
-    required String userId,
-  }) async {
+  Future<List<ShoppingList>?> fetchShoppingLists(List<String> listIds) async {
     final List<ShoppingList> lists = <ShoppingList>[];
-    await _database.ref('lists').child(userId).get().then((snapshot) {
-      if (snapshot.value == null) return lists;
-      final listsMap = snapshot.value as Map;
-      for (final listId in listsMap.keys) {
-        lists.add(ShoppingList.fromJson(listId, listsMap[listId]));
-      }
-    }).onError((error, stackTrace) {
-      _onError(ErrorType.input);
-      return Future.value(null);
-    });
+    for (final listId in listIds) {
+      await _database.ref('lists').child(listId).get().then((snapshot) {
+        final listMap = snapshot.value as Map;
+        lists.add(ShoppingList.fromJson(listId, listMap[listId]));
+      }).onError((error, stackTrace) {
+        _onError(ErrorType.input);
+        return Future.value(null);
+      });
+    }
     return lists;
   }
 
-  Future addShoppingList({
+  Future<List<String>> fetchListIds({required String userId}) async {
+    final List<String> listIds = <String>[];
+    await _database
+        .ref('users')
+        .child(userId)
+        .child('listIds')
+        .get()
+        .then((snapshot) {})
+        .onError((error, stackTrace) {
+      _onError(ErrorType.input);
+      return Future.value(null);
+    });
+    return listIds;
+  }
+
+  Future attachListIdToUser({
     required String userId,
+    required String listId,
+  }) async {
+    await _database
+        .ref('users')
+        .child(userId)
+        .child('listIds')
+        .push()
+        .set(listId);
+  }
+
+  Future removeListIdFromUser({
+    required String userId,
+    required String listId,
+  }) async {
+    late final String targetIndex;
+    await _database
+        .ref('users')
+        .child(userId)
+        .child('listIds')
+        .get()
+        .then((snapshot) {
+      final listIdsMap = snapshot.value as Map;
+      for (final listIdIndex in listIdsMap.keys) {
+        if (listIdsMap[listIdIndex] == listId) {
+          targetIndex = listIdIndex;
+          break;
+        }
+      }
+    });
+    await _database
+        .ref('users')
+        .child(userId)
+        .child('listIds')
+        .child(targetIndex)
+        .remove();
+  }
+
+  Future addShoppingList({
     required ShoppingList shoppingList,
   }) async {
     await _database
-        .ref('lists/$userId')
+        .ref('lists')
         .child(shoppingList.id)
         .set(shoppingList.toJson())
         .onError((error, stackTrace) => _onError(ErrorType.output));
   }
 
   Future updateShoppingList({
-    required String userId,
     required ShoppingList shoppingList,
   }) async {
     await _database
-        .ref('lists/$userId')
+        .ref('lists')
         .child(shoppingList.id)
         .update(shoppingList.toJson())
         .onError((error, stackTrace) => _onError(ErrorType.output));
   }
 
   Future deleteShoppingList({
-    required String userId,
     required String shoppingListId,
   }) async {
     await _database
-        .ref('lists/$userId')
+        .ref('lists')
         .child(shoppingListId)
         .remove()
         .onError((error, stackTrace) => _onError(ErrorType.output));

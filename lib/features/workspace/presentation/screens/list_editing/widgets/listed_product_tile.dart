@@ -151,7 +151,6 @@ class _ListedProductTileState extends State<ListedProductTile> {
                   ),
                 ],
               ),
-              // todo: not update while pressing
               Row(
                 children: [
                   GestureDetector(
@@ -167,7 +166,9 @@ class _ListedProductTileState extends State<ListedProductTile> {
                         await Future.delayed(const Duration(milliseconds: 10));
                       } while (isDecPressed);
                     },
-                    onLongPressEnd: (_) => isDecPressed = false,
+                    onLongPressEnd: (_) {
+                      isDecPressed = false;
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       margin: const EdgeInsets.symmetric(vertical: 6),
