@@ -302,6 +302,20 @@ class ListEditingViewModel extends FutureViewModel {
     );
     if (result != null && result[0].isNotEmpty) {
       final String userHandler = result[0];
+      if (settings.userHandler == userHandler) {
+        return Fluttertoast.showToast(
+          msg: 'Вы не можете добавить себя',
+          backgroundColor: AppColors.red,
+          toastLength: Toast.LENGTH_LONG,
+        );
+      }
+      if ((shoppingList.coAuthors.where((coAuthor) => coAuthor.handler == userHandler)).isNotEmpty) {
+        return Fluttertoast.showToast(
+          msg: 'Вы уже добавили этого пользователя',
+          backgroundColor: AppColors.red,
+          toastLength: Toast.LENGTH_LONG,
+        );
+      }
       final coAuthor = await settingsService.fetchAppUserByHandler(userHandler);
       if (coAuthor != null) {
         shoppingList.coAuthors.add(
