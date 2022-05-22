@@ -287,7 +287,6 @@ class ListEditingViewModel extends FutureViewModel {
   }
 
   // todo: add list for co-author
-  // todo: check if account is hidden
   Future showAddingCoAuthorDialog(BuildContext context) async {
     final List<String>? result = await showTextInputDialog(
       context: context,
@@ -311,7 +310,8 @@ class ListEditingViewModel extends FutureViewModel {
           toastLength: Toast.LENGTH_LONG,
         );
       }
-      if ((shoppingList.coAuthors.where((coAuthor) => coAuthor.handler == userHandler)).isNotEmpty) {
+      if ((shoppingList.coAuthors
+          .where((coAuthor) => coAuthor.handler == userHandler)).isNotEmpty) {
         return Fluttertoast.showToast(
           msg: 'Вы уже добавили этого пользователя',
           backgroundColor: AppColors.red,
@@ -319,22 +319,21 @@ class ListEditingViewModel extends FutureViewModel {
         );
       }
       final coAuthor = await settingsService.fetchAppUserByHandler(userHandler);
-      if (coAuthor != null) {
-        shoppingList.coAuthors.add(
-          CoAuthor(
-            name: coAuthor.name,
-            handler: userHandler,
-            avatarUrl: coAuthor.avatarUrl,
-          ),
-        );
-        notifyListeners();
-      } else {
-        Fluttertoast.showToast(
+      if (coAuthor == null || coAuthor.isHidden) {
+        return Fluttertoast.showToast(
           msg: 'Пользователь не был найден или его аккаунт скрыт',
           backgroundColor: AppColors.red,
           toastLength: Toast.LENGTH_LONG,
         );
       }
+      shoppingList.coAuthors.add(
+        CoAuthor(
+          name: coAuthor.name,
+          handler: userHandler,
+          avatarUrl: coAuthor.avatarUrl,
+        ),
+      );
+      notifyListeners();
     }
   }
 
