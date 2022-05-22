@@ -290,8 +290,9 @@ class ListEditingViewModel extends FutureViewModel {
   Future showAddingCoAuthorDialog(BuildContext context) async {
     final List<String>? result = await showTextInputDialog(
       context: context,
-      title: 'Добавить соавтора',
-      message: 'Введите идентификатор пользователя',
+      title: 'Введите идентификатор пользователя',
+      message:
+          'Добавляя соавтора в этот список, вы даете ему полные права на управление§',
       okLabel: 'Добавить',
       cancelLabel: 'Назад',
       textFields: [
