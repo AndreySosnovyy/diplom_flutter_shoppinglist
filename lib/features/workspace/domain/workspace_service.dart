@@ -23,10 +23,11 @@ class WorkspaceService {
     shoppingLists.addAll(result);
   }
 
-  Future<List<ShoppingList>> fetchShoppingLists() async {
+  Future fetchShoppingLists() async {
     final result = await remoteDataSource.fetchShoppingLists(
         userId: auth.currentUser!.uid);
-    if (result == null) return [];
+    if (result == null) return;
+    shoppingLists.clear();
     shoppingLists.addAll(result);
     return result;
   }

@@ -20,7 +20,9 @@ class ListsViewModel extends FutureViewModel {
       if (user == null) {
         shoppingLists.clear();
       } else {
-        shoppingLists.addAll(await workspaceService.fetchShoppingLists());
+        await workspaceService.fetchShoppingLists();
+        shoppingLists.clear();
+        shoppingLists.addAll(workspaceService.shoppingLists);
       }
       notifyListeners();
     });
@@ -37,7 +39,7 @@ class ListsViewModel extends FutureViewModel {
 
   @override
   Future futureToRun() async {
-    shoppingLists.addAll(await fetchShoppingLists());
+    await fetchShoppingLists();
     notifyListeners();
   }
 
@@ -47,8 +49,10 @@ class ListsViewModel extends FutureViewModel {
     authSubscription.cancel();
   }
 
-  Future<List<ShoppingList>> fetchShoppingLists() async {
-    return await workspaceService.fetchShoppingLists();
+  Future fetchShoppingLists() async {
+    await workspaceService.fetchShoppingLists();
+    shoppingLists.clear();
+    shoppingLists.addAll(workspaceService.shoppingLists);
   }
 
   String? get userName => auth.currentUser?.displayName;
