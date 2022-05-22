@@ -35,18 +35,18 @@ class CoAuthorsHandler extends StatelessWidget {
             const SizedBox(width: 12),
             SizedBox(
               height: 70,
-              child: coAuthors.length > 1
+              child: tempCoAuthors.isNotEmpty
                   ? ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: coAuthors.length,
+                      itemCount: tempCoAuthors.length,
                       itemBuilder: (context, index) {
                         return CoAuthorTile(
-                          avatarUrl: coAuthors[index].avatarUrl,
-                          name: coAuthors[index].name,
-                          handler: coAuthors[index].handler,
+                          avatarUrl: tempCoAuthors[index].avatarUrl,
+                          name: tempCoAuthors[index].name,
+                          handler: tempCoAuthors[index].handler,
                           deleteCallback: () =>
-                              deleteCoAuthor(coAuthors[index].handler),
+                              deleteCoAuthor(tempCoAuthors[index].handler),
                         );
                       },
                       separatorBuilder: (context, index) =>

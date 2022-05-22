@@ -59,7 +59,6 @@ class WorkspaceService {
       remoteDataSource.updateShoppingList(shoppingList: shoppingList);
 
   Future deleteShoppingList(String shoppingListId) async {
-    remoteDataSource.deleteShoppingList(shoppingListId: shoppingListId);
     remoteDataSource.removeListIdFromUser(
       listId: shoppingListId,
       userId: auth.currentUser!.uid,

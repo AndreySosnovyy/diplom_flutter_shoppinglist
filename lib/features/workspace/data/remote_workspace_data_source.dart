@@ -57,8 +57,7 @@ class RemoteWorkspaceDataSource {
     final List<ShoppingList> lists = <ShoppingList>[];
     for (final listId in listIds) {
       await _database.ref('lists').child(listId).get().then((snapshot) {
-        final listMap = snapshot.value as Map;
-        lists.add(ShoppingList.fromJson(listId, listMap[listId]));
+        lists.add(ShoppingList.fromJson(listId, snapshot.value as Map));
       }).onError((error, stackTrace) {
         _onError(ErrorType.input);
         return Future.value(null);
@@ -74,8 +73,13 @@ class RemoteWorkspaceDataSource {
         .child(userId)
         .child('listIds')
         .get()
-        .then((snapshot) {})
-        .onError((error, stackTrace) {
+        .then((snapshot) {
+      if (snapshot.value == null) return;
+      final listIdsMap = snapshot.value as Map;
+      for (final listId in listIdsMap.values) {
+        listIds.add(listId);
+      }
+    }).onError((error, stackTrace) {
       _onError(ErrorType.input);
       return Future.value(null);
     });
