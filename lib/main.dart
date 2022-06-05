@@ -13,6 +13,7 @@ void main() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
     // todo: set firebase rules (storage & database)
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     await Firebase.initializeApp();
     await setupDependencies();
     await setupSentry();
